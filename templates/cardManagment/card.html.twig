@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		{% include "root.html.twig" %}
+		<link rel="stylesheet" href=" {{ asset('styles/card.css') }} ">
+
+
+		<title>{{ card.name }}</title>
+	</head>
+	{% include "header.html.twig" %}
+	<body>
+
+		<div class="container-fluid"> 
+			<div class="row justify-content-center">
+				<div class="col-sm-6 main-card">
+					<h1> {{ card.name }}</h1>
+					<img class="contain-image" src="{{ card.png }}" alt="card image">
+				</div>
+				<div class="col-sm-4">
+					<p>
+						{{ card.oracle_text }}
+					</p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

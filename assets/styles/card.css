@@ -1,0 +1,9 @@
+
+.main-card{
+	justify-content: center;
+	text-align: center;
+}
+.contain-image{
+	width: 100%;
+	max-width: 300px;
+}

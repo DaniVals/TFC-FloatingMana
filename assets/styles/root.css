@@ -1,0 +1,17 @@
+
+:root{
+	--default-text-color: antiquewhite;
+	--default-background-color: black;
+}
+
+
+*{
+	margin: 0px;
+	padding: 0px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+	color: var(--default-text-color);
+	background-color: var(--default-background-color);
+}
