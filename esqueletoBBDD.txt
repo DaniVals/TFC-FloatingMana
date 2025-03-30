@@ -1,0 +1,26 @@
+TFC_FloatingMana
+
+Tablas:
+
+	- User:
+		- idUser - integer(6) - PK
+		- email - varchar(50) UNIQUE NOT NULL
+		- password - varchar(255) NOT NULL
+		- username - varchar(20) NOT NULL
+		- profilePic - varchar(150) - UNIQUE (hace ref a un archivo jpg/png)
+		- isAuth - integer(1)
+	
+	- TokenAuth:
+		- token - varchar(255) - PK
+		- idUser - integer(6) - FK (User, idUser)
+		- expirationDate - datetime
+	
+	- Deck:
+		- idDeck - integer(7) PK
+		- deckName - varchar(25) NOT NULL
+		- cardList - varchar(150) UNIQUE NOT NULL (hace ref a un archivo donde estarán las cartas y sus datos)
+		- deckOwner - varchar(20) - FK (Profile, userName)
+		- type - varchar(100) NOT NULL
+	
+	- Collection: - ?
+		- deckOwner - varchar(20) - FK (Profile, userName)

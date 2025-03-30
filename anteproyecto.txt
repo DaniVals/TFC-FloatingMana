@@ -1,0 +1,37 @@
+Lista de cosas para Isma
+
+Desglose de tareas:
+
+	- Funcionalidad básica:
+		- Main page sin login (pequeña explicación/introducción del proyecto y 3 opciones: login, sign in y recuperar contraseña).
+		- Login
+		- Sign in
+		- Recuperar contraseña
+		- Home (página nexo desde donde se accede a todo, tiene un menú con un carrusel que hace de showcase de las 3 cartas más caras de tu mazo, las ultimas cartas que has añadido y el valor y cantidad de tus cartas).
+		- Mi colección (aparecerán el precio total estimado de la colección, las cartas que tienes y un buscador para ver alguna en específico con filtros y cada carta al pulsar se puede editar para cambiar las opciones).
+		- Configuración (editar perfil).
+		- Añadir cartas (buscador genérico con filtros pero que busca entre todas las cartas existentes y cada carta al pulsar tiene una preview con un menú de opciones para seleccionar cómo quieres guardar la carta - lenguaje, condición, tipo y cantidad. La carta se guarda en mi colección).
+		- Ver carta (ver los valores e información de la carta y si forma parte de tu colección poder editarlos - datos de la preview).
+		
+	- Funcionalidad opcional:
+		- Mis decks (se pueden crear mazos al añadir cartas, se puede editar el nombre y las cartas que hay).
+		- Configuración (modo claro o modo oscuro).
+	
+Asignación de tareas:
+
+	- Iván: se encargará de la gran mayoría del back-end, siendo esto las funciones y controladores y del procesamiento de los datos del lado servidor. Hará uso de APIs.
+	
+	- Vals: se encargará de la mayoría del front-end, siendo esto el mostrar al usuario de forma simple y adaptada la información que devuelva el tratamiento de datos en el lado servidor. También usará APIs.
+	
+	- Álex: se encargará de la maquetación de la base de datos, las relaciones del ORM, las entidades/esquemas y el diseño de la interfaz con CSS.
+	
+Ideas de cara al desarrollo de la memoria:
+
+	No tenemos mucha idea de cómo hacer una memoria ya que nunca hemos hecho ninguna. Sin embargo, tenemos algunas ideas que nos gustaría compartir contigo:
+		- Comentarios en todos lados del código SIN EXCEPCIÓN.
+		- Crear un documento compartido donde se listen todas las funcionalidades que pretendemos hacer y cada vez que avancemos con el TFG entrar a este documento y poner con fecha incluida lo que hemos hecho, para qué sirve, con qué conecta, etc (información relevante de los avances).
+		
+Tecnologías utilizadas:
+	- Tenemos dudas entre usar Node.js o Spring, nos gustaría tu opinión al respecto.
+	- Para la base de datos usaremos MySQL con Xampp.
+	- El framework para diseñar la interfaz será Bootstrap.
