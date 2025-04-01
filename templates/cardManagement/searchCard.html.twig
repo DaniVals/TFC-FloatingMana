@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>  
+</head>
+<style>
+    *{
+        margin: 0px;
+        padding: 0px;
+        color: white;
+    }
+    body{
+        background-color: #242526;
+    }
+
+    #centerCard{
+        background-color: #067;
+    }
+    #cardImg{
+        border-radius: 15px;
+    }
+</style>
+<body>
+    <!-- Por cada carta, mostrar su nombre, precio y la imagen. -->
+    <!-- Leer el dato que se envia desde el controlador y mostrarlo en la vista. -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Resultados de la búsqueda</h1>
+            </div>
+        </div>
+        <div class="row">
+            {% for carta in cartas %}
+                <div class="col-4">
+                    <div class="card" id="centerCard">
+                        <img src="{{ carta.image_uris.small }}" class="card-img-top" alt="..." id="cardImg">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">{{ carta.name }}</h5>
+                            <p class="card-text text-center">{{ carta.prices.eur }}€</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
