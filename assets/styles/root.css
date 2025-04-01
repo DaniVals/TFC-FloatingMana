@@ -15,3 +15,7 @@ body {
 	color: var(--default-text-color);
 	background-color: var(--default-background-color);
 }
+
+.pop-up-bordered{
+	border: 1px solid var(--default-text-color);
+}

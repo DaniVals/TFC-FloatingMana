@@ -1,0 +1,15 @@
+.center-in-page-vert{
+	/* background-color: blueviolet; */
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+table{
+	padding: 5px;
+}
+
+tr{
+	margin: 20px;
+}
