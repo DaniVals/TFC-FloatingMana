@@ -7,3 +7,20 @@
 	width: 100%;
 	max-width: 300px;
 }
+
+.card-slide-preview{
+	background: var(--slide-background-color);
+	border-radius: 5px;
+	padding: 10px;
+}
+.card-slide-preview img{
+	border-radius: 10px;
+}
+
+.card-slide-text,
+.card-slide-text-default{
+	color: var(--semiclear-text-color);
+}
+.card-slide-text-default{
+	font-style: italic;
+}

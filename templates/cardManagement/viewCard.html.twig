@@ -22,9 +22,13 @@
 					<img class="contain-image" src="{{ card.image_uris.normal }}" alt="card image">
 				</div>
 				<div class="col-sm-4">
-					<p>
-						{{ card.oracle_text }}
-					</p>
+					{% if card.oracle_text is defined and card.oracle_text is not empty %}
+						<p>
+							{{ card.oracle_text }}
+						</p>
+					{% else %}
+						<p>Descripcion no encontrada</p>
+					{% endif %}
 				</div>
 			</div>
 		</div>

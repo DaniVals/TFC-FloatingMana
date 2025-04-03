@@ -19,13 +19,13 @@ class CardController extends AbstractController
     public function index(): Response
     {
         $cardInfo = $this->scryfallApiService->getRandomCard();
-        return $this->render('cardManagement/randomCard.html.twig', ['card' => $cardInfo]);
+        return $this->render('cardManagement/viewCard.html.twig', ['card' => $cardInfo]);
     }
 
     #[Route('/buscar/{nombre}', name: 'carta_buscar')]
     public function buscar(string $nombre): Response
     {
         $cards = $this->scryfallApiService->searchCards($nombre);
-        return $this->render('cardManagement/searchCard.html.twig', ['cartas' => $cards]);
+        return $this->render('cardManagement/searchCard.html.twig', ['cards' => $cards]);
     }
 }

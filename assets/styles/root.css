@@ -1,7 +1,11 @@
 
 :root{
 	--default-text-color: antiquewhite;
+	--semiclear-text-color: #fff9;
+
+
 	--default-background-color: black;
+	--slide-background-color: radial-gradient(circle at 100% 100%, #fff3, #fff1);;
 }
 
 
@@ -18,4 +22,8 @@ body {
 
 .pop-up-bordered{
 	border: 1px solid var(--default-text-color);
+}
+
+a{
+	color: var(--default-text-color);
 }
