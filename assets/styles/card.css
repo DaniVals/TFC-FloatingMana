@@ -24,3 +24,14 @@
 .card-slide-text-default{
 	font-style: italic;
 }
+
+.symbol-replacement{
+	display: inline-block;
+	width: 1em;
+
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+
+	color: #0000;
+}
