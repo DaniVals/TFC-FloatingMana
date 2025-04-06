@@ -4,8 +4,17 @@
 	text-align: center;
 }
 .contain-image{
+	/* width: 80%;
+	margin: 10%; */
+	
 	width: 100%;
 	max-width: 300px;
+	margin-top: 20px;
+
+	border-radius: 15px;
+}
+.contain-image:hover{
+	border-radius: 0px;
 }
 
 .card-slide-preview{

@@ -13,6 +13,7 @@ function replaceSymbols(htmlText) {
 	console.log(htmlText);
 	console.log(htmlText.innerHTML);
 
+	htmlText.innerHTML = htmlText.innerHTML.replace('\n', ''); // para evitar textos que empiezan con <br>
 	htmlText.innerHTML = htmlText.innerHTML.replaceAll('\n', '<br>');
 	htmlText.innerHTML = htmlText.innerHTML.replaceAll('(', '<i>(');
 	htmlText.innerHTML = htmlText.innerHTML.replaceAll(')', ')</i>');

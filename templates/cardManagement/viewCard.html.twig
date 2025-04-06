@@ -19,13 +19,32 @@
 			<div class="row justify-content-center">
 				<div class="col-sm-6 main-card">
 					<h1> {{ card.name }}</h1>
-					<img class="contain-image" src="{{ card.image_uris.normal }}" alt="card image">
+					{% if card.image_uris.normal is defined %}
+						<img class="contain-image" src="{{ card.image_uris.normal }}" alt="card image">
+					{% else %}
+						{# Placeholder photo, the back of the card #}
+						<img class="contain-image" src="https://upload.wikimedia.org/wikipedia/en/a/aa/Magic_the_gathering-card_back.jpg" alt="card image">
+					{% endif %}
 				</div>
 
-				{# descripcion de la carta #}
+				{# informacion de la carta #}
 				<div class="col-sm-4">
+
+					{# coste de mana #}
 					<p class="replace-text-with-symbol"> {{ card.mana_cost }} </p>
 
+					{# tipo #}
+					{% if card.type_line is defined and card.type_line is not empty %}
+						<p>
+							{{ card.type_line }}
+						</p>
+					{# {% else %}
+						<p>Descripcion no encontrada</p> #}
+					{% endif %}
+
+
+					
+					{# descripcion #}
 					{% if card.oracle_text is defined and card.oracle_text is not empty %}
 						<p class="replace-text-with-symbol">
 							{{ card.oracle_text }}
@@ -33,6 +52,18 @@
 					{% else %}
 						<p>Descripcion no encontrada</p>
 					{% endif %}
+
+
+					{# texto decorativo #}
+					{% if card.flavor_text is defined and card.flavor_text is not empty %}
+						<p class="replace-text-with-symbol"><i>
+							{{ card.flavor_text }}
+						</i></p>
+					{# {% else %}
+						<p>Descripcion no encontrada</p> #}
+					{% endif %}
+					
+					{{ dump(card) }}
 				</div>
 			</div>
 		</div>
