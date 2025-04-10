@@ -13,27 +13,34 @@
 
 </head>
 <body>
+	
+	
+	{% if responseData is defined %}
+		{{ responseData.message }}
+	{% endif %}
+
+
 	<div class="container">
 		<form action="{{ path('app_register') }}" method="post" 
 		class="center-in-page-vert row justify-content-center">
 			<table class="col-12 col-md-8 pop-up-bordered">
 				<tr>
-					<td class="col-6 col-md-4">Usuario</td>
-					<td class="col-6 col-md-4"><input type="text" id="username" name="_username" class="form-control" /></td>
+					<td class="col-6 col-md-4 p-2">Usuario</td>
+					<td class="col-6 col-md-4 p-2"><input type="text" id="username" name="_username" class="form-control" /></td>
 				</tr>
 				<tr>
-					<td>Correo</td>
-					<td><input type="email" id="email" name="email" class="form-control" /></td>
+					<td class="p-2">Correo</td>
+					<td class="p-2"><input type="email" id="email" name="email" class="form-control" /></td>
 				</tr>
 				<tr>
-					<td>Contraseña</td>
-					<td><input type="password" id="password" name="_password" class="form-control" /></td>
+					<td class="p-2">Contraseña</td>
+					<td class="p-2"><input type="password" id="password" name="_password" class="form-control" /></td>
 				</tr>
 				<tr>
-					<td colspan="2" class="text-center"><button type="submit" class="btn btn-primary">Crear cuenta</button></td>
+					<td colspan="2" class="text-center p-2"><button type="submit" class="btn btn-primary">Crear cuenta</button></td>
 				</tr>
 				<tr>
-					<td> <a href="{{ path('app_register') }}">Sign in</a></td>
+					<td class="mb-1 text-center"> <a href="{{ path('app_login_view') }}">Iniciar sesion</a></td>
 					{#<!--<td> <a href="{{ path('load_recovery') }}">Recover Password</a> </td> -->#}
 				</tr>
 			</table>
