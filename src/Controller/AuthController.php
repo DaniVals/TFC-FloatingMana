@@ -28,7 +28,7 @@ class AuthController extends AbstractController {
     }
 
     #[Route('/app/login', name: 'app_login', methods: ['POST'])]
-    public function login(Request $request): JsonResponse
+    public function login(Request $request)
     {
         // Extraer credenciales del request
         $email = $request->request->get('email');
@@ -37,10 +37,14 @@ class AuthController extends AbstractController {
 
         // Validación básica de formato
         if (empty($email) || empty($password)) {
-            return $this->json([
-                'success' => false,
-                'message' => 'Email y contraseña son requeridos'
-            ], Response::HTTP_BAD_REQUEST);
+            return $this->render('sessionManagement/login.html.twig',
+			[
+				'responseData' => [
+					'success' => false,
+					'message' => 'Email y contraseña son requeridos',
+					'status'  => 'HTTP_BAD_REQUEST'
+				]
+            ]);
         }
 
         try {

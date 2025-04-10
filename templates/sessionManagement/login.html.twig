@@ -13,6 +13,9 @@
 
 </head>
 <body>
+	{% if responseData is defined %}
+		{{ responseData.message }}
+	{% endif %}
 	<div class="container">
 		<form action="{{ path('app_login') }}" method="post" 
 		class="center-in-page-vert row justify-content-center">
