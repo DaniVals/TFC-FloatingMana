@@ -421,3 +421,6 @@ FodyWeavers.xsd
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+#fichero interno de Mac#
+.DS_Store
