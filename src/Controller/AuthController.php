@@ -21,6 +21,12 @@ class AuthController extends AbstractController {
         $this->authService = $authService;
     }
 
+    #[Route('/app/login', name: 'app_login_view', methods: ['GET'])]
+    public function loginView(): Response
+    {
+        return $this->render('sessionManagement/login.html.twig');
+    }
+
     #[Route('/app/login', name: 'app_login', methods: ['POST'])]
     public function login(Request $request): JsonResponse
     {
@@ -79,6 +85,12 @@ class AuthController extends AbstractController {
             'success' => true,
             'message' => 'Logout exitoso'
         ], Response::HTTP_OK);
+    }
+
+    #[Route('/app/register', name: 'app_register_view', methods: ['GET'])]
+    public function registerView(): Response
+    {
+        return $this->render('sessionManagement/register.html.twig');
     }
 
     #[Route('/app/register', name: 'app_register', methods: ['POST'])]
