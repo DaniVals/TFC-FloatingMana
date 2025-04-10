@@ -17,10 +17,14 @@ Tablas:
 	
 	- Deck:
 		- idDeck - integer(7) PK
-		- deckName - varchar(25) NOT NULL
-		- cardList - varchar(150) UNIQUE NOT NULL (hace ref a un archivo donde estarán las cartas y sus datos)
+		- deckName - varchar(50) NOT NULL
+		- cardList - varchar(150) UNIQUE NOT NULL (dirección donde se guardará el archivo json en el servidor)
 		- deckOwner - varchar(20) - FK (Profile, userName)
 		- type - varchar(100) NOT NULL
 	
-	- Collection: - ?
+	- Collection: 
+		- idCollection - integer(6) PRIMARY KEY	
 		- deckOwner - varchar(20) - FK (Profile, userName)
+		- collCardList - varchar(255) NOT NULL (dir donde está el json)
+		- collectionValue - decimal(6,2) NOT NULL
+		- cardAmount - integer(4) NOT NULL
