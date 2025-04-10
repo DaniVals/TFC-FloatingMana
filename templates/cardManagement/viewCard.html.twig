@@ -16,8 +16,11 @@
 	<body>
 
 		<div class="container-fluid"> 
-			<div class="row justify-content-center">
-				<div class="col-sm-6 main-card">
+
+			<div class="row justify-content-center pe-sm-5 ps-sm-5">
+
+				{# caratula de la carta (nombre y foto) #}
+				<div class="col-md-6 main-card mt-3">
 					<h1> {{ card.name }}</h1>
 					{% if card.image_uris.normal is defined %}
 						<img class="contain-image" src="{{ card.image_uris.normal }}" alt="card image">
@@ -28,11 +31,17 @@
 				</div>
 
 				{# informacion de la carta #}
-				<div class="col-sm-4">
+				<div class="col-md-4 mt-3">
 
+					<h3 class="text-center">Estadisticas de la carta</h3>
+					<hr class="fading-separation">
+					
 					{# coste de mana #}
-					<p class="replace-text-with-symbol"> {{ card.mana_cost }} </p>
+					{% if card.mana_cost is defined %}
+						<p> Coste: <span class="replace-text-with-symbol">{{ card.mana_cost }} </span></p>
+					{% endif %}
 
+					<hr class="fading-separation">
 					{# tipo #}
 					{% if card.type_line is defined and card.type_line is not empty %}
 						<p>
@@ -41,8 +50,6 @@
 					{# {% else %}
 						<p>Descripcion no encontrada</p> #}
 					{% endif %}
-
-
 					
 					{# descripcion #}
 					{% if card.oracle_text is defined and card.oracle_text is not empty %}
@@ -56,16 +63,130 @@
 
 					{# texto decorativo #}
 					{% if card.flavor_text is defined and card.flavor_text is not empty %}
+						<hr class="fading-separation">
 						<p class="replace-text-with-symbol"><i>
 							{{ card.flavor_text }}
 						</i></p>
 					{# {% else %}
 						<p>Descripcion no encontrada</p> #}
 					{% endif %}
+
+					{# poder y defensa o lealtad#}
+					{% if card.toughness is defined and card.toughness is not empty %}
+					{% if card.power is defined and card.power is not empty %}
+						<hr class="fading-separation">
+						<p class="d-flex justify-content-between ps-5 pe-5">
+							<span>
+								Poder: {{ card.power }}
+							</span>
+							<span>
+								Defensa: {{ card.toughness }}
+							</span>
+						</p>
+					{# {% else %}
+						<p>Descripcion no encontrada</p> #}
+					{% endif %}
+					{% endif %}
+
+					{% if card.loyalty is defined and card.loyalty is not empty %}
+						<hr class="fading-separation">
+						<p class="d-flex justify-content-between ps-5 pe-5">
+							<span>
+								Lealtad: {{ card.loyalty }}
+							</span>
+						</p>
+					{% endif %}
+
+				</div>
+			</div>
+
+			
+			<div class="row justify-content-center pe-sm-5 ps-sm-5">
+
+				{# contenedor para alinear el resto #}
+				<div class="col-md-1">
+				</div>
+
+				{# Legalidades #}
+				<div class="col-md-4 mt-3">
+					<h3 class="text-center">Otros datos</h3>
+					<hr class="fading-separation">
+
+					{# fecha de salida #}
+					{% if card.released_at is defined %}
+						<p> Fecha de salida: {{ card.released_at }} </p>
+					{% endif %}
+				
+					{# listar legalidades #}
+					{% if card.legalities is defined %}
+						<hr class="fading-separation">
+						<h4>Legalidades</h4>
+						<div class="card-legalities">
+							{% for key, value in card.legalities %}
+							<span class="card-legality card-{{value}}"> {{ key }} </span>
+							{% endfor %}
+						</div>
+					{% else %}
+						<p>No se encontraron datos</p>
+					{% endif %}
+				</div>
+
+				{# contenedor para alinear el resto #}
+				<div class="col-md-1">
+				</div>
+
+				{# Precios #}
+				<div class="col-md-4 mt-3">
+
+					<h3 class="text-center">Compra y Venta</h3>
+				
+
+					{# fecha de salida #}
+					{% if card.prices is defined %}
+						<hr class="fading-separation">
+						<h4>Precios</h4>
+						<ul>
+							{% if card.prices.usd is not null %}
+								<li> USD: {{ card.prices.usd }}$ </li>
+							{% endif %}
+							
+							{% if card.prices.usd_foil is not null %}
+								<li> USD Foil: {{ card.prices.usd_foil }}$ </li>
+							{% endif %}
+
+							{% if card.prices.usd_etched is not null %}
+								<li> USD Etched: {{ card.prices.usd_etched }}$ </li>
+							{% endif %}
+
+							{% if card.prices.eur is not null %}
+								<li> EUR: {{ card.prices.eur }}€ </li>
+							{% endif %}
+
+							{% if card.prices.eur_foil is not null %}
+								<li> EUR Foil: {{ card.prices.eur_foil }}€ </li>
+							{% endif %}
+
+							{% if card.prices.tix is not null %}
+								<li> TIX: {{ card.prices.tix }} </li>
+							{% endif %}
+						</ul>
+					{% endif %}
 					
+					{% if card.purchase_uris is defined %}
+						<hr class="fading-separation">
+						<h4>Precios</h4>
+						<div class="card-legalities">
+							{% for key, value in card.purchase_uris %}
+								<a class="{{key}}" href="{{value}}"> {{ key }} </a>
+							{% endfor %}
+						</div>
+					{% endif %}
+
+					<hr class="fading-separation">
 					{{ dump(card) }}
 				</div>
 			</div>
+			
 		</div>
 	</body>
 </html>

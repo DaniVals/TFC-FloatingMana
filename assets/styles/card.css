@@ -12,6 +12,8 @@
 	margin-top: 20px;
 
 	border-radius: 15px;
+
+	transition: border-radius 0.5s;
 }
 .contain-image:hover{
 	border-radius: 0px;
@@ -43,4 +45,37 @@
 	background-size: contain;
 
 	color: #0000;
+}
+
+/* legalities slides */
+.card-legalities{
+    display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+	gap: 0.5em;
+}
+.card-legality{
+	padding: 5px;
+	display: inline-block;
+	border-radius: 5px;
+	text-align: center;
+
+	color: var(--card-legal-text);
+	font-weight: bold;
+}
+.card-legal{
+	background: var(--card-legal-background);
+}
+.card-not_legal{
+	background: var(--card-legal-not-background);
+}
+
+/* card stores links */
+
+/* this is for the h3 between hr */
+h3 + hr {
+	margin-top: -0.8em !important;
+	margin-bottom: 1em !important;
+	/* height: 2px !important; */
+	opacity: 1 !important;
+
 }

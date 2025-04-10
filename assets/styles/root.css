@@ -3,6 +3,9 @@
 	--default-text-color: antiquewhite;
 	--semiclear-text-color: #fff9;
 
+	--card-legal-text: #000;
+	--card-legal-background: #0f0;
+	--card-legal-not-background: #f00;
 
 	--default-background-color: black;
 	--slide-background-color: radial-gradient(circle at 100% 100%, #fff3, #fff1);;
@@ -26,4 +29,13 @@ body {
 
 a{
 	color: var(--default-text-color);
+}
+
+
+.fading-separation {
+	border: none;
+	height: 1px !important;
+	background: linear-gradient(to right, transparent, var(--default-text-color), transparent);
+	margin-top: 1.5em;
+	margin-bottom: 0.5em;
 }
