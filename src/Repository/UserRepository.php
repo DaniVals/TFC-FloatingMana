@@ -16,9 +16,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         parent::__construct($registry, User::class);
     }
 
-    /**
-     * Busca un usuario por su email
-     */
+    // Busca un usuario por su email
     public function findOneByEmail(string $email): ?User
     {
         return $this->createQueryBuilder('u')
@@ -28,9 +26,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getOneOrNullResult();
     }
 
-    /**
-     * Guarda un usuario en la base de datos
-     */
+    // Guarda un usuario en la base de datos
     public function save(User $user, bool $flush = false): void
     {
         $this->getEntityManager()->persist($user);
@@ -40,9 +36,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         }
     }
 
-    /**
-     * Elimina un usuario de la base de datos
-     */
+    // Elimina un usuario de la base de datos
     public function remove(User $user, bool $flush = false): void
     {
         $this->getEntityManager()->remove($user);
@@ -52,9 +46,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         }
     }
 
-    /**
-     * Actualiza la contraseña si es necesario
-     */
+    // Actualiza la contraseña si es necesario
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
         if (!$user instanceof User) {
@@ -65,9 +57,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->save($user, true);
     }
 
-    /**
-     * Encuentra usuarios activos
-     */
+    // Encuentra usuarios activos
     public function findActiveUsers(): array
     {
         return $this->createQueryBuilder('u')
@@ -78,9 +68,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getResult();
     }
 
-    /**
-     * Busca usuarios por rol
-     */
+    // Busca usuarios por rol
     public function findByRole(string $role): array
     {
         return $this->createQueryBuilder('u')
