@@ -42,7 +42,7 @@ class ScryfallApiService
     }
 
     public function getCardById(string $id): array {
-        $url = 'https://api.scryfall.com/cards/search?q=unique:prints+id:' . $id;
+        $url = ' https://api.scryfall.com/cards/' . $id;
 
         try {
             $response = $this->httpClient->request('GET', $url, [
