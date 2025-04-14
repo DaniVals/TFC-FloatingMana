@@ -4,7 +4,7 @@ Tablas:
 
 	- User:
 		- idUser - integer(6) - PK
-		- username - varchar(20) NOT NULL
+		- username - varchar(50) NOT NULL
 		- email - varchar(50) UNIQUE NOT NULL
 		- password - varchar(255) NOT NULL
 		- isAuth - integer(1) - (se añade a la bd antes de autenticarse por lo que por defecto está a falso (0) hasta que se autentique y pase a verdadero (1))
@@ -18,22 +18,21 @@ Tablas:
 	- Deck:
 		- idDeck - integer(7) PK
 		- deckName - varchar(50) NOT NULL
-		- deckCardList - varchar(150) UNIQUE NOT NULL (dirección donde se guardará el archivo json en el servidor)
-		- deckOwner - varchar(20) - FK (Profile, userName)
+		- deckOwner - varchar(50) - FK (Profile, userName)
 		- type - varchar(150) NOT NULL
-		- deckValue - decimal(6,2) NOT NULL
 	
-	- Collection: 
+	- Collection: (tabla resultado de la relación (N:M) de User y Card)
 		- idCollection - integer(6) PK
-		- collectionOwner - varchar(20) - FK (Profile, userName)
-		- collCardList - varchar(255) NOT NULL (dirección donde se guardará el archivo json en el servidor)
-		- collectionValue - decimal(6,2) NOT NULL
-		- cardAmount - integer(4) NOT NULL
+		- idUser - varchar(50) - FK (Profile, userName)
+		- idCard - integer(4) - FK (Card, idCard)
+		- purchasePrice - decimal(6,2)
+		- isFoil - integer(1)
+		- state - integer(1) - FK (State, idState)
 
 	- Card:
 		- idCard - integer(4) PK
 		- cardName - varchar(255) UNIQUE NOT NULL
-		- marketPrice - decimal(6,2) NOT NULL
+		- idScryfall - integer(7)
 
 	- State:
 		- idState - integer(1) PK
@@ -43,6 +42,3 @@ Tablas:
 		- idDeckCard - integer(7) - PK
 		- idDeck - integer(7) - FK (Deck, idDeck)
 		- idCard - integer(4) FK (Card, idCard)
-		- state - integer(1) FK (State, idState)
-		- purchasedPrice - decimal(6,2) NOT NULL
-		- purchaseDate - timestamp NOT NULL
