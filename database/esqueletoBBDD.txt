@@ -4,11 +4,11 @@ Tablas:
 
 	- User:
 		- idUser - integer(6) - PK
+		- username - varchar(20) NOT NULL
 		- email - varchar(50) UNIQUE NOT NULL
 		- password - varchar(255) NOT NULL
-		- username - varchar(20) NOT NULL
-		- profilePic - varchar(150) - UNIQUE (hace ref a un archivo jpg/png)
-		- isAuth - integer(1)
+		- isAuth - integer(1) - (se añade a la bd antes de autenticarse por lo que por defecto está a falso (0) hasta que se autentique y pase a verdadero (1))
+		- profilePic - varchar(150) - UNIQUE (dirección del fichero jpg/png en el servidor)
 	
 	- TokenAuth:
 		- token - varchar(255) - PK
@@ -18,13 +18,31 @@ Tablas:
 	- Deck:
 		- idDeck - integer(7) PK
 		- deckName - varchar(50) NOT NULL
-		- cardList - varchar(150) UNIQUE NOT NULL (dirección donde se guardará el archivo json en el servidor)
+		- deckCardList - varchar(150) UNIQUE NOT NULL (dirección donde se guardará el archivo json en el servidor)
 		- deckOwner - varchar(20) - FK (Profile, userName)
-		- type - varchar(100) NOT NULL
+		- type - varchar(150) NOT NULL
+		- deckValue - decimal(6,2) NOT NULL
 	
 	- Collection: 
-		- idCollection - integer(6) PRIMARY KEY	
-		- deckOwner - varchar(20) - FK (Profile, userName)
-		- collCardList - varchar(255) NOT NULL (dir donde está el json)
+		- idCollection - integer(6) PK
+		- collectionOwner - varchar(20) - FK (Profile, userName)
+		- collCardList - varchar(255) NOT NULL (dirección donde se guardará el archivo json en el servidor)
 		- collectionValue - decimal(6,2) NOT NULL
 		- cardAmount - integer(4) NOT NULL
+
+	- Card:
+		- idCard - integer(4) PK
+		- cardName - varchar(255) UNIQUE NOT NULL
+		- marketPrice - decimal(6,2) NOT NULL
+
+	- State:
+		- idState - integer(1) PK
+		- stateName - varchar(50) UNIQUE NOT NULL
+
+	- DeckCard: (tabla resultado de la relación (N:M) de Deck y Card)
+		- idDeckCard - integer(7) - PK
+		- idDeck - integer(7) - FK (Deck, idDeck)
+		- idCard - integer(4) FK (Card, idCard)
+		- state - integer(1) FK (State, idState)
+		- purchasedPrice - decimal(6,2) NOT NULL
+		- purchaseDate - timestamp NOT NULL
