@@ -8,11 +8,11 @@
 			
 		</div>
 		<div class="col-4 flex-row justify-content-center">
-			<a href="{{ path('carta') }}">Carta Aleatoria</a>
+			<a href="{{ path('random_card') }}">Carta Aleatoria</a>
 		</div>
 
 		<div class="col-4 flex-row justify-content-center">
-			<form id="search-card-form" action=" {{path('carta_buscar', {nombre: '__name__'})}} ">
+			<form id="search-card-form" action=" {{path('search_card', {nombre: '__name__'})}} ">
 				<input type="text" name="cardName" placeholder="Search a card...">
 				<input type="button" value="Search" class="search-input">
 				<svg fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 488.4 488.4" xml:space="preserve">
