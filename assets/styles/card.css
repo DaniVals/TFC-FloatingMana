@@ -1,4 +1,5 @@
 
+/* view card */
 .main-card{
 	justify-content: center;
 	text-align: center;
@@ -18,35 +19,6 @@
 .contain-image:hover{
 	border-radius: 0px;
 }
-
-.card-slide-preview{
-	background: var(--slide-background-color);
-	border-radius: 5px;
-	padding: 10px;
-}
-.card-slide-preview img{
-	border-radius: 10px;
-}
-
-.card-slide-text,
-.card-slide-text-default{
-	color: var(--semiclear-text-color);
-}
-.card-slide-text-default{
-	font-style: italic;
-}
-
-.symbol-replacement{
-	display: inline-block;
-	width: 1em;
-
-	background-position: center center;
-	background-repeat: no-repeat;
-	background-size: contain;
-
-	color: #0000;
-}
-
 /* legalities slides */
 .card-legalities{
     display: grid;
@@ -78,4 +50,43 @@ h3 + hr {
 	/* height: 2px !important; */
 	opacity: 1 !important;
 
+}
+
+
+
+
+
+/* search card */
+.card-slide-preview{
+	background: var(--slide-background-color);
+	border-radius: 5px;
+	padding: 10px;
+}
+.card-slide-preview img{
+	border-radius: 10px;
+}
+
+.card-slide-link {
+	text-decoration: none !important;
+}
+.card-slide-link:hover {
+	color: var(--default-text-color);
+}
+.card-slide-text,
+.card-slide-text-default{
+	color: var(--semiclear-text-color);
+}
+.card-slide-text-default{
+	font-style: italic;
+}
+
+.symbol-replacement{
+	display: inline-block;
+	width: 1em;
+
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+
+	color: #0000;
 }
