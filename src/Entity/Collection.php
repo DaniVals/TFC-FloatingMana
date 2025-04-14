@@ -14,28 +14,49 @@ use App\Entity\User;
  */
 class Collection 
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+	#[ORM\Id]
+	#[ORM\GeneratedValue]
+	#[ORM\Column(type:'integer', name:'idCollection')]
+	private $idCollection;
+	
+	#[ORM\Column(type:'string', name:'collectionOwner')]
+	private $collectionOwner;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="collections")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
+	#[ORM\Column(type:'string', name:'collCardList ')]
+	private $collCardList ;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Card::class, inversedBy="collections")
-     */
-    private $cards;
+	#[ORM\Column(type:'number', name:'collectionValue')]
+	private $collectionValue;
+
+	#[ORM\Column(type:'integer', name:'cardAmount')]
+	private $cardAmount;
+
+    // /**
+    //  * @ORM\Id
+    //  * @ORM\GeneratedValue
+    //  * @ORM\Column(type="integer")
+    //  */
+    // private $id;
+
+    // /**
+    //  * @ORM\ManyToOne(targetEntity=User::class, inversedBy="collections")
+    //  * @ORM\JoinColumn(nullable=false)
+    //  */
+    // private $user;
+
+    // /**
+    //  * @ORM\ManyToMany(targetEntity=Card::class, inversedBy="collections")
+    //  */
+    // private $cards;
+
+	//----- Constructor -----
 
     public function __construct()
     {
         $this->cards = new ArrayCollection();
     }
+
+	//----- Getters y setters -----
 
     public function getId(): ?int
     {
