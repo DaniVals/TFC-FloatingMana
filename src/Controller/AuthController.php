@@ -37,14 +37,14 @@ class AuthController extends AbstractController {
 
         // Validación básica de formato
         if (empty($email) || empty($password)) {
-            return $this->render('sessionManagement/login.html.twig',
-			[
+            return $this->render('sessionManagement/login.html.twig', [
 				'responseData' => [
 					'success' => false,
 					'message' => 'Email y contraseña son requeridos',
 					'status'  => 'HTTP_BAD_REQUEST'
-				]
-            ]);
+			        ]
+                            ]
+            );
         }
 
         try {

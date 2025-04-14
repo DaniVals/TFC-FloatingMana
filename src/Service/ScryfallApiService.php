@@ -41,6 +41,27 @@ class ScryfallApiService
         }
     }
 
+    public function getCardById(string $id): array {
+        $url = 'https://api.scryfall.com/cards/search?q=unique:prints+id:' . $id;
+
+        try {
+            $response = $this->httpClient->request('GET', $url, [
+                'headers' => [
+                    'User-Agent' => 'MyMTGApp/1.0',
+                    'Accept' => 'application/json;q=0.9,*/*;q=0.8',
+                ]
+            ]);
+
+            if ($response->getStatusCode() !== 200) {
+                throw new \Exception("Error fetching card by ID: " . $response->getStatusCode());
+            }
+
+            return $response->toArray(); // Devuelve el array decodificado de JSON
+        } catch (TransportExceptionInterface | ClientExceptionInterface | ServerExceptionInterface | DecodingExceptionInterface $e) {
+            throw new \Exception('Error during API request: ' . $e->getMessage());
+        }
+    }
+
     public function searchCards(string $nombre): array
     {
         $url = 'https://api.scryfall.com/cards/search?q=' . urlencode($nombre) . '&unique=prints';
