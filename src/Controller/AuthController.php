@@ -31,12 +31,12 @@ class AuthController extends AbstractController {
     public function login(Request $request)
     {
         // Extraer credenciales del request
-        $email = $request->request->get('email');
-        $password = $request->request->get('password');
+        $username = $request->request->get('_username');
+        $password = $request->request->get('_password');
         $rememberMe = $request->request->get('remember_me', false);
 
         // Validación básica de formato
-        if (empty($email) || empty($password)) {
+        if (empty($username) || empty($password)) {
             return $this->render('sessionManagement/login.html.twig', [
 				'responseData' => [
 					'success' => false,
@@ -49,35 +49,46 @@ class AuthController extends AbstractController {
 
         try {
             // Delegar la lógica de autenticación al servicio
-            $result = $this->authService->login($email, $password, $rememberMe);
+            $result = $this->authService->login($username, $password, $rememberMe);
 
             // Si el login fue exitoso, devolver token y datos de usuario
-            return $this->json([
-                'success' => true,
-                'token' => $result['token'],
-                'user' => $result['user']
-            ], Response::HTTP_OK);
+            return $this->render('sessionManagement/login.html.twig', [
+                'responseData' => [
+                    'success' => true,
+                    'token' => $result['token'],
+                    'user' => $result['user'],
+                    'status'  => 'HTTP_OK'
+                ]
+            ]);
 
         } catch (InvalidCredentialsException $e) {
-            return $this->json([
-                'success' => false,
-                'message' => 'Credenciales inválidas'
-            ], Response::HTTP_UNAUTHORIZED);
-
+            return $this->render('sessionManagement/login.html.twig', [
+                'responseData' => [
+                    'success' => false,
+                    'message' => 'Credenciales inválidas',
+                    'status'  => 'HTTP_UNAUTHORIZED'
+                ]
+            ]);
         } catch (UserBlockedException $e) {
-            return $this->json([
-                'success' => false,
-                'message' => 'La cuenta está bloqueada. Contacta a soporte.'
-            ], Response::HTTP_FORBIDDEN);
+            return $this->render('sessionManagement/login.html.twig', [
+                'responseData' => [
+                    'success' => false,
+                    'message' => 'Usuario bloqueado',
+                    'status'  => 'HTTP_FORBIDDEN'
+                ]
+            ]);
 
         } catch (\Exception $e) {
             // Log el error para depuración
             $this->logger->error('Login error: ' . $e->getMessage());
-
-            return $this->json([
-                'success' => false,
-                'message' => 'Error interno del servidor'
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            
+            return $this->render('sessionManagement/login.html.twig', [
+                'responseData' => [
+                    'success' => false,
+                    'message' => 'Error interno del servidor',
+                    'status'  => 'HTTP_INTERNAL_SERVER_ERROR'
+                ]
+            ]);
         }
     }
 
@@ -98,38 +109,43 @@ class AuthController extends AbstractController {
     }
 
     #[Route('/app/register', name: 'app_register', methods: ['POST'])]
-    public function register(Request $request): JsonResponse
+    public function register(Request $request)
     {
         // Extraer datos del request
-        $email = $request->request->get('email');
-        $password = $request->request->get('password');
-        $name = $request->request->get('name');
-
-        // Validación básica de formato
+        $name = $request->request->get('_username'); $email = $request->request->get('_email'); $password = $request->request->get('_password'); // Validación básica de formato
         if (empty($email) || empty($password) || empty($name)) {
-            return $this->json([
-                'success' => false,
-                'message' => 'Email, contraseña y nombre son requeridos'
-            ], Response::HTTP_BAD_REQUEST);
+            return $this->render('sessionManagement/register.html.twig', [
+                'responseData' => [
+                    'success' => false,
+                    'message' => 'Email, contraseña y nombre son requeridos',
+                    'status'  => 'HTTP_BAD_REQUEST'
+                ]
+            ]);
         }
 
         try {
             // Delegar la lógica de registro al servicio
             $user = $this->authService->register($email, $password, $name);
 
-            return $this->json([
-                'success' => true,
-                'user' => $user
-            ], Response::HTTP_CREATED);
+            return $this->render('sessionManagement/register.html.twig', [
+                'responseData' => [
+                    'success' => true,
+                    'user' => $user,
+                    'status'  => 'HTTP_OK'
+                ]
+            ]);
 
         } catch (\Exception $e) {
             // Log el error para depuración
             $this->logger->error('Register error: ' . $e->getMessage());
 
-            return $this->json([
-                'success' => false,
-                'message' => 'Error interno del servidor'
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->render('sessionManagement/register.html.twig', [
+                'responseData' => [
+                    'success' => false,
+                    'message' => 'Error interno del servidor',
+                    'status'  => 'HTTP_INTERNAL_SERVER_ERROR'
+                ]
+            ]);
         }
     }
 }

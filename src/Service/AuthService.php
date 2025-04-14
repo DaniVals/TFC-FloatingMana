@@ -60,7 +60,7 @@ class AuthService {
         $user->setEmail($email);
         $user->setName($name);
         $user->setRoles(['ROLE_USER']);
-        $user->setActive(true);
+        $user->setActive(1);
         $user->setCreatedAt(new \DateTime());
         
         // Hashear contraseña usando el hasher de Symfony
