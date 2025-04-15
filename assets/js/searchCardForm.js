@@ -1,9 +1,12 @@
-document.getElementById("search-card-form").addEventListener("submit", function(event) {
-    event.preventDefault();
 
-    const valor = this.cardName.value.trim();
-    if (valor) {
-		const base = this.action;
-		window.location.href = base.replace("__name__", encodeURIComponent(valor));
-    }
+document.addEventListener("DOMContentLoaded", function() {
+	document.getElementById("search-card-form").addEventListener("submit", function(event) {
+		event.preventDefault();
+	
+		const valor = this.cardName.value.trim();
+		if (valor) {
+			const base = this.action;
+			window.location.href = base.replace("__name__", encodeURIComponent(valor));
+		}
+	});
 });
