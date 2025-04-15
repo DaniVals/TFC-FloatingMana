@@ -10,7 +10,11 @@
 		<link rel="stylesheet" href=" {{ asset('styles/card.css') }} ">
 
 		<script src=" {{asset('js/replaceSymbols.js')}} "></script>
+		<script src=" {{asset('js/flipCard.js')}} "></script>
 		<title>{{ card.name }}</title>
+
+		{% import "macros/cardUtilities.twig" as cardUtilities %}
+
 	</head>
 	{% include "header.html.twig" %}
 	<body>
@@ -22,12 +26,8 @@
 				{# caratula de la carta (nombre y foto) #}
 				<div class="col-md-6 main-card mt-3">
 					<h1> {{ card.name }}</h1>
-					{% if card.image_uris.normal is defined %}
-						<img class="contain-image" src="{{ card.image_uris.normal }}" alt="card image">
-					{% else %}
-						{# Placeholder photo, the back of the card #}
-						<img class="contain-image" src="https://upload.wikimedia.org/wikipedia/en/a/aa/Magic_the_gathering-card_back.jpg" alt="card image">
-					{% endif %}
+						{# {% include "import/cardImage.twig" with { card: card, img_class: "contain-image" } %} #}
+						{{ cardUtilities.mostrarImagen(card, "card-img-top", true) }}
 				</div>
 
 				{# informacion de la carta #}

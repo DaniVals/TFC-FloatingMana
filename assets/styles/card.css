@@ -4,12 +4,12 @@
 	justify-content: center;
 	text-align: center;
 }
-.contain-image{
+.main-card img{
 	/* width: 80%;
 	margin: 10%; */
 	
 	width: 100%;
-	max-width: 300px;
+	max-width: 300px !important;
 	margin-top: 20px;
 
 	border-radius: 15px;
@@ -90,3 +90,34 @@ h3 + hr {
 
 	color: #0000;
 }
+
+/* double side cards */
+.two-side-image {	
+	position: relative;
+}
+.two-side-image .card-hide{	
+	visibility: hidden;
+	margin-bottom: var(--card-flip-button-height);
+}
+.two-side-image .flip-card-button {
+	position: absolute;
+	bottom: 0px;
+	height: var(--card-flip-button-height);
+	left:  10%;
+	right: 10%;
+}
+
+.two-side-image .side-1,
+.two-side-image .side-0 {
+	position: absolute;
+	top: 0px;
+	transform: translateX(-100%);
+	
+	backface-visibility: hidden;
+	transition: all 1s;
+}
+
+.two-side-image[data-shown-face="0"] .side-0 {transform:translateX(-100%) rotateY(0deg);}
+.two-side-image[data-shown-face="0"] .side-1 {transform:translateX(-100%) rotateY(180deg);}
+.two-side-image[data-shown-face="1"] .side-0 {transform:translateX(-100%) rotateY(180deg);}
+.two-side-image[data-shown-face="1"] .side-1 {transform:translateX(-100%) rotateY(0deg);}

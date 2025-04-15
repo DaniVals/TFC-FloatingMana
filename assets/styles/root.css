@@ -7,6 +7,8 @@
 	--card-legal-background: #0f0;
 	--card-legal-not-background: #f00;
 
+	--card-flip-button-height: 2em;
+
 	--default-background-color: black;
 	--slide-background-color: radial-gradient(circle at 100% 100%, #fff3, #fff1);;
 }

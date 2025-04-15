@@ -8,6 +8,9 @@
 	
 	{% include "root.html.twig" %}
 	<link rel="stylesheet" href=" {{ asset('styles/card.css') }} ">
+
+	{% import "macros/cardUtilities.twig" as cardUtilities %}
+
 </head>
 {% include "header.html.twig" %}
 <body>
@@ -27,12 +30,8 @@
 					<a href=" {{ path('view_card', {id: card.id}) }} " class="card-slide-link">
 						<div class="card-slide-preview mb-5">
 						
-							{% if card.image_uris.small is defined %}
-								<img src="{{ card.image_uris.small }}" class="card-img-top" alt="..." id="cardImg">
-							{% else %}
-								{# Placeholder photo, the back of the card #}
-								<img src="https://upload.wikimedia.org/wikipedia/en/a/aa/Magic_the_gathering-card_back.jpg" class="card-img-top" alt="..." id="cardImg">
-							{% endif %}
+							{# {% include "import/cardImage.twig" with { card: card, img_class: "card-img-top" } %} #}
+							{{ cardUtilities.mostrarImagen(card, "card-img-top", false) }}
 
 							
 							<div class="card-body">

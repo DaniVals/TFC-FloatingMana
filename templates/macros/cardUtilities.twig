@@ -1,0 +1,38 @@
+
+{% macro mostrarImagen(card, img_class, flip_button)  %}
+
+	{% if card.card_faces is defined %}
+		{% if flip_button == true %}
+		
+			<div class="two-side-image" data-shown-face="0">
+				<img alt="card image" class="{{img_class}} card-hide"
+				src="{{ card.card_faces[0].image_uris.normal }}" >
+
+				<img alt="card image" class="{{img_class}} side-0"
+				src="{{ card.card_faces[0].image_uris.normal }}" >
+				<img alt="card image" class="{{img_class}} side-1"
+				src="{{ card.card_faces[1].image_uris.normal }}" >
+
+				<button type="button" class="flip-card-button">Flip</button>
+			</div>
+
+		{% else %}
+			<img alt="card image" class="{{img_class}}"
+			src="{{ card.card_faces[0].image_uris.normal }}" >
+
+		{% endif %}
+
+	{% else %}
+		<img class="{{img_class}}" alt="card image"
+		{% if card.image_uris.normal is defined %}
+			src="{{ card.image_uris.normal }}" 
+
+		{% else %}
+			{# Placeholder photo, the back of the card #}
+			src="https://upload.wikimedia.org/wikipedia/en/a/aa/Magic_the_gathering-card_back.jpg"
+
+
+		{% endif %}
+		>
+	{% endif %}
+{% endmacro %}
