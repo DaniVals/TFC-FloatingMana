@@ -182,6 +182,7 @@ ALTER TABLE `tokenauth`
 ALTER TABLE `user`
   ADD PRIMARY KEY (`idUser`),
   ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `email` (`email`),
   ADD UNIQUE KEY `profilePic` (`profilePic`);
 
 --
