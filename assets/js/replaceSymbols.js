@@ -1,8 +1,7 @@
-console.log("fnsjkebfes");
 
 document.addEventListener("DOMContentLoaded", function() {
 	const texts = document.getElementsByClassName('replace-text-with-symbol');
-	console.log(texts);
+	// console.log(texts);
 	
 	Array.from(texts).forEach(text => {
 		replaceSymbols(text);
@@ -10,8 +9,8 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function replaceSymbols(htmlText) {
-	console.log(htmlText);
-	console.log(htmlText.innerHTML);
+	// console.log(htmlText);
+	// console.log(htmlText.innerHTML);
 
 	htmlText.innerHTML = htmlText.innerHTML.replace('\n', ''); // para evitar textos que empiezan con <br>
 	htmlText.innerHTML = htmlText.innerHTML.replaceAll('\n', '<br>');
