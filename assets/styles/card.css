@@ -33,6 +33,8 @@
 
 	color: var(--card-legal-text);
 	font-weight: bold;
+	
+	background: var(--card-legal-default-background);
 }
 .card-legal{
 	background: var(--card-legal-background);
