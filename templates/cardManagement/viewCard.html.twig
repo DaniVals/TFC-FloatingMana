@@ -24,77 +24,30 @@
 			<div class="row justify-content-center pe-sm-5 ps-sm-5">
 
 				{# caratula de la carta (nombre y foto) #}
-				<div class="col-md-6 main-card mt-3">
+				<div class="col-md-5 main-card mt-3">
 					<h1> {{ card.name }}</h1>
 						{# {% include "import/cardImage.twig" with { card: card, img_class: "contain-image" } %} #}
 						{{ cardUtilities.mostrarImagen(card, "card-img-top", true) }}
 				</div>
 
 				{# informacion de la carta #}
-				<div class="col-md-4 mt-3">
+				<div class="col-md-5 mt-3">
 
 					<h3 class="text-center">Estadisticas de la carta</h3>
 					<hr class="fading-separation">
 					
-					{# coste de mana #}
-					{% if card.mana_cost is defined %}
-						<p> Coste: <span class="replace-text-with-symbol">{{ card.mana_cost }} </span></p>
-					{% endif %}
+					{% if card.card_faces is defined %}
+						<h3 class="mt-5">Cara 1: {{ card.card_faces[0].name }} </h3>
+						<hr class="fading-separation">
+						{{ cardUtilities.datosDeLaCarta(card.card_faces[0]) }}
+						<hr class="fading-separation">
+						<h3 class="mt-5">Cara 2: {{ card.card_faces[1].name }} </h3>
+						<hr class="fading-separation">
+						{{ cardUtilities.datosDeLaCarta(card.card_faces[1]) }}
 
-					<hr class="fading-separation">
-					{# tipo #}
-					{% if card.type_line is defined and card.type_line is not empty %}
-						<p>
-							{{ card.type_line }}
-						</p>
-					{# {% else %}
-						<p>Descripcion no encontrada</p> #}
-					{% endif %}
-					
-					{# descripcion #}
-					{% if card.oracle_text is defined and card.oracle_text is not empty %}
-						<p class="replace-text-with-symbol">
-							{{ card.oracle_text }}
-						</p>
 					{% else %}
-						<p>Descripcion no encontrada</p>
-					{% endif %}
-
-
-					{# texto decorativo #}
-					{% if card.flavor_text is defined and card.flavor_text is not empty %}
-						<hr class="fading-separation">
-						<p class="replace-text-with-symbol"><i>
-							{{ card.flavor_text }}
-						</i></p>
-					{# {% else %}
-						<p>Descripcion no encontrada</p> #}
-					{% endif %}
-
-					{# poder y defensa o lealtad#}
-					{% if card.toughness is defined and card.toughness is not empty %}
-					{% if card.power is defined and card.power is not empty %}
-						<hr class="fading-separation">
-						<p class="d-flex justify-content-between ps-5 pe-5">
-							<span>
-								Poder: {{ card.power }}
-							</span>
-							<span>
-								Defensa: {{ card.toughness }}
-							</span>
-						</p>
-					{# {% else %}
-						<p>Descripcion no encontrada</p> #}
-					{% endif %}
-					{% endif %}
-
-					{% if card.loyalty is defined and card.loyalty is not empty %}
-						<hr class="fading-separation">
-						<p class="d-flex justify-content-between ps-5 pe-5">
-							<span>
-								Lealtad: {{ card.loyalty }}
-							</span>
-						</p>
+						{{ cardUtilities.datosDeLaCarta(card) }}
+						
 					{% endif %}
 
 				</div>
@@ -108,7 +61,7 @@
 				</div>
 
 				{# Legalidades #}
-				<div class="col-md-4 mt-3">
+				<div class="col-md-5 mt-3">
 					<h3 class="text-center">Otros datos</h3>
 					<hr class="fading-separation">
 
@@ -136,7 +89,7 @@
 				</div>
 
 				{# Precios #}
-				<div class="col-md-4 mt-3">
+				<div class="col-md-5 mt-3">
 
 					<h3 class="text-center">Compra y Venta</h3>
 				

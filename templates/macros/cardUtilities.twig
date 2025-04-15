@@ -36,3 +36,70 @@
 		>
 	{% endif %}
 {% endmacro %}
+
+{% macro datosDeLaCarta(card)  %}
+					
+	{# coste de mana #}
+	{% if card.mana_cost is defined and card.mana_cost is not empty %}
+		<p> Coste: <span class="replace-text-with-symbol">{{ card.mana_cost }} </span></p>
+	{% else %}
+		<p> <i> No tiene coste </i> </p>
+	{% endif %}
+
+	<hr class="fading-separation">
+	{# tipo #}
+	{% if card.type_line is defined and card.type_line is not empty %}
+		<p>
+			{{ card.type_line }}
+		</p>
+	{# {% else %}
+		<p>Descripcion no encontrada</p> #}
+	{% endif %}
+	
+	{# descripcion #}
+	{% if card.oracle_text is defined and card.oracle_text is not empty %}
+		<p class="replace-text-with-symbol">
+			{{ card.oracle_text }}
+		</p>
+	{% else %}
+		<p>Descripcion no encontrada</p>
+	{% endif %}
+
+
+	{# texto decorativo #}
+	{% if card.flavor_text is defined and card.flavor_text is not empty %}
+		<hr class="fading-separation">
+		<p class="replace-text-with-symbol"><i>
+			{{ card.flavor_text }}
+		</i></p>
+	{# {% else %}
+		<p>Descripcion no encontrada</p> #}
+	{% endif %}
+
+	{# poder y defensa o lealtad#}
+	{% if card.toughness is defined and card.toughness is not empty %}
+	{% if card.power is defined and card.power is not empty %}
+		<hr class="fading-separation">
+		<p class="d-flex justify-content-between ps-5 pe-5">
+			<span>
+				Poder: {{ card.power }}
+			</span>
+			<span>
+				Defensa: {{ card.toughness }}
+			</span>
+		</p>
+	{# {% else %}
+		<p>Descripcion no encontrada</p> #}
+	{% endif %}
+	{% endif %}
+
+	{% if card.loyalty is defined and card.loyalty is not empty %}
+		<hr class="fading-separation">
+		<p class="d-flex justify-content-between ps-5 pe-5">
+			<span>
+				Lealtad: {{ card.loyalty }}
+			</span>
+		</p>
+	{% endif %}
+
+{% endmacro %}
