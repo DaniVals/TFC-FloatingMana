@@ -58,7 +58,7 @@ class AuthService {
         // Crear nuevo usuario
         $user = new \App\Entity\User();
         $user->setEmail($email);
-        $user->setUsername($name);
+        $user->setName($name);
         $user->setRoles(['ROLE_USER']);
         $user->setActive(1);
         $user->setCreatedAt(new \DateTime());
