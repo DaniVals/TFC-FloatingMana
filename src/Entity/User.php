@@ -12,52 +12,32 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-	#[ORM\Id]
-	#[ORM\GeneratedValue]
-	#[ORM\Column(type:'integer', name:'idUser')]
-	private $idUser;
-	
-	#[ORM\Column(type:'string', name:'username')]
-	private $username;
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
-	#[ORM\Column(type:'string', name:'email')]
-	private $email;
-
-	#[ORM\Column(type:'string', name:'password')]
-	private $password;
-
-	#[ORM\Column(type:'integer', name:'isAuth')]
-	private $active;
-
-	#[ORM\Column(type:'string', name:'profilePic')]
-	private $profilePic;
-
-    // /**
-    //  * @ORM\Id
-    //  * @ORM\GeneratedValue
-    //  * @ORM\Column(type="integer")
-    //  */
-    // private $id;
-
-    // /**
-    //  * @ORM\Column(type="string", length=180, unique=true)
-    //  */
-    // private $email;
+    /**
+     * @ORM\Column(type="string", length=180, unique=true)
+     */
+    private $email;
 
     /**
      * @ORM\Column(type="json")
      */
     private $roles = [];
 
-    // /**
-    //  * @ORM\Column(type="string")
-    //  */
-    // private $password;
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $password;
     
-    // /**
-    //  * @ORM\Column(type="string", length=255)
-    //  */
-    // private $name;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
     
     /**
      * @ORM\Column(type="datetime")
@@ -69,21 +49,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $lastLoginAt;
     
-    // /**
-    //  * @ORM\Column(type="boolean")
-    //  */
-    // private $active = true;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $active = true;
     
     /**
      * @ORM\Column(type="integer")
      */
     private $failedLoginAttempts = 0;
 
-//----- Getters y setters ----
+    // Getters y setters...
     
-    public function getIdUser(): ?int
+    public function getId(): ?int
     {
-        return $this->idUser;
+        return $this->id;
     }
     
     public function getEmail(): ?string
@@ -133,34 +113,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // Si almacenas datos temporalmente, bórralos aquí
     }
     
-    public function getUsername(): ?string
+    public function getName(): ?string
     {
-        return $this->username;
+        return $this->name;
     }
     
-    public function setUsername(string $username): self
+    public function setName(string $name): self
     {
-        $this->username = $username;
-        return $this;
-    }
-
-	public function getProfilePic(): ?string
-    {
-        return $this->profilePic;
-    }
-    
-    public function setProfilePic(string $profilePic): self
-    {
-        $this->profilePic = $profilePic;
+        $this->name = $name;
         return $this;
     }
     
-    public function isActive(): int
+    public function isActive(): bool
     {
         return $this->active;
     }
     
-    public function setActive(int $active): self
+    public function setActive(bool $active): self
     {
         $this->active = $active;
         return $this;
