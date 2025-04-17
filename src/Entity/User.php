@@ -2,52 +2,62 @@
 
 namespace App\Entity;
 
+use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Entity] 
-#[ORM\Table(name: 'user')]
+/**
+ * @ORM\Entity(repositoryClass=UserRepository::class)
+ */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer", length=6)
-     */
-    private $idUser;
-
-    /**
-     * @ORM\Column(type="string", length=25, unique=true)
-     */
-    private $username;
-
-    /**
-     * @ORM\Column(type="string", length=50, unique=true)
-     */
-    private $email;
+	#[ORM\Id]
+	#[ORM\GeneratedValue]
+	#[ORM\Column(type:'integer', name:'idUser')]
+	private $idUser;
 	
-    /**
-	 * @ORM\Column(type="string", length=255)
-     */
+	#[ORM\Column(type:'string', name:'username')]
+	private $username;
+
+	#[ORM\Column(type:'string', name:'email')]
+	private $email;
+
+	#[ORM\Column(type:'string', name:'password')]
 	private $password;
 
-	/**
-     * @ORM\Column(type="integer", length=1)
-     */
-    private $isAuth = 0;
+	#[ORM\Column(type:'integer', name:'isAuth')]
+	private $active;
 
-	/**
-	 * @ORM\Column(type="string", length=255, nullable=true)
-     */
-	private $profilePic = null;
+	#[ORM\Column(type:'string', name:'profilePic')]
+	private $profilePic;
 
-//----- Campos que no están en la base de datos -----
-	
-	/**
-	 * @ORM\Column(type="json")
-	 */
-	private $roles = [];
+    // /**
+    //  * @ORM\Id
+    //  * @ORM\GeneratedValue
+    //  * @ORM\Column(type="integer")
+    //  */
+    // private $id;
+
+    // /**
+    //  * @ORM\Column(type="string", length=180, unique=true)
+    //  */
+    // private $email;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
+    // /**
+    //  * @ORM\Column(type="string")
+    //  */
+    // private $password;
+    
+    // /**
+    //  * @ORM\Column(type="string", length=255)
+    //  */
+    // private $name;
     
     /**
      * @ORM\Column(type="datetime")
@@ -58,6 +68,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $lastLoginAt;
+    
+    // /**
+    //  * @ORM\Column(type="boolean")
+    //  */
+    // private $active = true;
     
     /**
      * @ORM\Column(type="integer")
@@ -70,59 +85,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->idUser;
     }
-
-	public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-        return $this;
-    }
     
     public function getEmail(): ?string
     {
         return $this->email;
     }
+    
     public function setEmail(string $email): self
     {
         $this->email = $email;
         return $this;
     }
-
-	public function getPassword(): string
-    {
-        return $this->password;
-    }
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-        return $this;
-    }
-
-	public function isActive(): int
-    {
-        return $this->isAuth;
-    }
-    
-    public function setActive(int $isAuth): self
-    {
-        $this->isAuth = $isAuth;
-        return $this;
-    }
-
-	public function getProfilePic(): ?string
-    {
-        return $this->profilePic;
-    }
-    public function setProfilePic(string $profilePic): self
-    {
-        $this->profilePic = $profilePic;
-        return $this;
-    }
-    
-//----- Getters y setters de campos que no están en la bd ----
     
     public function getUserIdentifier(): string
     {
@@ -144,15 +117,60 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
     
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+    
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+        return $this;
+    }
+    
     public function eraseCredentials() : void 
     {
         // Si almacenas datos temporalmente, bórralos aquí
+    }
+    
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+    
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+        return $this;
+    }
+
+	public function getProfilePic(): ?string
+    {
+        return $this->profilePic;
+    }
+    
+    public function setProfilePic(string $profilePic): self
+    {
+        $this->profilePic = $profilePic;
+        return $this;
+    }
+    
+    public function isActive(): int
+    {
+        return $this->active;
+    }
+    
+    public function setActive(int $active): self
+    {
+        $this->active = $active;
+        return $this;
     }
     
     public function getFailedLoginAttempts(): int
     {
         return $this->failedLoginAttempts;
     }
+    
     public function setFailedLoginAttempts(int $attempts): self
     {
         $this->failedLoginAttempts = $attempts;
@@ -163,6 +181,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->lastLoginAt;
     }
+    
     public function setLastLoginAt(?\DateTimeInterface $lastLoginAt): self
     {
         $this->lastLoginAt = $lastLoginAt;
@@ -173,6 +192,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->createdAt;
     }
+    
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
