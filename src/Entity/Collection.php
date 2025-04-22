@@ -19,26 +19,121 @@ class Collection
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private $idCollection;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="collections")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="username")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Card::class, inversedBy="collections")
+     * @ORM\ManyToMany(targetEntity=Card::class, inversedBy="idCard")
      */
-    private $cards;
+    private $card;
+
+	/**
+	 * @ORM\Column(type="decimal", precision=6, scale=2)
+	 */
+	private $purchasePrice;
+
+	/**
+	 * @ORM\Column(type="integer")
+	 */
+	private $isFoil;
+	
+	/**
+	 * @ORM\Column(type="integer")
+	 */
+	private $state;
+	
+	//----- Variables auxiliares -----
+
+	private $cards;
+
+	//----- Getters y setters -----
+
+	public function getIdCollection(): ?int
+	{
+		return $this->idCollection;
+	}
+
+	public function getUser(): ?User
+	{
+		return $this->user;
+	}
+	public function setUser(?User $user): self
+	{
+		$this->user = $user;
+		return $this;
+	}
+
+	public function getCard(): ?ArrayCollection
+	{
+		return $this->card;
+	}
+	public function setCard(ArrayCollection $card): self
+	{
+		$this->card = $card;
+		return $this;
+	}
+
+	public function getPurchasePrice(): ?string
+	{
+		return $this->purchasePrice;
+	}
+	public function setPurchasePrice(string $purchasePrice): self
+	{
+		$this->purchasePrice = $purchasePrice;
+		return $this;
+	}
+
+	public function getIsFoil(): ?int
+	{
+		return $this->isFoil;
+	}
+	public function setIsFoil(int $isFoil): self
+	{
+		$this->isFoil = $isFoil;
+		return $this;
+	}
+
+	public function getState(): ?int
+	{
+		return $this->state;
+	}
+	public function setState(int $state): self
+	{
+		$this->state = $state;
+		return $this;
+	}
+
+	//----- Funciones -----
+	
+	/**
+	 * @return ArrayCollection|Card[]
+	 */
+	public function getCards()
+	{
+		return $this->cards;
+	}
+
+	public function addCard(Card $card): self
+	{
+		if (!$this->cards->contains($card)) {
+			$this->cards[] = $card;
+		}
+		return $this;
+	}
+
+	public function removeCard(Card $card): self
+	{
+		$this->cards->removeElement($card);
+		return $this;
+	}
 
     public function __construct()
     {
         $this->cards = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 }

@@ -34,7 +34,7 @@ USE tfc_floatingmana;
 CREATE TABLE `card` (
   `idCard` int(4) NOT NULL,
   `cardName` varchar(255) NOT NULL,
-  `idScryfall` int(7) NOT NULL
+  `idScryfall` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

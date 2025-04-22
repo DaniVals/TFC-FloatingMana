@@ -19,46 +19,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $id;
 
+	/**
+	 * @ORM\Column(type="string", length=255)
+	 */
+	private $name;
+
     /**
      * @ORM\Column(type="string", length=180, unique=true) */
     private $email;
+	
+    /**
+	 * @ORM\Column(type="string")
+     */
+	private $password;
 
-    /**
-     * @ORM\Column(type="json")
-     */
-    private $roles = [];
+	/**
+	 * @ORM\Column(type="integer")
+	 */
+	private $isAuth;
 
-    /**
-     * @ORM\Column(type="string")
-     */
-    private $password;
+	//----- Variables auxiliares -----
     
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
+    private $createdAt;
     
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    // private $createdAt;
+	private $roles = [];
     
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    // private $lastLoginAt;
+    private $lastLoginAt;
     
-    /**
-     * @ORM\Column(type="boolean")
-     */
     private $active = true;
-    
-    /**
-     * @ORM\Column(type="integer")
-     */
-    // private $failedLoginAttempts = 0;
+   
+    private $failedLoginAttempts = 0;
 
-    // Getters y setters...
+    // ----- Getters y setters -----
     
     public function getId(): ?int
     {
@@ -82,6 +74,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->email = $email;
         return $this;
     }
+
+	public function getIsAuth(): ?int
+	{
+		return $this->isAuth;
+	}
+	public function setIsAuth(int $isAuth): self
+	{
+		$this->isAuth = $isAuth;
+		return $this;
+	}
     
     public function getUserIdentifier(): string
     {
