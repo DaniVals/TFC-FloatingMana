@@ -14,9 +14,17 @@
 </head>
 <body>
 
-
+	<!-- he añadido esto temporal -->
 	{% if responseData is defined %}
-		{{ responseData.message }}
+		<div class="alert alert-danger" role="alert">
+            {{ responseData.message }}
+		</div>
+	{% endif %}
+	<!-- fin de lo añadido temporal -->
+	{% if responseData is defined %}
+		<div class="alert alert-danger" role="alert">
+			{{ responseData.message }}
+		</div>
 	{% endif %}
 
 
@@ -26,7 +34,7 @@
 			<table class="col-12 col-md-8 pop-up-bordered">
 				<tr class="p-5">
 					<td class="col-6 col-md-4 p-2">Usuario</td>
-					<td class="col-6 col-md-4 p-2"><input type="text" id="username" name="_username" class="form-control" /></td>
+					<td class="col-6 col-md-4 p-2"><input type="text" id="email" name="_email" class="form-control" /></td>
 				</tr>
 				<tr>
 					<td class="p-2">Contraseña</td>

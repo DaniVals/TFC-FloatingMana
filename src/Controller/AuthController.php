@@ -2,8 +2,8 @@
 namespace App\Controller;
 
 use App\Service\AuthService;
-use \App\Exception\UserBlockedException;
-use \App\Exception\InvalidCredentialsException;
+use App\Exception\UserBlockedException;
+use App\Exception\InvalidCredentialsException;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,17 +31,16 @@ class AuthController extends AbstractController {
     public function login(Request $request)
     {
         // Extraer credenciales del request
-        $username = $request->request->get('_username');
+        $email = $request->request->get('_email');
         $password = $request->request->get('_password');
-        $rememberMe = $request->request->get('remember_me', false);
 
         // Validación básica de formato
-        if (empty($username) || empty($password)) {
+        if (empty($email) || empty($password)) {
             return $this->render('sessionManagement/login.html.twig', [
 				'responseData' => [
 					'success' => false,
 					'message' => 'Email y contraseña son requeridos',
-					'status'  => 'HTTP_BAD_REQUEST'
+					'status'  => Response::HTTP_BAD_REQUEST
 			        ]
                             ]
             );
@@ -49,7 +48,7 @@ class AuthController extends AbstractController {
 
         try {
             // Delegar la lógica de autenticación al servicio
-            $result = $this->authService->login($username, $password, $rememberMe);
+            $result = $this->authService->login($email, $password);
 
             // Si el login fue exitoso, devolver token y datos de usuario
             return $this->render('sessionManagement/login.html.twig', [
@@ -57,7 +56,7 @@ class AuthController extends AbstractController {
                     'success' => true,
                     'token' => $result['token'],
                     'user' => $result['user'],
-                    'status'  => 'HTTP_OK'
+                    'status'  => Response::HTTP_OK
                 ]
             ]);
 
@@ -65,8 +64,8 @@ class AuthController extends AbstractController {
             return $this->render('sessionManagement/login.html.twig', [
                 'responseData' => [
                     'success' => false,
-                    'message' => 'Credenciales inválidas',
-                    'status'  => 'HTTP_UNAUTHORIZED'
+                    'message' => $e->getMessage(),
+                    'status'  => $e->getMessageData()['status']
                 ]
             ]);
         } catch (UserBlockedException $e) {
@@ -74,7 +73,7 @@ class AuthController extends AbstractController {
                 'responseData' => [
                     'success' => false,
                     'message' => 'Usuario bloqueado',
-                    'status'  => 'HTTP_FORBIDDEN'
+                    'status'  => Response::HTTP_FORBIDDEN
                 ]
             ]);
 
@@ -86,7 +85,7 @@ class AuthController extends AbstractController {
                 'responseData' => [
                     'success' => false,
                     'message' => 'Error interno del servidor',
-                    'status'  => 'HTTP_INTERNAL_SERVER_ERROR'
+                    'status'  => Response::HTTP_INTERNAL_SERVER_ERROR
                 ]
             ]);
         }
@@ -118,7 +117,7 @@ class AuthController extends AbstractController {
                 'responseData' => [
                     'success' => false,
                     'message' => 'Email, contraseña y nombre son requeridos',
-                    'status'  => 'HTTP_BAD_REQUEST'
+                    'status'  => Response::HTTP_BAD_REQUEST
                 ]
             ]);
         }
@@ -131,7 +130,7 @@ class AuthController extends AbstractController {
                 'responseData' => [
                     'success' => true,
                     'user' => $user,
-                    'status'  => 'HTTP_OK'
+                    'status'  => Response::HTTP_OK
                 ]
             ]);
 
@@ -143,7 +142,7 @@ class AuthController extends AbstractController {
                 'responseData' => [
                     'success' => false,
                     'message' => 'Error interno del servidor',
-                    'status'  => 'HTTP_INTERNAL_SERVER_ERROR'
+                    'status'  => Response::HTTP_INTERNAL_SERVER_ERROR
                 ]
             ]);
         }
