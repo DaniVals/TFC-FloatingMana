@@ -15,45 +15,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: "integer", name: "idUser")]
     private $id;
 
-<<<<<<< HEAD
-	/**
-	 * @ORM\Column(type="string", length=255)
-	 */
-	private $name;
-
-    /**
-     * @ORM\Column(type="string", length=180, unique=true) */
-=======
     #[ORM\Column(type: "string", length: 50, unique: true, name: "email")]
->>>>>>> 61be6b1 (feat: muchas cosas, tengo sueño)
     private $email;
-	
-    /**
-	 * @ORM\Column(type="string")
-     */
-	private $password;
-
-<<<<<<< HEAD
-	/**
-	 * @ORM\Column(type="integer")
-	 */
-	private $isAuth;
-
-	//----- Variables auxiliares -----
     
-    private $createdAt;
-    
-	private $roles = [];
-    
-    private $lastLoginAt;
-    
-    private $active = true;
-   
-    private $failedLoginAttempts = 0;
-
-    // ----- Getters y setters -----
-    
-=======
     private $roles = []; // Este campo es necesario si se usan roles dinámicos
 
     #[ORM\Column(type: "string", name: "password")]
@@ -84,7 +48,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     // Getters y setters...
 
->>>>>>> 61be6b1 (feat: muchas cosas, tengo sueño)
     public function getId(): ?int
     {
         return $this->id;
@@ -106,20 +69,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->email = $email;
         return $this;
     }
-
-<<<<<<< HEAD
-	public function getIsAuth(): ?int
-	{
-		return $this->isAuth;
-	}
-	public function setIsAuth(int $isAuth): self
-	{
-		$this->isAuth = $isAuth;
-		return $this;
-	}
     
-=======
->>>>>>> 61be6b1 (feat: muchas cosas, tengo sueño)
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
