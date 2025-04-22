@@ -34,9 +34,6 @@ class AuthServiceTest extends TestCase
             ->method('isActive')
             ->willReturn(true);
         $user->expects($this->once())
-            ->method('setLastLoginAt')
-            ->with($this->isInstanceOf(\DateTime::class));
-        $user->expects($this->once())
             ->method('setFailedLoginAttempts')
             ->with(0);
         

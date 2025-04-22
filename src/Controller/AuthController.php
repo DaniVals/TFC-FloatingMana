@@ -1,11 +1,13 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Service\AuthService;
 use App\Exception\UserBlockedException;
 use App\Exception\InvalidCredentialsException;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -48,18 +50,23 @@ class AuthController extends AbstractController {
 
         try {
             // Delegar la lógica de autenticación al servicio
-            $result = $this->authService->login($email, $password);
+            $user = $this->authService->login($email, $password);
 
-            // Si el login fue exitoso, devolver token y datos de usuario
-            return $this->render('sessionManagement/login.html.twig', [
+            $token = bin2hex(random_bytes(16)); // Genera un token aleatorio
+
+            return $this->render('sessionManagement/main.html.twig', [
                 'responseData' => [
                     'success' => true,
-                    'token' => $result['token'],
-                    'user' => $result['user'],
+                    'token' => $token,
+                    'message' => 'Login exitoso',
+                    'user' => [
+                        'id' => $user->getId(),
+                        'username' => $user->getName(),
+                        'email' => $user->getEmail()
+                    ],
                     'status'  => Response::HTTP_OK
                 ]
             ]);
-
         } catch (InvalidCredentialsException $e) {
             return $this->render('sessionManagement/login.html.twig', [
                 'responseData' => [
@@ -134,6 +141,7 @@ class AuthController extends AbstractController {
                 'responseData' => [
                     'success' => true,
                     'user' => $user,
+                    'message' => 'Registro exitoso',
                     'status'  => Response::HTTP_OK
                 ]
             ]);

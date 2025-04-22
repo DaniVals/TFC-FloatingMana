@@ -22,7 +22,7 @@ class AuthService {
     }
     
     //Maneja la lógica de negocio del login
-    public function login(string $email, string $password): UserInterface {
+    public function login(string $email, string $password): User {
         // Buscar usuario por email
         $user = $this->userRepository->findOneByEmail($email);
         
