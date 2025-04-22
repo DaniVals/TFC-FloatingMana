@@ -111,7 +111,11 @@ class AuthController extends AbstractController {
     public function register(Request $request)
     {
         // Extraer datos del request
-        $name = $request->request->get('_username'); $email = $request->request->get('_email'); $password = $request->request->get('_password'); // Validación básica de formato
+        $name = $request->request->get('_username'); 
+        $email = $request->request->get('_email'); 
+        $password = $request->request->get('_password'); 
+        
+        // Validación básica de formato
         if (empty($email) || empty($password) || empty($name)) {
             return $this->render('sessionManagement/register.html.twig', [
                 'responseData' => [

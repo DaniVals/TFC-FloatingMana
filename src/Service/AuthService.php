@@ -1,6 +1,7 @@
 <?php
 namespace App\Service;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Exception\InvalidCredentialsException;
 use App\Exception\UserBlockedException;
@@ -40,7 +41,7 @@ class AuthService {
         $this->resetFailedLoginAttempts($user);
         
         // Actualizar fecha de último login
-        $user->setLastLoginAt(new \DateTime());
+        // $user->setLastLoginAt(new \DateTime());
         
         // Guardar cambios en la base de datos
         $this->userRepository->save($user, true);
@@ -56,12 +57,12 @@ class AuthService {
         }
         
         // Crear nuevo usuario
-        $user = new \App\Entity\User();
+        $user = new User();
         $user->setEmail($email);
         $user->setName($name);
         $user->setRoles(['ROLE_USER']);
         $user->setActive(1);
-        $user->setCreatedAt(new \DateTime());
+        // $user->setCreatedAt(new \DateTime());
         
         // Hashear contraseña usando el hasher de Symfony
         $hashedPassword = $this->passwordHasher->hashPassword($user, $password);

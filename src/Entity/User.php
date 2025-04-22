@@ -41,12 +41,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    // private $createdAt;
     
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $lastLoginAt;
+    // private $lastLoginAt;
     
     /**
      * @ORM\Column(type="boolean")
@@ -56,7 +56,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="integer")
      */
-    private $failedLoginAttempts = 0;
+    // private $failedLoginAttempts = 0;
 
     // Getters y setters...
     
@@ -141,36 +141,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
     
-    public function getFailedLoginAttempts(): int
-    {
-        return $this->failedLoginAttempts;
-    }
-    
-    public function setFailedLoginAttempts(int $attempts): self
-    {
-        $this->failedLoginAttempts = $attempts;
-        return $this;
-    }
-    
-    public function getLastLoginAt(): ?\DateTimeInterface
-    {
-        return $this->lastLoginAt;
-    }
-    
-    public function setLastLoginAt(?\DateTimeInterface $lastLoginAt): self
-    {
-        $this->lastLoginAt = $lastLoginAt;
-        return $this;
-    }
-    
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-    
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-        return $this;
-    }
+    // public function getFailedLoginAttempts(): int
+    // {
+    //     return $this->failedLoginAttempts;
+    // }
+    // 
+    // public function setFailedLoginAttempts(int $attempts): self
+    // {
+    //     $this->failedLoginAttempts = $attempts;
+    //     return $this;
+    // }
+    // 
+    // public function getLastLoginAt(): ?\DateTimeInterface
+    // {
+    //     return $this->lastLoginAt;
+    // }
+    // 
+    // public function setLastLoginAt(?\DateTimeInterface $lastLoginAt): self
+    // {
+    //     $this->lastLoginAt = $lastLoginAt;
+    //     return $this;
+    // }
+    // 
+    // public function getCreatedAt(): ?\DateTimeInterface
+    // {
+    //     return $this->createdAt;
+    // }
+    // 
+    // public function setCreatedAt(\DateTimeInterface $createdAt): self
+    // {
+    //     $this->createdAt = $createdAt;
+    //     return $this;
+    // }
 }
