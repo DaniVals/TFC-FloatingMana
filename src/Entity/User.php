@@ -20,7 +20,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     
     private $roles = []; // Este campo es necesario si se usan roles dinámicos
 
-    #[ORM\Column(type: "string", name: "password")]
+    #[ORM\Column(type: "string", length: 255, name: "password")]
     private $password;
 
     #[ORM\Column(type: "boolean", options: ["default" => false], name: "isAuth")]

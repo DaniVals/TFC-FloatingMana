@@ -5,26 +5,19 @@ namespace App\Entity;
 use App\Repository\CardRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=CardRepository::class)
- */
+#[ORM\Entity(repositoryClass=CardRepository::class)]
+#[ORM\Table(name: "card")]
 class Card
 {
-	/**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $idUser;
+	#[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: "integer", name: "idCard")]
+    private $idCard;
 
-	/**
-	 * @ORM\Column(type="string", length=255)
-	 */
+	#[ORM\Column(type: "string", length: 255, unique: true, name: "cardName")]
 	private $cardName;
 
-	/**
-	 * @ORM\Column(type="string", length=64)
-	 */
+	#[ORM\Column(type: "string", length: 64, name: "idScryfall")]
 	private $idScryfall;
 
 	//----- Getters y setters -----
