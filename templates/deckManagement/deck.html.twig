@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Colleccion</title>
+	
+	{% include "root.html.twig" %}
+	<link rel="stylesheet" href=" {{ asset('styles/card.css') }} ">
+</head>
+{% include "header.html.twig" %}
+<body>
+    <!-- Por cada carta, mostrar su nombre, precio y la imagen. -->
+    <!-- Leer el dato que se envia desde el controlador y mostrarlo en la vista. -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1> {{ deck.name }} </h1>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+			{{ dump(deck) }}
+		
+            {# {% for card in user.collection %}
+                <div class="col-10 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card-slide-preview mb-5">
+                        <img src="{{ card.image_uris.small }}" class="card-img-top" alt="..." id="cardImg">
+                        <div class="card-body">
+                            <h5 class="card-slide-title text-center">{{ card.name }}</h5>
+							{% if card.prices.eur is not empty %}
+								<p class="card-slide-text text-center">{{ card.prices.eur }}€</p>
+							{% else %}
+								<p class="card-slide-text-default text-center">Precio no disponible</p>
+							{% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %} #}
+        </div>
+    </div>
+</body>
+</html>

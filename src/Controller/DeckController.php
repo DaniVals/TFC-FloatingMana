@@ -2,10 +2,17 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Deck;
 
 class DeckController extends AbstractController {
-    public function index()
+
+    #[Route('/testing/vals/deck', name: 'testing_vals_deck')]
+    public function vals_deck()
     {
-        return $this->render('deck/index.html.twig');
+		$deck = new Deck();
+		$deck->setDeckName('Default Name'); // Replace with your desired default values
+		$deck->setType('Default Type'); // Replace with your desired default values
+
+        return $this->render('deck/deck.html.twig', ["deck" => $deck]);
     }
 }
