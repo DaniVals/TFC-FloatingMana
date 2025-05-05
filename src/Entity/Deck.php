@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\DeckRepository;
+use App\Entity\User;
 
 #[ORM\Entity(repositoryClass: DeckRepository::class)]
 #[ORM\Table(name: "deck")]
@@ -12,8 +13,9 @@ class Deck
 {
 	#[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: "integer", name: "idDeck")]
-    private $idDeck;
+    #[ORM\Column(type: "integer", length: 7, name: "idDeck")]
+	#[ORM\OneToMany(targetEntity: DeckCard::class, mappedBy: "idDeck")]
+	private $idDeck;
 
     #[ORM\Column(type: "string", length: 50, name: "deckName")]
     private $deckName;
