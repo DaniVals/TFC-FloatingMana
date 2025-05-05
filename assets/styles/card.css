@@ -42,6 +42,9 @@
 .card-not_legal{
 	background: var(--card-legal-not-background);
 }
+.card-banned{
+	background: var(--card-legal-banned-background);
+}
 
 /* card stores links */
 

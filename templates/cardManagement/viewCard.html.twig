@@ -84,11 +84,20 @@
 						<h4>Legalidades</h4>
 						<div class="card-legalities">
 							{% for key, value in card.legalities %}
-							<span class="card-legality card-{{value}}"> {{ key }} </span>
+							<span class="card-legality card-{{value}}" title="{{value}}"> {{ key }} </span> {# el title para mayor accesibilidad #}
 							{% endfor %}
 						</div>
+						
+						<br>
+						<h5>Leyenda de colores</h5>
+						<div class="card-legalities">
+							<span class="card-legality card-legal"> legal </span>
+							<span class="card-legality card-not_legal"> no legal </span>
+							<span class="card-legality card-banned"> baneada </span>
+							<span class="card-legality"> no encontrado </span>
+						</div>
 					{% else %}
-						<p>No se encontraron datos</p>
+						<p>No se encontraron datos sobre la legalidad de la carta</p>
 					{% endif %}
 				</div>
 
