@@ -18,7 +18,7 @@ Tablas:
 	- Deck:
 		- idDeck - integer(7) PK
 		- deckName - varchar(50) NOT NULL
-		- deckOwner - varchar(50) - FK (Profile, userName)
+		- idUser - varchar(50) - FK (Profile, userName)
 		- type - varchar(150) NOT NULL
 	
 	- Collection: (tabla resultado de la relación (N:M) de User y Card)

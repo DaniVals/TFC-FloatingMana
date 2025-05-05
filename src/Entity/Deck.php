@@ -5,31 +5,24 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\DeckRepository;
 
-/**
- * @ORM\Entity(repositoryClass=DeckRepository::class)
- */
+#[ORM\Entity(repositoryClass: DeckRepository::class)]
+#[ORM\Table(name: "deck")]
+
 class Deck
 {
-	/**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+	#[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: "integer", name: "idDeck")]
     private $idDeck;
 
-	/**
-     * @ORM\Column(type="string", length=50)
-     */
+    #[ORM\Column(type: "string", length: 50, name: "deckName")]
     private $deckName;
 
-	/**
-     * @ORM\Column(type="string", length=50)
-     */
+    #[ORM\Column(type: "string", length: 50, name: "idUser")]
+	#[ORM\ManyToOne(targetEntity: User::class, inversedBy: "username")]
     private $idUser;
 
-	/**
-     * @ORM\Column(type="string", length=150)
-     */
+	#[ORM\Column(type: "string", length: 150, name: "type")]
 	private $type;
 
 	//----- Getters y setters -----

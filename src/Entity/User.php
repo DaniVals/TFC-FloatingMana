@@ -2,18 +2,25 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Table(name: "user")]
+
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: "integer", name: "idUser")]
     private $id;
+
+	#[ORM\Column(type: "string", length: 255, name: "username")]
+	#[ORM\OneToMany(targetEntity: Collection::class, mappedBy: "user")]
+	#[ORM\OneToMany(targetEntity: Deck::class, mappedBy: "idUser")]
+	private $name;
 
     #[ORM\Column(type: "string", length: 50, unique: true, name: "email")]
     private $email;
@@ -29,9 +36,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: "string", length: 255, nullable: true, name: "profilePic")]
     private $profilePic;
 
-    #[ORM\Column(type: "string", length: 255, name: "username")]
-    private $name;
-
     private $active = true;
 
     // Comentado porque no está en uso actualmente
@@ -46,7 +50,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     // #[ORM\Column(type: "integer", name: "failedLoginAttempts")]
     private $failedLoginAttempts = 0;
 
-    // Getters y setters...
+    // -----Getters y setters-----
 
     public function getId(): ?int
     {
@@ -56,6 +60,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setId(int $id): self
     {
         $this->id = $id;
+        return $this;
+    }
+	
+	public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
         return $this;
     }
 
@@ -79,7 +94,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     // public function getRoles(): array
     // {
     //     $roles = $this->roles;
-    //     // Garantizar que todos los usuarios tengan ROLE_USER
+         // Garantizar que todos los usuarios tengan ROLE_USER
     //     $roles[] = 'ROLE_USER';
     //
     //     return array_unique($roles);
@@ -111,17 +126,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials(): void
     {
         // Si almacenas datos temporales, bórralos aquí
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-        return $this;
     }
 
     public function isActive(): bool

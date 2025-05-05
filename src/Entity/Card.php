@@ -2,10 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\CardRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CardRepository;
 
-#[ORM\Entity(repositoryClass=CardRepository::class)]
+#[ORM\Entity(repositoryClass: CardRepository::class)]
+#[ORM\Table(name: "card")]
+
+#[ORM\Entity(repositoryClass: CardRepository::class)]
 #[ORM\Table(name: "card")]
 class Card
 {
@@ -14,7 +17,9 @@ class Card
     #[ORM\Column(type: "integer", name: "idCard")]
     private $idCard;
 
-	#[ORM\Column(type: "string", length: 255, unique: true, name: "cardName")]
+	/**
+	 * @ORM\Column(type="string", length=255)
+	 */
 	private $cardName;
 
 	#[ORM\Column(type: "string", length: 64, name: "idScryfall")]
@@ -22,13 +27,13 @@ class Card
 
 	//----- Getters y setters -----
 
-	public function getIdUser(): ?int
+	public function getIdCard(): ?int
 	{
-		return $this->idUser;
+		return $this->idCard;
 	}
-	public function setIdUser(int $idUser): self
+	public function setIdCard(int $idCard): self
 	{
-		$this->idUser = $idUser;
+		$this->idCard = $idCard;
 		return $this;
 	}
 

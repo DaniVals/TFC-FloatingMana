@@ -8,43 +8,31 @@ use App\Repository\UserCollectionRepository;
 use App\Entity\Card;
 use App\Entity\User;
 
+#[ORM\Entity(repositoryClass: UserCollectionRepository::class)]
+#[ORM\Table(name: "collection")]
 
-/**
- * @ORM\Entity(repositoryClass=UserCollectionRepository::class)
- */
 class Collection 
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: "integer", name: "idCollection")]
     private $idCollection;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="username")
-     * @ORM\JoinColumn(nullable=false)
-     */
+	#[ORM\Column(type: "string", length: 25, name: "idUser")]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "username")]
     private $user;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Card::class, inversedBy="idCard")
-     */
+	#[ORM\Column(type: "integer", length: 4, name: "idCard")]
+    #[ORM\ManyToMany(targetEntity: Card::class, inversedBy: "idCard")]
     private $card;
 
-	/**
-	 * @ORM\Column(type="decimal", precision=6, scale=2)
-	 */
+	#[ORM\Column(type: "decimal", precision: 6, scale: 2)]
 	private $purchasePrice;
 
-	/**
-	 * @ORM\Column(type="integer")
-	 */
+	#[ORM\Column(type: "integer", length: 1, name: "isFoil")]
 	private $isFoil;
 	
-	/**
-	 * @ORM\Column(type="integer")
-	 */
+	#[ORM\Column(type: "integer", length: 1, name: "state")]
 	private $state;
 	
 	//----- Variables auxiliares -----
