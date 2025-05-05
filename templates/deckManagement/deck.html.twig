@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<title>Colleccion</title>
+	<title>Mazo</title>
 	
 	{% include "root.html.twig" %}
-	<link rel="stylesheet" href=" {{ asset('styles/card.css') }} ">
+	<link rel="stylesheet" href=" {{ asset('styles/cardList.css') }} ">
+	<script src=" {{asset('js/cardListDeck.js')}} "></script>
 </head>
 {% include "header.html.twig" %}
 <body>
@@ -16,27 +17,27 @@
     <div class="container">
         <div class="row">
             <div class="col-12 text-center">
-                <h1> {{ deck.name }} </h1>
+                <h1> {{ deck.getDeckName }} </h1>
             </div>
         </div>
-        <div class="row justify-content-center">
-			{{ dump(deck) }}
 		
-            {# {% for card in user.collection %}
-                <div class="col-10 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                    <div class="card-slide-preview mb-5">
-                        <img src="{{ card.image_uris.small }}" class="card-img-top" alt="..." id="cardImg">
-                        <div class="card-body">
-                            <h5 class="card-slide-title text-center">{{ card.name }}</h5>
-							{% if card.prices.eur is not empty %}
-								<p class="card-slide-text text-center">{{ card.prices.eur }}€</p>
-							{% else %}
-								<p class="card-slide-text-default text-center">Precio no disponible</p>
-							{% endif %}
-                        </div>
-                    </div>
+		{# <div >
+			<span class="card-data" data-card-id="4b4390f4-451f-4575-96e0-dc4dcb45ad8f"></span>
+			<span class="card-data" data-card-id="047f196b-a9d1-4cd3-b665-3b304cc59767"></span>
+		</div> #}
+		{{ dump(deck) }}
+		{{ dump(deckCards) }}
+
+        <div class="row justify-content-center" id="card-list" data-ajax-route="https://api.scryfall.com/cards/">
+		
+            {% for card in deckCards %}
+                <div class="col-12 col-sm-11 col-md-10   card-list-show" data-card-id="{{ card.id }}">
+					<div class="d-flex justify-content-between align-items-center w-100">
+						<img id="card-image" class="col-4 col-md-2 col-sm-3 m-2" src="https://fepfi.es/wp-content/uploads/2021/10/placeholder-1.png" alt="card image">
+						<p class="col-8"><a href=" {{ path('view_card', {id: card.id}) }} "> {{card.name}} </a></p>
+					</div>
                 </div>
-            {% endfor %} #}
+            {% endfor %}
         </div>
     </div>
 </body>

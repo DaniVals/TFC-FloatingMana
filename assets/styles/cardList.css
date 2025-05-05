@@ -1,0 +1,21 @@
+/* #card-list {
+	background-color: #f003;
+	border-radius: 2em;
+} */
+
+.card-list-show {
+	background-color: var(--card-list-background-color);
+	border-bottom: var(--card-list-border-separator);
+}
+.card-list-show:first-of-type {
+	border-top-left-radius: 2em;
+	border-top-right-radius: 2em;
+}
+.card-list-show:last-of-type {
+	border-bottom-left-radius: 2em;
+	border-bottom-right-radius: 2em;
+	border-bottom: none;
+}
+.card-list-show img {
+	border-radius: 2em;
+}
