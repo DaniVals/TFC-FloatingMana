@@ -8,8 +8,6 @@ use App\Repository\CardRepository;
 #[ORM\Entity(repositoryClass: CardRepository::class)]
 #[ORM\Table(name: "card")]
 
-#[ORM\Entity(repositoryClass: CardRepository::class)]
-#[ORM\Table(name: "card")]
 class Card
 {
 	#[ORM\Id]
@@ -17,9 +15,7 @@ class Card
     #[ORM\Column(type: "integer", name: "idCard")]
     private $idCard;
 
-	/**
-	 * @ORM\Column(type="string", length=255)
-	 */
+	#[ORM\Column(type: "string", length: 255, name: "cardName")]
 	private $cardName;
 
 	#[ORM\Column(type: "string", length: 64, name: "idScryfall")]
