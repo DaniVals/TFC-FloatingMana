@@ -33,7 +33,7 @@ class AuthController extends AbstractController {
     public function login(Request $request)
     {
         // Extraer credenciales del request
-        $email = $request->request->get('_email');
+        $email = $request->request->get('_username');
         $password = $request->request->get('_password');
 
         // Validación básica de formato

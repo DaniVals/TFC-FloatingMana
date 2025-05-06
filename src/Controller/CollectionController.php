@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * @Route("/api/collection", name="collection_")
+ * @Route("/collection", name="collection_")
  */
 class CollectionController extends AbstractController
 {
@@ -243,7 +243,7 @@ class CollectionController extends AbstractController
             $collection = $this->collectionService->getUserCollection();
             $stats = $this->collectionService->getCollectionStats();
             
-            return $this->render('collection/index.html.twig', [
+            return $this->render('collectionManagement/collection.html.twig', [
                 'collection' => $collection,
                 'stats' => $stats
             ]);
