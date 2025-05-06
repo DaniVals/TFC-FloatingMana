@@ -37,11 +37,11 @@ class DeckCard
 		return $this;
 	}
 	
-	public function getDeck(): ?int
+	public function getDeck(): ?Deck
 	{
 		return $this->idDeck;
 	}
-	public function setDeck(int $idDeck): self
+	public function setDeck(Deck $idDeck): self
 	{
 		$this->idDeck = $idDeck;
 		return $this;

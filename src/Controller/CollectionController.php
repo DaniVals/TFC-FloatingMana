@@ -39,6 +39,7 @@ class CollectionController extends AbstractController {
 		$deckCards = [];
 
 		$deckCard  = new DeckCard();
+		$deckCard->setDeck($deck);
 		$card1 = new Card();
 		$card1->setCardName("Isshin 1");
 		$card1->setIdScryfall("a062a004-984e-4b62-960c-af7288f7a3e9");
