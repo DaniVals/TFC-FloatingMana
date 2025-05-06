@@ -14,45 +14,64 @@
 </head>
 {% include "header.html.twig" %}
 <body>
-    <h1>¡Hola 
-	{% if responseData is defined %}
-		{{ responseData.user.username }}
-	{% elseif is_granted("ROLE") %}
-    	{{ app.user.username }}
-	{% else %}
-    	desconocido
-	{% endif %}
-	! Bienvenido a tu colección de Magic 🧙‍♂️</h1>
+	<div class="container">
+		<div class="row justify-content-center pe-sm-5 ps-sm-5">
+			<h1 class="text-center">¡Hola 
+			{% if responseData is defined %}
+				{{ responseData.user.username }}!
+			{% elseif is_granted("ROLE") %}
+				{{ app.user.username }}!
+			{% else %}
+				desconocido!
+			{% endif %}
+			{# Bienvenido a tu colección de Magic 🧙‍♂️ #}
+			</h1>
+			<hr>
+		</div>
+	</div>
 
-    <div class="dashboard">
-        <a href="#" class="card">
-            <h2>📂 Ver Mis Colecciones</h2>
-            <p>Explora tus cartas organizadas por colección.</p>
-        </a>
+	<br>
 
-        <a href="#" class="card">
-            <h2>➕ Crear Colección</h2>
-            <p>Empieza una nueva colección desde cero.</p>
-        </a>
+	<div class="container">
+		<div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center pe-sm-5 ps-sm-5">
+			<div class="col option">
+				<a href="#" class="text-center">
+					<h2>Colección</h2>
+					<p>Explora y organiza tu coleccion</p>
+				</a>
+			</div>
+			<div class="col option">
+				<a href="#" class="text-center">
+					<h2>Mazos</h2>
+					<p>Crea, edita y comparte mazos</p>
+				</a>
+			</div>
+			<div class="col option">
+				<a href="#" class="text-center">
+					<h2>Buscar</h2>
+					<p>Busca cartas para añadir a tu coleccion</p>
+				</a>
+			</div>
+			<div class="col option">
+				<a href="#" class="text-center">
+					<h2>Ir a mi perfil</h2>
+					<p>Visita tu perfil</p>
+				</a>
+			</div>
+			{# <div class="col option">
+				<a href="#" class="text-center">
+					<h2>🤝 Gestionar Intercambios</h2>
+					<p>Organiza tus cartas para cambiar con otros usuarios.</p>
+				</a>
+			</div> #}
+			<div class="col option">
+				<a href="{{ path('app_logout') }}" class="text-center">
+					<h2>Cerrar Sesión</h2>
+					<p>¡Hasta pronto!</p>
+				</a>
+			</div>
 
-        <a href="#" class="card">
-            <h2>🔍 Buscar Cartas</h2>
-            <p>Encuentra cartas por nombre, tipo o edición.</p>
-        </a>
-
-        <a href="#" class="card">
-            <h2>🤝 Gestionar Intercambios</h2>
-            <p>Organiza tus cartas para cambiar con otros usuarios.</p>
-        </a>
-
-        <a href="#" class="card">
-            <h2>👤 Mi Perfil</h2>
-            <p>Edita tus datos de usuario y preferencias.</p>
-        </a>
-
-        <a href="#" class="card logout">
-            <h2>🚪 Cerrar Sesión</h2>
-        </a>
-    </div>
+		</div>
+	</div>
 
 </body>

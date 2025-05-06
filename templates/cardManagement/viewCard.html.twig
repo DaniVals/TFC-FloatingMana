@@ -67,10 +67,12 @@
 				{# Legalidades #}
 				<div class="col-md-5 mt-3">
 					<h3 class="text-center">Otros</h3>
-					<hr class="fading-separation">
 
 					{# boton para añadir a coleccion #}
-					<button onclick="addCardPopUp( '{{ card.name }}' , '{{ card.id }}' )"> Añadir a... </button>
+					{% if is_granted("IS_AUTHENTICATED_FULLY") %}
+						<hr class="fading-separation">
+						<button onclick="addCardPopUp( '{{ card.name }}' , '{{ card.id }}' )"> Añadir a... </button>
+					{% endif %}
 
 					{# fecha de salida #}
 					{% if card.released_at is defined %}
