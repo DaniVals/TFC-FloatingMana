@@ -19,11 +19,11 @@ class DeckCard
 
 	#[ORM\ManyToOne(targetEntity: Deck::class, inversedBy: "idDeck")]
 	#[ORM\JoinColumn(name: "idDeck", referencedColumnName: "idDeck")]
-	private $idDeck;
+	private $deck;
 
 	#[ORM\ManyToOne(targetEntity: Card::class, inversedBy: "idCard")]
 	#[ORM\JoinColumn(name: "idCard", referencedColumnName: "idCard")]
-	private $idCard;
+	private $card;
 
 	//----- Getters y setters -----
 
@@ -37,21 +37,21 @@ class DeckCard
 		return $this;
 	}
 	
-	public function getIdDeck(): ?int
+	public function getDeck(): ?int
 	{
 		return $this->idDeck;
 	}
-	public function setIdDeck(int $idDeck): self
+	public function setDeck(int $idDeck): self
 	{
 		$this->idDeck = $idDeck;
 		return $this;
 	}
 
-	public function getIdCard(): ?int
+	public function getCard(): ? Card
 	{
 		return $this->idCard;
 	}
-	public function setIdCard(int $idCard): self
+	public function setCard(Card $idCard): self
 	{
 		$this->idCard = $idCard;
 		return $this;
