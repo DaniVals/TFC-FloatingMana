@@ -8,6 +8,7 @@ groups["noni"] = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
 	const cardList = document.getElementById(CARD_LIST_ID);
+	groups["none"] = cardList;
 	
 	if (cardList){
 		const AJAXroute = cardList.getAttribute('data-ajax-route');
@@ -54,9 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function addToBody() {
-	const lista = document.getElementById(CARD_LIST_ID);
 	for (let i = 0; i < cards.length; i++) {
-		lista.appendChild(cards[i].element);
+		groups[group].appendChild(cards[i].element);
 	}
 }
 
