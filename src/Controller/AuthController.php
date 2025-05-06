@@ -102,10 +102,13 @@ class AuthController extends AbstractController {
     public function logout(): JsonResponse
     {
         // Aquí puedes manejar la lógica de logout si es necesario
-        return $this->json([
-            'success' => true,
-            'message' => 'Logout exitoso'
-        ], Response::HTTP_OK);
+        return $this->render('app/index.html.twig', [
+            'responseData' => [
+                'success' => true,
+                'message' => 'Logout exitoso',
+                'status'  => Response::HTTP_OK
+            ]
+        ]);
     }
 
     #[Route('/app/register', name: 'app_register_view', methods: ['GET'])]
