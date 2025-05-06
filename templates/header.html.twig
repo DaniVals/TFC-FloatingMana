@@ -3,12 +3,14 @@
 	<div class="row justify-content-center">
 		<div class="col-2 justify-content-start">
 
-
-			<img src="https://marketplace.canva.com/EAF9iwmYYPw/1/0/1600w/canva-logo-tienda-ecol%C3%B3gica-minimalista-beige--AbA3ALwAuw.jpg" alt="logo">
+			<a href="{{ path('dashboard') }}">
+				<img src="https://marketplace.canva.com/EAF9iwmYYPw/1/0/1600w/canva-logo-tienda-ecol%C3%B3gica-minimalista-beige--AbA3ALwAuw.jpg" alt="logo">
+			</a>
 			
 		</div>
-		<div class="col-4 flex-row justify-content-center">
-			<a href="{{ path('random_card') }}">Carta Aleatoria</a>
+		<div class="col-6 flex-row justify-content-center">
+			<p class="m-1"><a href="{{ path('dashboard') }}">Dashboard</a></p>
+			<p class="m-1"><a href="{{ path('random_card') }}">Carta Aleatoria</a></p>
 		</div>
 
 		<div class="col-4 flex-row justify-content-center">
@@ -23,7 +25,7 @@
 		
 		</div>
 		<div class="col-2 d-flex justify-content-end">
-			<img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="foto de perfil">
+			{# <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="foto de perfil"> #}
 		</div>
 	</div>
 </header>
