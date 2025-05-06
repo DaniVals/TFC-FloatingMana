@@ -1,0 +1,88 @@
+{% block body %}
+
+	<div class="profile-container">
+
+		<h1> 👤 Mi perfil </h1>
+
+		<div class="profile-info">
+
+			<img src="{{ user.profilePicture }}" alt="Foto de perfil" class="profile-picture">
+			<p><strong> Usuario: </strong> {{ user.username }}</p>
+			<p><strong> Correo: </strong> {{ user.email }}</p>
+
+		</div>
+
+		<form action="{{ path('profile_update') }}" method="post" enctype="multipart/form-data" class="profile-form">
+
+			<div>
+				<label for="profilePicture">Foto de perfil:</label>
+				<input type="file" id="profilePicture" name="profilePicture" accept="image/*">
+			</div>
+			<div>
+				<label for="username">Usuario:</label>
+				<input type="text" id="username" name="username" value="{{ user.username }}" required>
+			</div>
+			<div>
+				<label for="email">Correo:</label>
+				<input type="email" id="email" name="email" value="{{ user.email }}" required>
+			</div>
+			<button type="submit">Actualizar perfil</button>
+
+		</form>
+
+	</div>
+
+{% endblock %}
+
+<style>
+
+	.profile-container {
+		text-align: center;
+		margin: 20px auto;
+		max-width: 400px;
+		border: 1px solid #ccc;
+		border-radius: 10px;
+		padding: 20px;
+		background-color: #f9f9f9;
+	}
+	.profile-picture {
+		width: 150px;
+		height: 150px;
+		border-radius: 50%;
+		margin-bottom: 15px;
+	}
+	.profile-info p {
+		margin: 5px 0;
+	}
+	.profile-form {
+		margin-top: 20px;
+		text-align: left;
+	}
+	.profile-form div {
+		margin-bottom: 15px;
+	}
+	.profile-form label {
+		display: block;
+		font-weight: bold;
+		margin-bottom: 5px;
+	}
+	.profile-form input {
+		width: 100%;
+		padding: 8px;
+		box-sizing: border-box;
+	}
+	.profile-form button {
+		display: block;
+		width: 100%;
+		padding: 10px;
+		background-color: #007bff;
+		color: white;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+	.profile-form button:hover {
+		background-color: #0056b3;
+	}
+
+</style>
