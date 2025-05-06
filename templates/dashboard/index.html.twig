@@ -19,8 +19,8 @@
 			<h1 class="text-center">¡Hola 
 			{% if responseData is defined %}
 				{{ responseData.user.username }}!
-			{% elseif is_granted("ROLE") %}
-				{{ app.user.username }}!
+			{% elseif is_granted("IS_AUTHENTICATED_FULLY") %}
+				{{ app.user.getName }}!
 			{% else %}
 				desconocido!
 			{% endif %}
@@ -64,12 +64,22 @@
 					<p>Organiza tus cartas para cambiar con otros usuarios.</p>
 				</a>
 			</div> #}
-			<div class="col option">
-				<a href="{{ path('app_logout') }}" class="text-center">
-					<h2>Cerrar Sesión</h2>
-					<p>¡Hasta pronto!</p>
-				</a>
-			</div>
+			
+			{% if is_granted("IS_AUTHENTICATED_FULLY") %}
+				<div class="col option">
+					<a href="{{ path('app_logout') }}" class="text-center">
+						<h2>Cerrar Sesión</h2>
+						<p>¡Hasta pronto!</p>
+					</a>
+				</div>
+			{% else %}
+				<div class="col option">
+					<a href="{{ path('app_login') }}" class="text-center">
+						<h2>Iniciar Sesión</h2>
+						<p>¡Unete a nosotros y empieza a gestionar tus cartas!</p>
+					</a>
+				</div>
+			{% endif %}
 
 		</div>
 	</div>
