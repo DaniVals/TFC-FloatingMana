@@ -1,7 +1,7 @@
 
 {% macro mostrarImagen(card, img_class, flip_button)  %}
 
-	{% if card.card_faces is defined %}
+	{% if card.card_faces is defined and card.card_faces[0] is defined and card.card_faces[0].image_uris is defined %}
 		{% if flip_button == true %}
 		
 			<div class="two-side-image" data-shown-face="0">
