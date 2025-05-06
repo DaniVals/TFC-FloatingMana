@@ -94,7 +94,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 		return $this;
 	}
 
-	public function getDecks(): ?array
+	public function getDecks()
 	{
 		return $this->decks;
 	}
