@@ -22,13 +22,11 @@ class CollectionService
         EntityManagerInterface $entityManager,
         UserCollectionRepository $collectionRepository,
         CardRepository $cardRepository,
-        // Security $security,
         ScryfallApiService $scryfallApiService
     ) {
         $this->entityManager = $entityManager;
         $this->collectionRepository = $collectionRepository;
         $this->cardRepository = $cardRepository;
-        // $this->security = $security;
         $this->scryfallApiService = $scryfallApiService;
     }
 
