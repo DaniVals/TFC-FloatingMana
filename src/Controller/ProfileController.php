@@ -7,7 +7,7 @@ use App\Entity\User;
 
 class ProfileController extends AbstractController {
 
-	#[Route('/profile', name: 'profile')]
+	#[Route('/app/profile', name: 'profile')]
 	public function profile()
 	{
 		$user = $this->getUser();
