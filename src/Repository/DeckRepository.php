@@ -60,10 +60,19 @@ class DeckRepository extends ServiceEntityRepository
     public function findOneByIdAndUser(int $id, User $user): ?Deck
     {
         return $this->createQueryBuilder('d')
-            ->andWhere('d.id = :id')
-            ->andWhere('d.user = :user')
+            ->andWhere('d.idDeck = :idDeck')
+            ->andWhere('d.idUser = :idUser')
+            ->setParameter('idDeck', $id)
+            ->setParameter('idUser', $user)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findOneById(int $id): ?Deck
+    {
+        return $this->createQueryBuilder('d')
+            ->andWhere('d.idDeck = :id')
             ->setParameter('id', $id)
-            ->setParameter('user', $user)
             ->getQuery()
             ->getOneOrNullResult();
     }
