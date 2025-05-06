@@ -39,21 +39,21 @@ class DeckCard
 	
 	public function getDeck(): ?Deck
 	{
-		return $this->idDeck;
+		return $this->deck;
 	}
-	public function setDeck(Deck $idDeck): self
+	public function setDeck(Deck $deck): self
 	{
-		$this->idDeck = $idDeck;
+		$this->deck = $deck;
 		return $this;
 	}
 
-	public function getCard(): ? Card
+	public function getCard(): ?Card
 	{
-		return $this->idCard;
+		return $this->card;
 	}
-	public function setCard(Card $idCard): self
+	public function setCard(Card $card): self
 	{
-		$this->idCard = $idCard;
+		$this->card = $card;
 		return $this;
 	}
 }
