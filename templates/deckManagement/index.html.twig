@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Tus mazos</title>
+	
+	{% include "root.html.twig" %}
+</head>
+{% include "header.html.twig" %}
+<body>
+	
+    <div class="container">
+		{% if !is_granted("IS_AUTHENTICATED_FULLY") %}
+			<div class="row">
+				<div class="col-12 text-center">
+					<a href="{{ path('app_login') }}">
+					<h1> Inicia sesion para gestionar tus mazos </h1>
+					</a>
+				</div>
+			</div>
+		{% else %}
+
+			<div class="row">
+				<div class="col-12 text-center">
+					<h1> Tus mazos </h1>
+					<a href="#">
+						<h2>Crear nuevo mazo</h2>
+					</a>
+				</div>
+			</div>
+
+			<div class="row justify-content-center" id="card-list" data-ajax-route="https://api.scryfall.com/cards/">
+				{% for deck in app.user.getDecks %}
+					{{ dump(deck) }}
+				{% endfor %}
+			</div>
+		{% endif %}
+    </div>
+</body>
+</html>
