@@ -39,12 +39,12 @@ class AuthController extends AbstractController {
         // Validación básica de formato
         if (empty($email) || empty($password)) {
             return $this->render('sessionManagement/login.html.twig', [
-				'responseData' => [
-					'success' => false,
-					'message' => 'Email y contraseña son requeridos',
-					'status'  => Response::HTTP_BAD_REQUEST
-			        ]
-                            ]
+                'responseData' => [
+                    'success' => false,
+                    'message' => 'Email y contraseña son requeridos',
+                    'status'  => Response::HTTP_BAD_REQUEST
+                ]
+            ]
             );
         }
 
@@ -98,7 +98,7 @@ class AuthController extends AbstractController {
         }
     }
 
-    #[Route('/app/logout', name: 'app_logout', methods: ['POST'])]
+    #[Route('/app/logout', name: 'app_logout', methods: ['GET'])]
     public function logout(): JsonResponse
     {
         // Aquí puedes manejar la lógica de logout si es necesario

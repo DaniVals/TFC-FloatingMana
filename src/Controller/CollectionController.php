@@ -1,88 +1,281 @@
 <?php
+
 namespace App\Controller;
 
-use App\Service\ScryfallApiService;
+use App\Service\CollectionService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Deck;
-use App\Entity\DeckCard;
-use App\Entity\Card;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Serializer\SerializerInterface;
 
-class CollectionController extends AbstractController {
-    private ScryfallApiService $scryfallApiService;
-    public function __construct(ScryfallApiService $scryfallApiService)
-    {
-        $this->scryfallApiService = $scryfallApiService;
+/**
+ * @Route("/api/collection", name="collection_")
+ */
+class CollectionController extends AbstractController
+{
+    private $collectionService;
+    private $serializer;
+    private $security;
+
+    public function __construct(
+        CollectionService $collectionService,
+        SerializerInterface $serializer,
+        // Security $security
+    ) {
+        $this->collectionService = $collectionService;
+        $this->serializer = $serializer;
+        // $this->security = $security;
     }
 
-    #[Route('/testing/vals/collection', name: 'testing_vals_collection')]
-    public function collectionRender(): Response
+    /**
+     * @Route("", name="index", methods={"GET"})
+     */
+    public function index(): JsonResponse
     {
-		$cards = [];
-		for ($i = 0; $i < 5; $i++) {
-			$cards[] = $this->scryfallApiService->getRandomCard();
-		}
-		$user = [
-			"collection" => $cards
-		];
-        return $this->render('collectionManagement\collection.html.twig', ['user' => $user]);
+        try {
+            $collection = $this->collectionService->getUserCollection();
+            return $this->json([
+                'status' => 'success',
+                'data' => $collection
+            ]);
+        } catch (\Exception $e) {
+            return $this->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
     }
 
-    #[Route('/testing/vals/deck', name: 'testing_vals_deck')]
-    public function vals_deck()
+    /**
+     * @Route("/stats", name="stats", methods={"GET"})
+     */
+    public function getStats(): JsonResponse
     {
-		$deck = new Deck();
-		$deck->setDeckName('Default Name');
-		$deck->setType('Default Type');
-		
-		$deckCards = [];
+        try {
+            $stats = $this->collectionService->getCollectionStats();
+            return $this->json([
+                'status' => 'success',
+                'data' => $stats
+            ]);
+        } catch (\Exception $e) {
+            return $this->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
+    }
 
-		$deckCard  = new DeckCard();
-		$deckCard->setDeck($deck);
-		$card1 = new Card();
-		$card1->setCardName("Isshin 1");
-		$card1->setIdScryfall("a062a004-984e-4b62-960c-af7288f7a3e9");
-		$deckCard->setCard($card1);
-		$deckCards[] = $deckCard;
-		
-		$deckCard  = new DeckCard();
-		$card2 = new Card();
-		$card2->setCardName("doble cara 1");
-		$card2->setIdScryfall("4b4390f4-451f-4575-96e0-dc4dcb45ad8f");
-		$deckCard->setCard($card2);
-		$deckCards[] = $deckCard;
-		
-		$deckCard  = new DeckCard();
-		$card3 = new Card();
-		$card3->setCardName("doble cara 2");
-		$card3->setIdScryfall("047f196b-a9d1-4cd3-b665-3b304cc59767");
-		$deckCard->setCard($card3);
-		$deckCards[] = $deckCard;
-		
-		$deckCard  = new DeckCard();
-		$card4 = new Card();
-		$card4->setCardName("Aatchik, Emerald Radian");
-		$card4->setIdScryfall("e789df76-d658-47a4-9efb-74da6bd8821c");
-		$deckCard->setCard($card4);
-		$deckCards[] = $deckCard;
-		
-		$deckCard  = new DeckCard();
-		$card5 = new Card();
-		$card5->setCardName("Isshin 2");
-		$card5->setIdScryfall("1bf8b008-3a7c-4b6d-8c18-263a576f0d64");
-		$deckCard->setCard($card5);
-		$deckCards[] = $deckCard;
-		
-		$deckCard  = new DeckCard();
-		$card6 = new Card();
-		$card6->setCardName("counter spell");
-		$card6->setIdScryfall("5d93b770-dc46-46ad-aefe-282dac8cc246");
-		$deckCard->setCard($card6);
-		$deckCards[] = $deckCard;
+    /**
+     * @Route("/search", name="search", methods={"GET"})
+     */
+    public function search(Request $request): JsonResponse
+    {
+        $query = $request->query->get('q');
+        if (!$query) {
+            return $this->json([
+                'status' => 'error',
+                'message' => 'Parámetro de búsqueda no proporcionado'
+            ], Response::HTTP_BAD_REQUEST);
+        }
 
-		$deck->setDeckCards($deckCards);
-		
-        return $this->render('deckManagement/deck.html.twig', ["deck" => $deck]);
+        try {
+            $results = $this->collectionService->searchInCollection($query);
+            return $this->json([
+                'status' => 'success',
+                'data' => $results
+            ]);
+        } catch (\Exception $e) {
+            return $this->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    /**
+     * @Route("/card/{cardId}", name="card_detail", methods={"GET"})
+     */
+    public function getCard(int $cardId): JsonResponse
+    {
+        try {
+            $collectionItem = $this->collectionService->getCardFromCollection($cardId);
+            if (!$collectionItem) {
+                return $this->json([
+                    'status' => 'error',
+                    'message' => 'Carta no encontrada en tu colección'
+                ], Response::HTTP_NOT_FOUND);
+            }
+
+            return $this->json([
+                'status' => 'success',
+                'data' => $collectionItem
+            ]);
+        } catch (\Exception $e) {
+            return $this->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    /**
+     * @Route("/card", name="add_card", methods={"POST"})
+     */
+    public function addCard(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+        
+        if (!isset($data['card_id'])) {
+            return $this->json([
+                'status' => 'error',
+                'message' => 'ID de carta no proporcionado'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        $quantity = $data['quantity'] ?? 1;
+
+        try {
+            $collectionItem = $this->collectionService->addCardToCollection($data['card_id'], $quantity);
+            return $this->json([
+                'status' => 'success',
+                'message' => 'Carta añadida a la colección',
+                'data' => $collectionItem
+            ], Response::HTTP_CREATED);
+        } catch (\Exception $e) {
+            return $this->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    /**
+     * @Route("/card/{cardId}", name="update_card", methods={"PUT"})
+     */
+    public function updateCard(int $cardId, Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+        
+        if (!isset($data['quantity'])) {
+            return $this->json([
+                'status' => 'error',
+                'message' => 'Cantidad no proporcionada'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        try {
+            $collectionItem = $this->collectionService->updateCardQuantity($cardId, $data['quantity']);
+            return $this->json([
+                'status' => 'success',
+                'message' => 'Cantidad actualizada',
+                'data' => $collectionItem
+            ]);
+        } catch (\Exception $e) {
+            return $this->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    /**
+     * @Route("/card/{cardId}", name="remove_card", methods={"DELETE"})
+     */
+    public function removeCard(int $cardId): JsonResponse
+    {
+        try {
+            $this->collectionService->removeCardFromCollection($cardId);
+            return $this->json([
+                'status' => 'success',
+                'message' => 'Carta eliminada de la colección'
+            ]);
+        } catch (\Exception $e) {
+            return $this->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    /**
+     * @Route("/import", name="import", methods={"POST"})
+     */
+    public function importCollection(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+        
+        if (!isset($data['card_list']) || empty($data['card_list'])) {
+            return $this->json([
+                'status' => 'error',
+                'message' => 'Lista de cartas no proporcionada'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        try {
+            $results = $this->collectionService->importCardList($data['card_list']);
+            
+            return $this->json([
+                'status' => 'success',
+                'message' => 'Importación completada',
+                'data' => [
+                    'imported' => count($results['success']),
+                    'failed' => count($results['errors']),
+                    'details' => $results
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return $this->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    /**
+     * @Route("/view", name="view", methods={"GET"})
+     */
+    public function viewCollection(): Response
+    {
+        try {
+            $collection = $this->collectionService->getUserCollection();
+            $stats = $this->collectionService->getCollectionStats();
+            
+            return $this->render('collection/index.html.twig', [
+                'collection' => $collection,
+                'stats' => $stats
+            ]);
+        } catch (\Exception $e) {
+            $this->addFlash('error', $e->getMessage());
+            return $this->redirectToRoute('dashboard_index');
+        }
+    }
+
+    /**
+     * @Route("/export", name="export", methods={"GET"})
+     */
+    public function exportCollection(): Response
+    {
+        try {
+            $collection = $this->collectionService->getUserCollection();
+            $exportData = '';
+            
+            foreach ($collection as $item) {
+                $exportData .= $item->getQuantity() . 'x ' . $item->getCard()->getName() . "\n";
+            }
+            
+            $response = new Response($exportData);
+            $response->headers->set('Content-Type', 'text/plain');
+            $response->headers->set('Content-Disposition', 'attachment; filename="collection_export.txt"');
+            
+            return $response;
+        } catch (\Exception $e) {
+            return $this->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
     }
 }
