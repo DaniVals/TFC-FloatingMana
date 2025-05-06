@@ -7,32 +7,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * @Route("/collection", name="collection_")
- */
+#[Route('/collection', name: 'collection_')]
 class CollectionController extends AbstractController
 {
     private $collectionService;
-    private $serializer;
-    private $security;
 
     public function __construct(
         CollectionService $collectionService,
-        SerializerInterface $serializer,
-        // Security $security
     ) {
         $this->collectionService = $collectionService;
-        $this->serializer = $serializer;
-        // $this->security = $security;
     }
 
-    /**
-     * @Route("", name="index", methods={"GET"})
-     */
+    #[Route('', name: 'index', methods: ['GET'])]
     public function index(): JsonResponse
     {
         try {
@@ -49,9 +37,7 @@ class CollectionController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/stats", name="stats", methods={"GET"})
-     */
+    #[Route('/stats', name: 'stats', methods: ['GET'])]
     public function getStats(): JsonResponse
     {
         try {
@@ -68,9 +54,7 @@ class CollectionController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/search", name="search", methods={"GET"})
-     */
+    #[Route('/search', name: 'search', methods: ['GET'])]
     public function search(Request $request): JsonResponse
     {
         $query = $request->query->get('q');
@@ -95,9 +79,7 @@ class CollectionController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/card/{cardId}", name="card_detail", methods={"GET"})
-     */
+    #[Route('/card/{cardId}', name: 'card_detail', methods: ['GET'])]
     public function getCard(int $cardId): JsonResponse
     {
         try {
@@ -121,13 +103,11 @@ class CollectionController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/card", name="add_card", methods={"POST"})
-     */
+    #[Route('/card', name: 'add_card', methods: ['POST'])]
     public function addCard(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        
+
         if (!isset($data['card_id'])) {
             return $this->json([
                 'status' => 'error',
@@ -152,13 +132,11 @@ class CollectionController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/card/{cardId}", name="update_card", methods={"PUT"})
-     */
+    #[Route('/card/{cardId}', name: 'update_card', methods: ['PUT'])]
     public function updateCard(int $cardId, Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        
+
         if (!isset($data['quantity'])) {
             return $this->json([
                 'status' => 'error',
@@ -181,9 +159,7 @@ class CollectionController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/card/{cardId}", name="remove_card", methods={"DELETE"})
-     */
+    #[Route('/card/{cardId}', name: 'remove_card', methods: ['DELETE'])]
     public function removeCard(int $cardId): JsonResponse
     {
         try {
@@ -200,13 +176,11 @@ class CollectionController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/import", name="import", methods={"POST"})
-     */
+    #[Route('/import', name: 'import', methods: ['POST'])]
     public function importCollection(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        
+
         if (!isset($data['card_list']) || empty($data['card_list'])) {
             return $this->json([
                 'status' => 'error',
@@ -216,7 +190,7 @@ class CollectionController extends AbstractController
 
         try {
             $results = $this->collectionService->importCardList($data['card_list']);
-            
+
             return $this->json([
                 'status' => 'success',
                 'message' => 'Importación completada',
@@ -234,15 +208,13 @@ class CollectionController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/view", name="view", methods={"GET"})
-     */
+    #[Route('/view', name: 'view', methods: ['GET'])]
     public function viewCollection(): Response
     {
         try {
             $collection = $this->collectionService->getUserCollection();
             $stats = $this->collectionService->getCollectionStats();
-            
+
             return $this->render('collectionManagement/collection.html.twig', [
                 'collection' => $collection,
                 'stats' => $stats
@@ -253,23 +225,21 @@ class CollectionController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/export", name="export", methods={"GET"})
-     */
+    #[Route('/export', name: 'export', methods: ['GET'])]
     public function exportCollection(): Response
     {
         try {
             $collection = $this->collectionService->getUserCollection();
             $exportData = '';
-            
+
             foreach ($collection as $item) {
                 $exportData .= $item->getQuantity() . 'x ' . $item->getCard()->getName() . "\n";
             }
-            
+
             $response = new Response($exportData);
             $response->headers->set('Content-Type', 'text/plain');
             $response->headers->set('Content-Disposition', 'attachment; filename="collection_export.txt"');
-            
+
             return $response;
         } catch (\Exception $e) {
             return $this->json([
