@@ -19,7 +19,7 @@
 	--card-list-background-color: #343536;
 	--card-list-border-separator: solid var(--default-text-color) 1px;
 
-	--dashboard-option-background: radial-gradient(circle at 30% 0%, #fff4, #ffffff19, #fff1);
+	--dashboard-option-background: #fff1;
 }
 
 

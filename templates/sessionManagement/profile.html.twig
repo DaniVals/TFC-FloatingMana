@@ -1,3 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Profile</title>
+	
+	{% include "root.html.twig" %}
+	{% include "header.html.twig" %}
+	<link rel="stylesheet" href=" {{ asset('styles/form.css') }} ">
+
+	<style>
+
+		.profile-container {
+			text-align: center;
+			margin: 20px auto;
+			max-width: 400px;
+			border: 1px solid #ccc;
+			border-radius: 10px;
+			padding: 20px;
+			background-color: #f9f9f9;
+		}
+		.profile-picture {
+			width: 150px;
+			height: 150px;
+			border-radius: 50%;
+			margin-bottom: 15px;
+		}
+		.profile-info p {
+			margin: 5px 0;
+		}
+		.profile-form {
+			margin-top: 20px;
+			text-align: left;
+		}
+		.profile-form div {
+			margin-bottom: 15px;
+		}
+		.profile-form label {
+			display: block;
+			font-weight: bold;
+			margin-bottom: 5px;
+		}
+		.profile-form input {
+			width: 100%;
+			padding: 8px;
+			box-sizing: border-box;
+		}
+		.profile-form button {
+			display: block;
+			width: 100%;
+			padding: 10px;
+			background-color: #007bff;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		.profile-form button:hover {
+			background-color: #0056b3;
+		}
+
+	</style>
+
+</head>
+
+<body>
 {% block body %}
 
 	<div class="profile-container">
@@ -16,7 +83,7 @@
 
 			<div>
 				<label for="profilePicture">Foto de perfil:</label>
-				<input type="file" id="profilePicture" name="profilePicture" accept="image/*">
+				<input type="file" id="profilePicture" name="profilePicture" accept="*.png">
 			</div>
 			<div>
 				<label for="username">Usuario:</label>
@@ -34,55 +101,4 @@
 
 {% endblock %}
 
-<style>
-
-	.profile-container {
-		text-align: center;
-		margin: 20px auto;
-		max-width: 400px;
-		border: 1px solid #ccc;
-		border-radius: 10px;
-		padding: 20px;
-		background-color: #f9f9f9;
-	}
-	.profile-picture {
-		width: 150px;
-		height: 150px;
-		border-radius: 50%;
-		margin-bottom: 15px;
-	}
-	.profile-info p {
-		margin: 5px 0;
-	}
-	.profile-form {
-		margin-top: 20px;
-		text-align: left;
-	}
-	.profile-form div {
-		margin-bottom: 15px;
-	}
-	.profile-form label {
-		display: block;
-		font-weight: bold;
-		margin-bottom: 5px;
-	}
-	.profile-form input {
-		width: 100%;
-		padding: 8px;
-		box-sizing: border-box;
-	}
-	.profile-form button {
-		display: block;
-		width: 100%;
-		padding: 10px;
-		background-color: #007bff;
-		color: white;
-		border: none;
-		border-radius: 5px;
-		cursor: pointer;
-	}
-	.profile-form button:hover {
-		background-color: #0056b3;
-	}
-
-</style>
+</body>
