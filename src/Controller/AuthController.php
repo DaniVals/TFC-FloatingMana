@@ -54,7 +54,7 @@ class AuthController extends AbstractController {
 
             $token = bin2hex(random_bytes(16)); // Genera un token aleatorio
 
-            return $this->render('sessionManagement/main.html.twig', [
+            return $this->render('dashboard/index.html.twig', [
                 'responseData' => [
                     'success' => true,
                     'token' => $token,
