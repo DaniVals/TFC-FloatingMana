@@ -18,12 +18,12 @@ class Collection
     #[ORM\Column(type: "integer", name: "idCollection")]
     private $idCollection;
 
-	#[ORM\Column(type: "string", length: 25, name: "idUser")]
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "username")]
+	#[ORM\JoinColumn(name: "idUser", referencedColumnName: "idUser")]
     private $user;
 
-	#[ORM\Column(type: "integer", length: 4, name: "idCard")]
     #[ORM\ManyToMany(targetEntity: Card::class, inversedBy: "idCard")]
+	#[ORM\JoinColumn(name: "idCard", referencedColumnName: "idCard")]
     private $card;
 
 	#[ORM\Column(type: "decimal", precision: 6, scale: 2)]

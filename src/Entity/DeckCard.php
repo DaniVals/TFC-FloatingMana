@@ -17,12 +17,12 @@ class DeckCard
 	#[ORM\Column(type: "integer", length: 7, name: "idDeckCard")]
 	private $idDeckCard;
 
-	#[ORM\Column(type: "integer", length: 7, name: "idDeck")]
 	#[ORM\ManyToOne(targetEntity: Deck::class, inversedBy: "idDeck")]
+	#[ORM\JoinColumn(name: "idDeck", referencedColumnName: "idDeck")]
 	private $idDeck;
 
-	#[ORM\Column(type: "integer", length: 4, name: "idCard")]
 	#[ORM\ManyToOne(targetEntity: Card::class, inversedBy: "idCard")]
+	#[ORM\JoinColumn(name: "idCard", referencedColumnName: "idCard")]
 	private $idCard;
 
 	//----- Getters y setters -----

@@ -20,9 +20,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
 	#[ORM\Column(type: "string", length: 255, name: "username")]
-	#[ORM\OneToMany(targetEntity: Collection::class, mappedBy: "user")]
-	#[ORM\OneToMany(targetEntity: Deck::class, mappedBy: "idUser")]
 	private $name;
+	
+	// ----- Relación de username con otras entidades -----
+
+	#[ORM\OneToMany(targetEntity: Collection::class, mappedBy: "idUser")]
+	private $collectionCards;
+	
+	#[ORM\OneToMany(targetEntity: Deck::class, mappedBy: "idUser")]
+	private $decks;
+
+	//----- Fin de la relación de username con otras entidades -----
 
     #[ORM\Column(type: "string", length: 50, unique: true, name: "email")]
     private $email;
@@ -75,6 +83,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->name = $name;
         return $this;
     }
+
+	public function getCollectionCards(): ?array
+	{
+		return $this->collectionCards;
+	}
+	public function setCollectionCards(array $collectionCards): self
+	{
+		$this->collectionCards = $collectionCards;
+		return $this;
+	}
+
+	public function getDecks(): ?array
+	{
+		return $this->decks;
+	}
+	public function setDecks(array $decks): self
+	{
+		$this->decks = $decks;
+		return $this;
+	}
 
     public function getEmail(): ?string
     {
