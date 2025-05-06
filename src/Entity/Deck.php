@@ -66,7 +66,7 @@ class Deck
 		return $this;
 	}
 
-	public function getDeckCards(): ?array
+	public function getDeckCards() 
 	{
 		return $this->deckCards;
 	}
