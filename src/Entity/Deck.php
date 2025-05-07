@@ -16,15 +16,15 @@ class Deck
     #[ORM\Column(type: "integer", length: 7, name: "idDeck")]
 	private $idDeck;
 	
-	#[ORM\OneToMany(targetEntity: DeckCard::class, mappedBy: "idDeck")]
+	#[ORM\OneToMany(targetEntity: DeckCard::class, mappedBy: "deck")]
 	private $deckCards;
 
     #[ORM\Column(type: "string", length: 50, name: "deckName")]
     private $deckName;
 
-	#[ORM\ManyToOne(targetEntity: User::class, inversedBy: "username")]
-	#[ORM\JoinColumn(name: "idUser", referencedColumnName: "idUser")]
-    private $idUser;
+	#[ORM\ManyToOne(targetEntity: User::class, inversedBy: "decks")]
+	#[ORM\JoinColumn(name: "idUser", referencedColumnName: "username")]
+    private $user;
 
 	#[ORM\Column(type: "string", length: 150, name: "type")]
 	private $type;
@@ -46,13 +46,13 @@ class Deck
 		return $this;
 	}
 
-	public function getIdUser(): ?string
+	public function getUser(): ?string
 	{
-		return $this->idUser;
+		return $this->user;
 	}
-	public function setIdUser(string $idUser): self
+	public function setUser(string $user): self
 	{
-		$this->idUser = $idUser;
+		$this->user = $user;
 		return $this;
 	}
 

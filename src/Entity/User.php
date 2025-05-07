@@ -24,10 +24,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 	
 	// ----- Relación de username con otras entidades -----
 
-	#[ORM\OneToMany(targetEntity: Collection::class, mappedBy: "idUser")]
+	#[ORM\OneToMany(targetEntity: Collection::class, mappedBy: "user")]
 	private $collectionCards;
 	
-	#[ORM\OneToMany(targetEntity: Deck::class, mappedBy: "idUser")]
+	#[ORM\OneToMany(targetEntity: Deck::class, mappedBy: "user")]
 	private $decks;
 
 	//----- Fin de la relación de username con otras entidades -----

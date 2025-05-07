@@ -17,11 +17,11 @@ class DeckCard
 	#[ORM\Column(type: "integer", length: 7, name: "idDeckCard")]
 	private $idDeckCard;
 
-	#[ORM\ManyToOne(targetEntity: Deck::class, inversedBy: "idDeck")]
+	#[ORM\ManyToOne(targetEntity: Deck::class, inversedBy: "deckCards")]
 	#[ORM\JoinColumn(name: "idDeck", referencedColumnName: "idDeck")]
 	private $deck;
 
-	#[ORM\ManyToOne(targetEntity: Card::class, inversedBy: "idCard")]
+	#[ORM\ManyToOne(targetEntity: Card::class)]
 	#[ORM\JoinColumn(name: "idCard", referencedColumnName: "idCard")]
 	private $card;
 
