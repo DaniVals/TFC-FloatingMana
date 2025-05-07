@@ -6,99 +6,48 @@
 	<title>Profile</title>
 	
 	{% include "root.html.twig" %}
-	{% include "header.html.twig" %}
 	<link rel="stylesheet" href=" {{ asset('styles/form.css') }} ">
-
-	<style>
-
-		.profile-container {
-			text-align: center;
-			margin: 20px auto;
-			max-width: 400px;
-			border: 1px solid #ccc;
-			border-radius: 10px;
-			padding: 20px;
-			background-color: #f9f9f9;
-		}
-		.profile-picture {
-			width: 150px;
-			height: 150px;
-			border-radius: 50%;
-			margin-bottom: 15px;
-		}
-		.profile-info p {
-			margin: 5px 0;
-		}
-		.profile-form {
-			margin-top: 20px;
-			text-align: left;
-		}
-		.profile-form div {
-			margin-bottom: 15px;
-		}
-		.profile-form label {
-			display: block;
-			font-weight: bold;
-			margin-bottom: 5px;
-		}
-		.profile-form input {
-			width: 100%;
-			padding: 8px;
-			box-sizing: border-box;
-		}
-		.profile-form button {
-			display: block;
-			width: 100%;
-			padding: 10px;
-			background-color: #007bff;
-			color: white;
-			border: none;
-			border-radius: 5px;
-			cursor: pointer;
-		}
-		.profile-form button:hover {
-			background-color: #0056b3;
-		}
-
-	</style>
 
 </head>
 
+{% include "header.html.twig" %}
 <body>
-{% block body %}
 
-	<div class="profile-container">
+	<div class="container">
 
-		<h1> 👤 Mi perfil </h1>
-
-		<div class="profile-info">
-
-			<img src="{{ user.profilePicture }}" alt="Foto de perfil" class="profile-picture">
-			<p><strong> Usuario: </strong> {{ user.username }}</p>
-			<p><strong> Correo: </strong> {{ user.email }}</p>
-
+		<div class="row">
+			<h1 class="col-12 text-center"> 👤 Mi perfil </h1>
+			<hr>
 		</div>
 
-		<form action="{{ path('profile_update') }}" method="post" enctype="multipart/form-data" class="profile-form">
+		<div class="row">
+			<div class="col-12 col-sm-6 col-md-3">
+				<img src="{{ app.user.getProfilePic }}" alt="Foto de perfil" class="profile-picture w-100">
+			</div>
+			<div class="col-12 col-sm-6 col-md-3">
+				<p><strong> Usuario: </strong> {{ app.user.getName }}</p>
+				<p><strong> Correo: </strong> {{ app.user.getEmail }}</p>
+			</div>
 
-			<div>
-				<label for="profilePicture">Foto de perfil:</label>
-				<input type="file" id="profilePicture" name="profilePicture" accept="*.png">
-			</div>
-			<div>
-				<label for="username">Usuario:</label>
-				<input type="text" id="username" name="username" value="{{ user.username }}" required>
-			</div>
-			<div>
-				<label for="email">Correo:</label>
-				<input type="email" id="email" name="email" value="{{ user.email }}" required>
-			</div>
-			<button type="submit">Actualizar perfil</button>
+			<form action="{{ path('profile_update') }}" method="post" enctype="multipart/form-data" class="col-12 col-sm-12 col-md-6">
 
-		</form>
+				<div>
+					<label for="profilePicture">Foto de perfil:</label>
+					<input type="file" id="profilePicture" name="profilePicture" accept="*.png">
+				</div>
+				<div>
+					<label for="username">Usuario:</label>
+					<input type="text" id="username" name="username" value="{{ app.user.getName }}" required>
+				</div>
+				<div>
+					<label for="email">Correo:</label>
+					<input type="email" id="email" name="email" value="{{ app.user.getEmail }}" required>
+				</div>
+				<button type="submit">Actualizar perfil</button>
+
+			</form>
+		</div>
+
 
 	</div>
-
-{% endblock %}
-
 </body>
