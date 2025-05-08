@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Editar mazo</title>
+	
+	{% include "root.html.twig" %}
+	<link rel="stylesheet" href=" {{ asset('styles/cardList.css') }} ">
+	<script src=" {{asset('js/CardClass.js')}} "></script>
+	<script src=" {{asset('js/cardList.js')}} "></script>
+</head>
+{% include "header.html.twig" %}
+<body>
+    <!-- Por cada carta, mostrar su nombre, precio y la imagen. -->
+    <!-- Leer el dato que se envia desde el controlador y mostrarlo en la vista. -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2>Editando: {{ deck.getDeckName }} </h2>
+            </div>
+        </div>
+
+		<form action="{{ path('') }}" method="post">
+		</form>
+
+		{{ dump(deck) }}
+    </div>
+</body>
+</html>

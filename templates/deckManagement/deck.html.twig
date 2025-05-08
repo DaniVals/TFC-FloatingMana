@@ -41,7 +41,6 @@
 			<span class="card-data" data-card-id="4b4390f4-451f-4575-96e0-dc4dcb45ad8f"></span>
 			<span class="card-data" data-card-id="047f196b-a9d1-4cd3-b665-3b304cc59767"></span>
 		</div> #}
-		{{ dump(deck) }}
 
         <div class="row justify-content-center" id="card-list" data-ajax-route="https://api.scryfall.com/cards/">
 		
@@ -55,6 +54,9 @@
                 </div>
             {% endfor %}
         </div>
+		{# dejar un pequeño pie de pagina #}
+		<br> 
+		{{ dump(deck) }}
     </div>
 </body>
 </html>
