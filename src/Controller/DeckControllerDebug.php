@@ -78,10 +78,15 @@ class DeckControllerDebug extends AbstractController {
     }
 
     #[Route('/{id}/edit', name: 'edit')]
-    public function edit(Deck $deck) {
+    public function edit() {
 		return $this->render('deckManagement/edit.html.twig', [
 			'deck' => $this->deck,
 		]);
+    }
+
+    #[Route('/create', name: 'create')]
+    public function create() {
+		return $this->render('deckManagement/create.html.twig');
     }
 
 }

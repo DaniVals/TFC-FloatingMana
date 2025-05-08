@@ -22,7 +22,26 @@
             </div>
         </div>
 
-		<form action="{{ path('') }}" method="post">
+		<form 
+		{% if deck.getIdDeck is not null and deck.getIdDeck != '' %}
+			action="{{ path('deck_edit', {'id': deck.getIdDeck}) }}"
+		{% endif %}
+		method="post">
+
+			<div class="form-group">
+				<label for="deckName">Nombre del mazo:</label>
+				<input type="text" id="deckName" name="deckName" class="form-control" value="{{ deck.getDeckName }}" required>
+			</div>
+			<br>
+			<div class="form-group">
+				{% include "deckManagement/deckTypeInput.twig" %}
+			</div>
+			<br>
+			<div class="form-group text-center">
+				<button type="submit" class="btn btn-primary">Guardar cambios</button>
+			</div>
+			<br>
+			
 		</form>
 
 		{{ dump(deck) }}
