@@ -113,7 +113,7 @@ class DeckBuilderService
     {
         $deck = new Deck();
         $deck->setDeckName($deckName);
-        $deck->setType($type);
+        $deck->setFormat($type);
         $deck->setUser($user);
         
         // Guardar el mazo en la base de datos

@@ -14,16 +14,19 @@ class DeckCard
 {
 	#[ORM\Id]
 	#[ORM\GeneratedValue]
-	#[ORM\Column(type: "integer", length: 7, name: "idDeckCard")]
+	#[ORM\Column(type: "integer", name: "idDeckCard")]
 	private $idDeckCard;
 
-	#[ORM\ManyToOne(targetEntity: Deck::class, inversedBy: "deckCards")]
+	#[ORM\ManyToOne(targetEntity: Deck::class, inversedBy: "deckCards", fetch: "EAGER")]
 	#[ORM\JoinColumn(name: "idDeck", referencedColumnName: "idDeck")]
 	private $deck;
 
-	#[ORM\ManyToOne(targetEntity: Card::class)]
+	#[ORM\ManyToOne(targetEntity: Card::class, fetch: "EAGER")]
 	#[ORM\JoinColumn(name: "idCard", referencedColumnName: "idCard")]
 	private $card;
+
+	#[ORM\Column(type: "integer", length: 3, name: "cardQuantity")]
+	private $cardQuantity;
 
 	//----- Getters y setters -----
 
@@ -54,6 +57,16 @@ class DeckCard
 	public function setCard(Card $card): self
 	{
 		$this->card = $card;
+		return $this;
+	}
+
+	public function getCardQuantity(): ?int
+	{
+		return $this->cardQuantity;
+	}
+	public function setCardQuantity(int $cardQuantity): self
+	{
+		$this->cardQuantity = $cardQuantity;
 		return $this;
 	}
 }

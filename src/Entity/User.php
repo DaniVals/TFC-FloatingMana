@@ -8,6 +8,8 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Entity\Deck;
 use App\Entity\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection as DoctrineCollection;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: "user")]
@@ -24,10 +26,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 	
 	// ----- Relación de username con otras entidades -----
 
-	#[ORM\OneToMany(targetEntity: Collection::class, mappedBy: "user")]
+	#[ORM\OneToMany(targetEntity: Collection::class, mappedBy: "user", fetch: "EAGER")]
 	private $collectionCards;
 	
-	#[ORM\OneToMany(targetEntity: Deck::class, mappedBy: "user")]
+	#[ORM\OneToMany(targetEntity: Deck::class, mappedBy: "user", fetch: "EAGER")]
 	private $decks;
 
 	//----- Fin de la relación de username con otras entidades -----
@@ -60,6 +62,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     // #[ORM\Column(type: "integer", name: "failedLoginAttempts")]
     private $failedLoginAttempts = 0;
 
+	// ----- Constructor -----
+
+	public function __construct()
+	{
+		// Inicializa las colecciones de cartas y mazos
+		$this->collectionCards = new ArrayCollection();
+		$this->decks = new ArrayCollection();
+	}
+
     // -----Getters y setters-----
 
     public function getId(): ?int
@@ -84,7 +95,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-	public function getCollectionCards(): ?array
+	public function getCollectionCards()
 	{
 		return $this->collectionCards;
 	}

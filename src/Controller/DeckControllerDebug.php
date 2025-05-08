@@ -22,7 +22,7 @@ class DeckControllerDebug extends AbstractController {
 
 		$this->deck = new Deck();
 		$this->deck->setDeckName("nombre mazo");
-		$this->deck->setType("tipo mazo");
+		$this->deck->setFormat("tipo mazo");
 		$this->deck->setUser(new User());
 
 		$deckCards = [];

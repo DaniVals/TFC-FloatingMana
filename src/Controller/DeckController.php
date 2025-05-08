@@ -192,7 +192,7 @@ class DeckController extends AbstractController {
 	$deckFormat = $request->request->get('_deckFormat');
 	try {
 	    $deck->setDeckName($deckName);
-	    $deck->setType($deckFormat);
+	    $deck->setFormat($deckFormat);
 	    $this->deckRepository->save($deck, true);
 
 	    return $this->render('deckManagement/deck.html.twig', [

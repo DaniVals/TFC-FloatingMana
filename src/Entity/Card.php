@@ -12,7 +12,7 @@ class Card
 {
 	#[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: "integer", length: 4, name: "idCard")]
+    #[ORM\Column(type: "integer", name: "idCard")]
     private $idCard;
 
 	#[ORM\Column(type: "string", length: 255, name: "cardName")]

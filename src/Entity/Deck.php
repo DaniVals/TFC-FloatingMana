@@ -13,7 +13,7 @@ class Deck
 {
 	#[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: "integer", length: 7, name: "idDeck")]
+    #[ORM\Column(type: "integer", name: "idDeck")]
 	private $idDeck;
 	
 	#[ORM\OneToMany(targetEntity: DeckCard::class, mappedBy: "deck")]
@@ -22,12 +22,15 @@ class Deck
     #[ORM\Column(type: "string", length: 50, name: "deckName")]
     private $deckName;
 
-	#[ORM\ManyToOne(targetEntity: User::class, inversedBy: "decks")]
-	#[ORM\JoinColumn(name: "idUser", referencedColumnName: "username")]
+	#[ORM\ManyToOne(targetEntity: User::class, inversedBy: "decks", fetch: "EAGER")]
+	#[ORM\JoinColumn(name: "idUser", referencedColumnName: "idUser")]
     private $user;
 
-	#[ORM\Column(type: "string", length: 150, name: "type")]
-	private $type;
+	#[ORM\Column(type: "string", length: 150, name: "format")]
+	private $format;
+
+	#[ORM\Column(type: "string", length: 255, name: "coverImg")]
+	private $coverImg;
 
 	//----- Getters y setters -----
 
@@ -56,13 +59,13 @@ class Deck
 		return $this;
 	}
 
-	public function getType(): ?string
+	public function getFormat(): ?string
 	{
-		return $this->type;
+		return $this->format;
 	}
-	public function setType(string $type): self
+	public function setFormat(string $format): self
 	{
-		$this->type = $type;
+		$this->format = $format;
 		return $this;
 	}
 
@@ -73,6 +76,16 @@ class Deck
 	public function setDeckCards(array $deckCards): self
 	{
 		$this->deckCards = $deckCards;
+		return $this;
+	}
+
+	public function getCoverImg(): ?string
+	{
+		return $this->coverImg;
+	}
+	public function setCoverImg(string $coverImg): self
+	{
+		$this->coverImg = $coverImg;
 		return $this;
 	}
 }
