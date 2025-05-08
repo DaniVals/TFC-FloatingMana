@@ -69,6 +69,11 @@ class DeckControllerDebug extends AbstractController {
     public function index() {
 		return $this->render('deckManagement/index.html.twig');
     }
+	
+    #[Route('/create', name: 'create')]
+    public function create() {
+		return $this->render('deckManagement/create.html.twig');
+    }
 
     #[Route('/{id}', name: 'show')]
     public function show(int $id) {
@@ -84,9 +89,5 @@ class DeckControllerDebug extends AbstractController {
 		]);
     }
 
-    #[Route('/create', name: 'create')]
-    public function create() {
-		return $this->render('deckManagement/create.html.twig');
-    }
 
 }

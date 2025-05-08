@@ -1,8 +1,8 @@
 
 <label for="deckType">Tipo de mazo:</label>
 <select id="deckType" name="deckType" class="form-control" required>
-	<option value="aggressive" {% if deck.getType == 'aggressive' %}selected{% endif %}>Agresivo</option>
-	<option value="control" {% if deck.getType == 'control' %}selected{% endif %}>Control</option>
-	<option value="combo" {% if deck.getType == 'combo' %}selected{% endif %}>Combo</option>
-	<option value="midrange" {% if deck.getType == 'midrange' %}selected{% endif %}>Midrange</option>
+	<option value="aggressive" {% if  deck.getType is defined and deck.getType == 'aggressive' %}selected{% endif %}>Agresivo</option>
+	<option value="control" {% if  deck.getType is defined and deck.getType == 'control' %}selected{% endif %}>Control</option>
+	<option value="combo" {% if  deck.getType is defined and deck.getType == 'combo' %}selected{% endif %}>Combo</option>
+	<option value="midrange" {% if  deck.getType is defined and deck.getType == 'midrange' %}selected{% endif %}>Midrange</option>
 </select>

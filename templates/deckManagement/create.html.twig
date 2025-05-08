@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Editar mazo</title>
+	
+	{% include "root.html.twig" %}
+	<link rel="stylesheet" href=" {{ asset('styles/cardList.css') }} ">
+	<script src=" {{asset('js/CardClass.js')}} "></script>
+	<script src=" {{asset('js/cardList.js')}} "></script>
+</head>
+{% include "header.html.twig" %}
+<body>
+    <!-- Por cada carta, mostrar su nombre, precio y la imagen. -->
+    <!-- Leer el dato que se envia desde el controlador y mostrarlo en la vista. -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2> Creando nuevo mazo </h2>
+            </div>
+        </div>
+
+		<form 
+		{# action="{{ path('deck_create', {'id': deck.getIdDeck}) }}" #}
+		method="post">
+
+			<div class="form-group">
+				<label for="deckName">Nombre del mazo:</label>
+				<input type="text" id="deckName" name="deckName" class="form-control" required>
+			</div>
+			<br>
+			<div class="form-group">
+				{% include "deckManagement/deckTypeInput.twig" %}
+			</div>
+			<br>
+			<div class="form-group text-center">
+				<button type="submit" class="btn btn-primary">Crear mazo</button>
+			</div>
+			<br>
+			
+		</form>
+
+    </div>
+</body>
+</html>
