@@ -53,7 +53,7 @@ class DeckController extends AbstractController {
 	$deckFormat = $request->request->get('_deckFormat');
 
 	try {
-	    $deck = $this->deckBuilderService->createDeck($user, $deckName, $deckFormat);
+	    $deck = $this->deckBuilderService->createDeck($user, (string)$deckName, (string)$deckFormat);
 	    $this->deckRepository->save($deck, true);
 
 	    return $this->render('deckManagement/deck.html.twig', [

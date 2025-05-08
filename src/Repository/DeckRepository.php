@@ -24,6 +24,16 @@ class DeckRepository extends ServiceEntityRepository
         }
     }
 
+    // Crear un mazo nuevo en la base de dato 
+    public function create(Deck $deck, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($deck);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
     // Elimina un mazo de la base de datos
     public function remove(Deck $deck, bool $flush = false): void
     {

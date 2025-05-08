@@ -26,6 +26,16 @@ class DeckCardRepository extends ServiceEntityRepository
         }
     }
 
+    // Crear un mazo vacío
+    public function createDeck(Deck $deck, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($deck);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
     
     //Elimina una relación carta-mazo de la base de datos
     public function remove(DeckCard $deckCard, bool $flush = false): void

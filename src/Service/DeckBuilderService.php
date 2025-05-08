@@ -117,7 +117,7 @@ class DeckBuilderService
         $deck->setUser($user);
         
         // Guardar el mazo en la base de datos
-        $this->deckRepository->save($deck, true);
+        $this->deckRepository->createDeck($deck, true);
         
         return $deck;
     }
