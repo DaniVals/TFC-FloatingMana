@@ -108,5 +108,23 @@ class DeckBuilderService
         // ...
     }
     
-    // Otros métodos del servicio...
+    // Crear un mazo nuevo
+    public function createDeck(User $user, string $deckName, string $type): Deck
+    {
+        $deck = new Deck();
+        $deck->setDeckName($deckName);
+        $deck->setType($type);
+        $deck->setUser($user);
+        
+        // Guardar el mazo en la base de datos
+        $this->deckRepository->save($deck, true);
+        
+        return $deck;
+    }
+
+    // Check if a deck is empty
+    public function isDeckEmpty(Deck $deck): bool
+    {
+        return $this->deckCardRepository->countCardsInDeck($deck) === 0;
+    }
 }
