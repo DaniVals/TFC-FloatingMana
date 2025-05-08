@@ -2,44 +2,58 @@
 	<div class="row justify-content-center">
 
 		<div id="addCardPopUp-window" class="col-10 mt-5 p-5">
-		<div class="row">
-			<div id="addCardPopUp-window-colecction" class="col">
-				<h2>Añadir a coleccion</h2>
-				<p id="addCardPopUp-window-colecction-name">Nombre de la carta</p>
-				
-				<label for="colecction-purchacePrice">Precio de compra</label>
-				<input type="number" name="colecction-purchacePrice"
-				id="addCardPopUp-window-colecction-purchacePrice"
-				placeholder="No encontrado">€
-				<br>
-				
-				<label for="colecction-isFoil">Es foil</label>
-				<input type="checkbox" name="colecction-isFoil"
-				id="addCardPopUp-window-colecction-isFoil">
-				<br>
+			<input type="hidden" id="addCardPopUp-window-card-id" value="">
+			<input type="hidden" id="addCardPopUp-window-card-name" value="">
+			<div class="row">
+				<div id="addCardPopUp-window-colecction" class="col mb-3">
+					<h2>Añadir a coleccion</h2>
+					<p id="addCardPopUp-window-colecction-name">Nombre de la carta</p>
+					
+					<label for="colecction-purchacePrice">Precio de compra</label>
+					<input type="number" name="colecction-purchacePrice"
+					id="addCardPopUp-window-colecction-purchacePrice"
+					placeholder="No encontrado">€
+					<br>
+					
+					<label for="colecction-isFoil">Es foil</label>
+					<input type="checkbox" name="colecction-isFoil"
+					id="addCardPopUp-window-colecction-isFoil">
+					<br>
 
-				<label for="colecction-status">Estado</label>
-				<select name="colecction-status"
-				id="addCardPopUp-window-colecction-status">
-				
-				</select>
-				<br>
+					<label for="colecction-status">Estado</label>
+					<select name="colecction-status"
+					id="addCardPopUp-window-colecction-status">
+					
+					</select>
+					<br>
 
-				<button>Añadir a coleccion</button>
+					<button>Añadir a coleccion</button>
+				</div>
+
+				<div id="addCardPopUp-window-deck" class="col" data-AJAX-route="{{ path('add_card_to_deck') }}">
+					<h2>Añadir a mazo</h2>
+					<p id="addCardPopUp-window-deck-name">Nombre de la carta</p>
+					
+					<label for="deck-quantity">Catidad</label>
+					<input name="deck-quantity" id="addCardPopUp-window-deck-quantity" type="number">
+					<br>
+
+					<label for="selected-deck">Mazo</label>
+					<select name="selected-deck"
+					id="addCardPopUp-window-deck-selected">
+						<option value="none">Elige un mazo</option>
+					</select>
+					<br>
+					
+					<button id="addCardPopUp-window-deck-button" onclick="addCardToDeck()">Añadir a mazo</button>
+				</div>
 			</div>
+			<div class="row">
+				<div id="addCardPopUp-window-message" class="col" data-status="-1">
+					<p id="addCardPopUp-window-message-text">Texto de prueba</p>
 
-			<div id="addCardPopUp-window-deck" class="col">
-				<h2>Añadir a mazo</h2>
-				<p id="addCardPopUp-window-deck-name">Nombre de la carta</p>
-				
-				<select id="addCardPopUp-window-deck-selected">
-					<option value="none">Elige un mazo</option>
-				</select>
-				<br>
-				
-				<button>Añadir a mazo</button>
+				</div>
 			</div>
-		</div>
 		</div>
 	</div>
 </div>

@@ -20,6 +20,10 @@
 	--card-list-border-separator: solid var(--default-text-color) 1px;
 
 	--dashboard-option-background: #fff1;
+
+	--status-message-ok-background: #696;
+	--status-message-warning-background: #996;
+	--status-message-error-background: #966;
 }
 
 

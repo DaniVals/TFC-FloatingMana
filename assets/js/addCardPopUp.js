@@ -27,6 +27,11 @@ function addCardPopUp(cardName, cardId, cardPrices) {
 	const cardNameDeck = document.getElementById('addCardPopUp-window-deck-name');
 	cardNameDeck.innerText = cardName;
 
+	const cardNameInput = document.getElementById('addCardPopUp-window-card-name');
+	cardNameInput.value = cardName;
+	const cardIdInput = document.getElementById('addCardPopUp-window-card-id');
+	cardIdInput.value = cardId;
+
 	prices = cardPrices;
 	console.log(prices);
 
@@ -55,4 +60,48 @@ function updatePrices() {
 			cardPriceColecction.value = "";	
 		}
 	}
+}
+
+
+
+function addCardToDeck() {
+	const AJAXroute = document.getElementById('addCardPopUp-window-deck').getAttribute("data-AJAX-route");
+	const message = document.getElementById('addCardPopUp-window-message');
+	const messageText = document.getElementById('addCardPopUp-window-message-text');
+
+	console.log("añadiendo carta a mazo");
+	
+
+	const xhr = new XMLHttpRequest();
+	xhr.open('POST', AJAXroute);
+	xhr.setRequestHeader('Content-Type', 'application/json');
+	const params = {
+		cardId: document.getElementById('addCardPopUp-window-card-id').value,
+		deckId: document.getElementById('addCardPopUp-window-deck').value,
+		quantity: document.getElementById('addCardPopUp-window-deck-quantity').value
+	};
+	xhr.send(JSON.stringify({ data: params }));
+
+	xhr.onload = function () {
+		// console.log(xhr);
+		const data = JSON.parse(xhr.responseText);
+		console.log("Carta añadida", data);
+
+		messageText.innerText = data["message"];
+		if (data["success"] == true) {
+			message.setAttribute("data-status", 200);
+		} else if (data["success"] == false) {
+			message.setAttribute("data-status", 404);
+		} else {
+			message.setAttribute("data-status", xhr.status);
+		}
+	};
+	
+	xhr.onerror = function () {
+		// console.log(xhr);
+		console.error('No se ha podido añadir la carta', xhr.statusText);
+		message.setAttribute("data-status", 404);
+		messageText.innerText = "No se ha podido añadir la carta: " + xhr.status;
+	};
+	xhr.send();
 }
