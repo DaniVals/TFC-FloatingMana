@@ -50,3 +50,10 @@ a{
 	margin-top: 1.5em;
 	margin-bottom: 0.5em;
 }
+
+a.no-deco {
+	text-decoration: none;
+}
+.no-deco a {
+	text-decoration: none;
+}
