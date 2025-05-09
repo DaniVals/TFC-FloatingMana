@@ -17,7 +17,7 @@ class CardCollection {
 	}
 
 	updateElement(JSON_DATA) {
-		console.log(JSON_DATA);
+		// console.log(JSON_DATA);
 		
 		const cardImage = this.element.querySelector("#card-image");
 		if (JSON_DATA["image_uris"] && JSON_DATA["image_uris"]["art_crop"]) {
@@ -34,11 +34,11 @@ class CardCollection {
 
 		if (JSON_DATA["type_line"]) {
 			let types = JSON_DATA["type_line"].split("—")[0].trim().split(/\s+/);
-			console.log(types);
+			// console.log(types);
 			if (types[0] == "Legendary") {
 				types.shift();
 			}
-			console.log(types);
+			// console.log(types);
 			this.type = types[0];
 			
 		} else {

@@ -63,7 +63,7 @@ function addToBody() {
 
 function sortBy(selectId) {
 	const sortingMode = document.getElementById(selectId).value
-	console.log(sortingMode);
+	console.log("sorting by: ", sortingMode);
 	
 	switch (sortingMode) {
 		case "name":
@@ -84,7 +84,9 @@ function sortBy(selectId) {
 
 function groupBy(selectId) {
 	grupo = document.getElementById(selectId).value;
-	console.log(grupo);
+	console.log("grouping by: ", grupo);
+	console.log("NOT IMPLEMENTED");
+	
 
 	const groups = document.getElementsByClassName("groupMode");
 	for (let i = 0; i < groups.length; i++) {
@@ -93,6 +95,8 @@ function groupBy(selectId) {
 	
 	switch (grupo) {
 		case "type":
+			// log secreto para ver la lista
+			console.log(cards);
 			break;
 			
 		case "set":
