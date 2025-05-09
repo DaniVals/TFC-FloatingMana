@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use App\Repository\UserCollectionRepository;
 use App\Entity\Card;
 use App\Entity\User;
+use App\Entity\State;
 
 #[ORM\Entity(repositoryClass: UserCollectionRepository::class)]
 #[ORM\Table(name: "collection")]
@@ -41,7 +42,8 @@ class Collection
 	#[ORM\Column(type: "integer", length: 1, name: "isFoil")]
 	private $isFoil;
 	
-	#[ORM\Column(type: "integer", length: 1, name: "state")]
+	#[ORM\ManyToOne(targetEntity: State::class)]
+	#[ORM\JoinColumn(name: "state", referencedColumnName: "idState")]
 	private $state;
 	
 	//----- Variables auxiliares -----

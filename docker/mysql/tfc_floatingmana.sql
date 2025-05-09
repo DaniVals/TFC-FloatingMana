@@ -106,7 +106,7 @@ INSERT INTO `state` (`idState`, `stateName`) VALUES
 CREATE TABLE IF NOT EXISTS `tokenauth` (
   `idUser` int NOT NULL,
   `token` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `expirationDate` date NOT NULL,
+  `expirationDate` datetime NOT NULL,
   PRIMARY KEY (`token`),
   UNIQUE KEY `idUser` (`idUser`),
   CONSTRAINT `FK_TAidU_UidU` FOREIGN KEY (`idUser`) REFERENCES `user` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE

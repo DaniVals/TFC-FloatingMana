@@ -8,8 +8,8 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Entity\Deck;
 use App\Entity\Collection;
+use App\Entity\TokenAuth;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection as DoctrineCollection;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: "user")]
@@ -19,6 +19,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: "integer", name: "idUser")]
+	#[ORM\OneToOne(targetEntity: TokenAuth::class, mappedBy: 'idUser')]
     private $id;
 
 	#[ORM\Column(type: "string", length: 255, name: "username")]
