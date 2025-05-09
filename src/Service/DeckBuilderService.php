@@ -73,8 +73,7 @@ class DeckBuilderService
             $deckCard = new DeckCard();
             $deckCard->setDeck($deck);
             $deckCard->setCard($card);
-            $deckCard->setQuantity($quantity);
-            $deckCard->setIsSideboard($isSideboard);
+            $deckCard->setCardQuantity($quantity);
         }
         
         // Guardar cambios
