@@ -26,7 +26,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 	
 	// ----- Relación de username con otras entidades -----
 
-	#[ORM\OneToMany(targetEntity: Collection::class, mappedBy: "user", fetch: "EAGER")]
+	#[ORM\OneToMany(targetEntity: Collection::class, mappedBy: "user")]
 	private $collectionCards;
 	
 	#[ORM\OneToMany(targetEntity: Deck::class, mappedBy: "user", fetch: "EAGER")]

@@ -33,12 +33,12 @@
 			</div>
 
 			<div class="row justify-content-center" id="deck-list" data-ajax-route="https://api.scryfall.com/cards/">
-					{{ dump(app.user.getDecks) }}
-{# 
+				{# {{ dump(app.user.getDecks) }} #}
+
 				{% for deck in app.user.getDecks %}
-					{{ dump(deck) }}
+					{# {{ dump(deck) }} #}
 					<a href="{{ path('deck_show', { id: deck.getIdDeck }) }}"> {{ deck.getDeckName }} </a>
-				{% endfor %} #}
+				{% endfor %}
 			</div>
 		{% endif %}
     </div>

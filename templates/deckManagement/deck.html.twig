@@ -47,7 +47,7 @@
 
         <div class="row justify-content-center no-deco" id="card-list" data-ajax-route="https://api.scryfall.com/cards/">
 		
-            {# {% for card in deck.getDeckCards %}
+            {% for card in deck.getDeckCards %}
                 <div class="col-12 col-sm-11 col-md-10   card-list-show" data-card-id="{{ card.getCard.getIdScryfall }}" data-card-name="{{ card.getCard.getCardName }}">
 					<a href=" {{ path('view_card', {id: card.getCard.getIdScryfall  }) }} "> 
 					<div class="d-flex justify-content-between align-items-center w-100">
@@ -57,12 +57,12 @@
 					</div>
 					</a>
                 </div>
-            {% endfor %} #}
+            {% endfor %}
         </div>
 		{# dejar un pequeño pie de pagina #}
 		<br> 
     </div>
-		{{ dump(deck) }}
-		{{ dump(app.user) }}
+		{# {{ dump(deck) }}
+		{{ dump(app.user) }} #}
 </body>
 </html>

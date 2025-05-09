@@ -16,7 +16,7 @@ class Deck
     #[ORM\Column(type: "integer", name: "idDeck")]
 	private $idDeck;
 	
-	#[ORM\OneToMany(targetEntity: DeckCard::class, mappedBy: "deck")]
+	#[ORM\OneToMany(targetEntity: DeckCard::class, mappedBy: "deck", fetch: "EAGER")]
 	private $deckCards;
 
     #[ORM\Column(type: "string", length: 50, name: "deckName")]

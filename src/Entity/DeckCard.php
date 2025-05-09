@@ -8,7 +8,7 @@ use App\Entity\Card;
 use App\Entity\Deck;
 
 #[ORM\Entity(repositoryClass: DeckCardRepository::class)]
-#[ORM\Table(name: "deckCard")]
+#[ORM\Table(name: "deckcard")]
 
 class DeckCard
 {

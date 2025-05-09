@@ -23,7 +23,7 @@ class Collection
     private $user;
 
 	// #[ORM\JoinColumn(name: "idCard", referencedColumnName: "idCard")]
-    #[ORM\ManyToMany(targetEntity: Card::class, fetch: "EAGER")]
+    #[ORM\ManyToMany(targetEntity: Card::class)]
 	#[ORM\JoinTable(
 		name: "collection_card",
 		joinColumns: [
