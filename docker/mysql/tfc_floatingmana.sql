@@ -16,8 +16,8 @@
 
 
 -- Volcando estructura de base de datos para tfc_floatingmana
-DROP DATABASE IF EXISTS `tfc_floatingmana`
-CREATE DATABASE `tfc_floatingmana` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+-- DROP DATABASE IF EXISTS `tfc_floatingmana`
+CREATE DATABASE IF NOT EXISTS `tfc_floatingmana` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `tfc_floatingmana`;
 
 -- Volcando estructura para tabla tfc_floatingmana.card
