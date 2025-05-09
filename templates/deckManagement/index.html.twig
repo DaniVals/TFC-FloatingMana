@@ -25,12 +25,14 @@
 			<div class="row">
 				<div class="col-12 text-center">
 					<h1> Tus mazos </h1>
-					<a href="#">
-						<h2>Crear nuevo mazo</h2>
-					</a>
-					{% include "separation.twig" %}
+					<div class="col-12 text-center">
+						<a href="{{ path('deck_create_view') }}" class="btn btn-outline-success {% if app.user.getDecks|length == 0 %}btn-lg{% endif %}">
+							Crear nuevo mazo
+						</a>
+					</div>
 				</div>
 			</div>
+			{% include "separation.twig" %}
 
 			<div class="row justify-content-center" id="deck-list" data-ajax-route="https://api.scryfall.com/cards/">
 				{# {{ dump(app.user.getDecks) }} #}

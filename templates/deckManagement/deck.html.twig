@@ -18,19 +18,32 @@
     <div class="container">
         <div class="row">
             <div class="col-12 text-center">
-                <h1> {{ deck.getDeckName }} </h1>
+				<h1 class="fw-bold"> {{ deck.getDeckName }} </h1>
             </div>
-			{% include "separation.twig" %}
+			<div class="col-6 col-sm-2 text-center">
+				<a href="{{ path('deck_index') }}" class="btn btn-outline-secondary me-auto">
+					Volver
+				</a>
+			</div>
+			<div class="col-6 col-sm-8 text-center">
+					<a href="{{ path('deck_edit_view', {id: deck.getIdDeck}) }}" class="btn btn-outline-primary">
+						Editar mazo
+					</a>
+			</div>
+			<div class="col-0 col-sm-2 text-center">
+            </div>
         </div>
+
+		{% include "separation.twig" %}
 
         <div class="row">
             <div class="col-12 text-center">
 			 	{# <button onclick="addToBody()">mostrar lista</button> #}
-			 	<select id="sortMode" onchange="sortBy('sortMode')">
-			 		<option value="name">Nombre</option>
-			 		<option value="price">Precio</option>
-			 	</select>
-			 	<select id="groupMode" onchange="groupBy('groupMode')">
+				<select id="sortMode" class="form-select w-auto d-inline-block" onchange="sortBy('sortMode')">
+					<option value="name">Nombre</option>
+					<option value="price">Precio</option>
+				</select>
+				<select id="groupMode" class="form-select w-auto d-inline-block" onchange="groupBy('groupMode')">
 			 		<option value="none">No agrupar</option>
 			 		<option value="type">Tipo</option>
 			 		<option value="set">Expansion</option>

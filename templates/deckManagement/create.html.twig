@@ -20,11 +20,16 @@
             <div class="col-12 text-center">
                 <h2> Creando nuevo mazo </h2>
             </div>
-			{% include "separation.twig" %}
+			<div class="col-12 text-start">
+				<a href="{{ path('deck_index') }}" class="btn btn-outline-secondary">
+					Volver
+				</a>
+			</div>
         </div>
+		{% include "separation.twig" %}
 
 		<form 
-		{# action="{{ path('deck_create', {'id': deck.getIdDeck}) }}" #}
+		action="{{ path('deck_create') }}"
 		method="post">
 
 			<div class="form-group">

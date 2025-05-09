@@ -18,10 +18,15 @@
     <div class="container">
         <div class="row">
             <div class="col-12 text-center">
-                <h2>Editando: {{ deck.getDeckName }} </h2>
+				<h2>Editando: <strong>{{ deck.getDeckName }}</strong> </h2>
             </div>
-			{% include "separation.twig" %}
+			<div class="col-12 text-start">
+				<a href="{{ path('deck_show', { id: deck.getIdDeck }) }}" class="btn btn-outline-secondary">
+					Volver al mazo
+				</a>
+			</div>
         </div>
+		{% include "separation.twig" %}
 
 		<form 
 		{% if deck.getIdDeck is not null and deck.getIdDeck != '' %}
@@ -44,8 +49,19 @@
 			<br>
 			
 		</form>
+		<form 
+		{% if deck.getIdDeck is not null and deck.getIdDeck != '' %}
+			action="{{ path('deck_delete', {'id': deck.getIdDeck}) }}"
+		{% endif %}
+		method="post">
+			<div class="form-group text-center">
+				<button type="submit" class="btn btn-danger">BORRAR MAZO</button>
+			</div>
+			<br>
+			
+		</form>
 
-		{{ dump(deck) }}
+		{# {{ dump(deck) }} #}
     </div>
 </body>
 </html>
