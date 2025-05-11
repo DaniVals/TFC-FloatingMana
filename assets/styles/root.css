@@ -3,11 +3,11 @@
 	--default-text-color: antiquewhite;
 	--semiclear-text-color: #fff9;
 
-	--card-legal-text: #000;
+	--card-legal-text: var(--default-background-color);
 	--card-legal-default-background: #ccc;
-	--card-legal-background: #0f0;
-	--card-legal-not-background: #ff0;
-	--card-legal-banned-background: #f00;
+	--card-legal-background: #0a0;
+	--card-legal-not-background: #aa0;
+	--card-legal-banned-background: #a00;
 
 	--card-flip-button-height: 2em;
 

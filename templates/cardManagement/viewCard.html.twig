@@ -71,7 +71,7 @@
 					{# boton para añadir a coleccion #}
 					{% if is_granted("IS_AUTHENTICATED_FULLY") %}
 						<hr class="fading-separation">
-						<button onclick="addCardPopUp( '{{ card.name }}' , '{{ card.id }}' , {{ card.prices|json_encode() }} )"> Añadir a... </button>
+						<button class="btn btn-outline-info w-100" onclick="addCardPopUp( '{{ card.name }}' , '{{ card.id }}' , {{ card.prices|json_encode() }} )"> Añadir a... </button>
 					{% endif %}
 
 					{# fecha de salida #}

@@ -108,8 +108,8 @@ h3 + hr {
 	position: absolute;
 	bottom: 0px;
 	height: var(--card-flip-button-height);
-	left:  10%;
-	right: 10%;
+	left:  20%;
+	right: 20%;
 }
 
 .two-side-image .side-1,

@@ -8,44 +8,57 @@
 				<div id="addCardPopUp-window-colecction" class="col mb-3">
 					<h2>Añadir a coleccion</h2>
 					<p id="addCardPopUp-window-colecction-name">Nombre de la carta</p>
+					<hr class="fading-separation">
 					
 					<label for="colecction-purchacePrice">Precio de compra</label>
 					<input type="number" name="colecction-purchacePrice"
-					id="addCardPopUp-window-colecction-purchacePrice"
+					id="addCardPopUp-window-colecction-purchacePrice" class="form-control w-auto" style="display: inline;"
 					placeholder="No encontrado">€
 					<br>
 					
 					<label for="colecction-isFoil">Es foil</label>
-					<input type="checkbox" name="colecction-isFoil"
+					<input type="checkbox" name="colecction-isFoil" class="form-check-input"
 					id="addCardPopUp-window-colecction-isFoil">
 					<br>
 
 					<label for="colecction-status">Estado</label>
-					<select name="colecction-status"
+					<select name="colecction-status" class="form-select"
 					id="addCardPopUp-window-colecction-status">
 					
 					</select>
 					<br>
 
-					<button>Añadir a coleccion</button>
+					<button id="addCardPopUp-window-colecction-button" class="btn btn-outline-success">Añadir a coleccion</button>
 				</div>
 
 				<div id="addCardPopUp-window-deck" class="col" data-AJAX-route="{{ path('add_card_to_deck') }}">
 					<h2>Añadir a mazo</h2>
 					<p id="addCardPopUp-window-deck-name">Nombre de la carta</p>
+					<hr class="fading-separation">
 					
-					<label for="deck-quantity">Catidad</label>
-					<input name="deck-quantity" id="addCardPopUp-window-deck-quantity" type="number">
-					<br>
+					{% if not app.user.getDecks or app.user.getDecks|length <= 0 %}
+						<a href="{{ path('deck_create_view') }}"
+						class="btn btn-outline-success btn-lg">
+							Crear nuevo mazo
+						</a>
+					{% else %}
+						<label for="deck-quantity">Catidad</label>
+						<input name="deck-quantity" type="number"
+						id="addCardPopUp-window-deck-quantity" class="form-control w-auto" style="display: inline;">
+						<br>
 
-					<label for="selected-deck">Mazo</label>
-					<select name="selected-deck"
-					id="addCardPopUp-window-deck-selected">
-						<option value="none">Elige un mazo</option>
-					</select>
-					<br>
-					
-					<button id="addCardPopUp-window-deck-button" onclick="addCardToDeck()">Añadir a mazo</button>
+						<label for="selected-deck">Mazo</label>
+						<select name="selected-deck" class="form-select"
+						id="addCardPopUp-window-deck-selected">
+							<option value="none">Elige un mazo</option>
+							{% for deck in app.user.getDecks %}
+								<option value="{{ deck.getIdDeck }}">{{ deck.getDeckName }}</option>
+							{% endfor %}
+						</select>
+						<br>
+						
+						<button id="addCardPopUp-window-deck-button" class="btn btn-outline-success" onclick="addCardToDeck()">Añadir a mazo</button>
+					{% endif %}
 				</div>
 			</div>
 			<div class="row">
