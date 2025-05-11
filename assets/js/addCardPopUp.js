@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 let prices;
 
 function addCardPopUp(cardName, cardId, cardPrices) {
-	console.log("creando pop up de " + cardName + " --- " + cardId);
+	console.log("opening pop up of " + cardName + " --- " + cardId);
 
 	const popUp = document.getElementById('addCardPopUp');
 	popUp.setAttribute('data-show-status', '1');
@@ -69,23 +69,39 @@ function addCardToDeck() {
 	const message = document.getElementById('addCardPopUp-window-message');
 	const messageText = document.getElementById('addCardPopUp-window-message-text');
 
-	console.log("añadiendo carta a mazo");
+	console.log("adding card to deck");
+	showMessaje("Añadiendo carta...", 1);
 	
+	const params = {
+		cardId: document.getElementById('addCardPopUp-window-card-id').value,
+		deckId: document.getElementById('addCardPopUp-window-deck-selected').value,
+		quantity: document.getElementById('addCardPopUp-window-deck-quantity').value
+	};
+
+	if (params["deckId"] == "none") {
+		console.log("missing deck");
+		showMessaje("Seleccione un mazo", 404);
+		return;
+	}
+	if (params["quantity"] <= 0) {
+		console.log("missing quantity");
+		showMessaje("Introduzca una cantidad valida", 404);
+		return;
+	}
 
 	const xhr = new XMLHttpRequest();
 	xhr.open('POST', AJAXroute);
 	xhr.setRequestHeader('Content-Type', 'application/json');
-	const params = {
-		cardId: document.getElementById('addCardPopUp-window-card-id').value,
-		deckId: document.getElementById('addCardPopUp-window-deck').value,
-		quantity: document.getElementById('addCardPopUp-window-deck-quantity').value
-	};
-	xhr.send(JSON.stringify({ data: params }));
+	xhr.send(JSON.stringify(params));
 
 	xhr.onload = function () {
-		// console.log(xhr);
+		// >> DELETE WHEN AJAX WORKS
+		console.log(xhr);
+		messageText.innerHTML = xhr.responseText;
+		// <<
+
 		const data = JSON.parse(xhr.responseText);
-		console.log("Carta añadida", data);
+		console.log("Card request", data);
 
 		messageText.innerText = data["message"];
 		if (data["success"] == true) {
@@ -100,8 +116,16 @@ function addCardToDeck() {
 	xhr.onerror = function () {
 		// console.log(xhr);
 		console.error('No se ha podido añadir la carta', xhr.statusText);
-		message.setAttribute("data-status", 404);
-		messageText.innerText = "No se ha podido añadir la carta: " + xhr.status;
+		showMessaje("No se ha podido añadir la carta: " + xhr.status, 404);
+
 	};
 	xhr.send();
+}
+
+function showMessaje(messaje, code) {
+	const message = document.getElementById('addCardPopUp-window-message');
+	const messageText = document.getElementById('addCardPopUp-window-message-text');
+	
+	message.setAttribute("data-status", code);
+	messageText.innerText = messaje;
 }
