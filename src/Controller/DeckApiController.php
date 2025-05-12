@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class DeckApiController extends AbstractController
@@ -33,7 +34,7 @@ class DeckApiController extends AbstractController
             return $this->json([
                 'success' => false,
                 'message' => 'Faltan parámetros requeridos: deckId, cardId, quantity'
-            ], 400);
+            ], Response::HTTP_BAD_REQUEST);
         }
         
         $deckId = $data['deckId'];
@@ -81,12 +82,9 @@ class DeckApiController extends AbstractController
             return $this->json(['success' => false, 'message' => $e->getMessage()], 400);
             
         } catch (\Exception $e) {
-            // Loggear el error
-            $this->logger->error('Error al añadir carta al mazo: ' . $e->getMessage());
-            
             return $this->json([
                 'success' => false, 
-                'message' => 'Error interno del servidor'
+                'message' => 'Error interno del servidor al añadir la carta al mazo: ' . $e->getMessage()
             ], 500);
         }
     }
