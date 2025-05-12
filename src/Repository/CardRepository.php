@@ -23,7 +23,15 @@ class CardRepository extends ServiceEntityRepository
         }
     }
 
-    
+    public function findId(string $cardId): ?Card
+    {
+       return $this->createQueryBuilder('c')
+            ->andWhere('c.idScryfall = :id')
+            ->setParameter('id', $cardId)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     // Busca cartas por nombre
     public function findByNamePartial(string $name, int $limit = 20): array
     {
