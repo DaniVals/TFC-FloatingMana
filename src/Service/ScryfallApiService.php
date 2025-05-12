@@ -66,6 +66,9 @@ class ScryfallApiService
     {
         $url = 'https://api.scryfall.com/cards/search?q=' . urlencode($nombre) . '&unique=prints';
 
+        // Buscar carta que empieza por el nombre introducido
+        // $url = 'https://api.scryfall.com/cards/search?q=' . urlencode($nombre) . '&unique=prints&order=name&dir=asc';
+
         try {
             // Realizamos la solicitud GET con el cliente HTTP de Symfony
             $response = $this->httpClient->request('GET', $url, [
