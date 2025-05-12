@@ -106,35 +106,35 @@ class DeckCardRepository extends ServiceEntityRepository
         return $result ? (int)$result : 0;
     }
 
-    //Cuenta el número total de cartas en el mazo principal
-    public function countCardsInMainboard(Deck $deck): int
-    {
-        $result = $this->createQueryBuilder('dc')
-            ->select('SUM(dc.quantity)')
-            ->andWhere('dc.deck = :deck')
-            ->andWhere('dc.isSideboard = :sideboard')
-            ->setParameter('deck', $deck)
-            ->setParameter('sideboard', false)
-            ->getQuery()
-            ->getSingleScalarResult();
-            
-        return $result ? (int)$result : 0;
-    }
-
-    // Cuenta el número total de cartas en el sideboard
-    public function countCardsInSideboard(Deck $deck): int
-    {
-        $result = $this->createQueryBuilder('dc')
-            ->select('SUM(dc.quantity)')
-            ->andWhere('dc.deck = :deck')
-            ->andWhere('dc.isSideboard = :sideboard')
-            ->setParameter('deck', $deck)
-            ->setParameter('sideboard', true)
-            ->getQuery()
-            ->getSingleScalarResult();
-            
-        return $result ? (int)$result : 0;
-    }
+    // //Cuenta el número total de cartas en el mazo principal
+    // public function countCardsInMainboard(Deck $deck): int
+    // {
+    //     $result = $this->createQueryBuilder('dc')
+    //         ->select('SUM(dc.quantity)')
+    //         ->andWhere('dc.deck = :deck')
+    //         ->andWhere('dc.isSideboard = :sideboard')
+    //         ->setParameter('deck', $deck)
+    //         ->setParameter('sideboard', false)
+    //         ->getQuery()
+    //         ->getSingleScalarResult();
+    //         
+    //     return $result ? (int)$result : 0;
+    // }
+    //
+    // // Cuenta el número total de cartas en el sideboard
+    // public function countCardsInSideboard(Deck $deck): int
+    // {
+    //     $result = $this->createQueryBuilder('dc')
+    //         ->select('SUM(dc.quantity)')
+    //         ->andWhere('dc.deck = :deck')
+    //         ->andWhere('dc.isSideboard = :sideboard')
+    //         ->setParameter('deck', $deck)
+    //         ->setParameter('sideboard', true)
+    //         ->getQuery()
+    //         ->getSingleScalarResult();
+    //         
+    //     return $result ? (int)$result : 0;
+    // }
 
     
     // Calcula el valor total del mazo
