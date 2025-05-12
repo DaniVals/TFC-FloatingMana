@@ -5,6 +5,7 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Exception\InvalidCredentialsException;
 use App\Exception\UserBlockedException;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
