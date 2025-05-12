@@ -25,15 +25,21 @@ class CollectionController extends AbstractController
     {
         try {
             $collection = $this->collectionService->getUserCollection();
-            return $this->json([
+            return $this->render('collectionManagement/collection.html.twig', [
+                'title' => 'Mi colección',
+                'description' => 'Aquí puedes ver y gestionar tu colección de cartas.',
                 'status' => 'success',
-                'data' => $collection
+                'collection' => $collection,
+                Response::HTTP_OK
             ]);
         } catch (\Exception $e) {
-            return $this->json([
+            return $this->render('collectionManagement/collection.html.twig', [
+                'title' => 'Mi colección',
+                'description' => 'Aquí puedes ver y gestionar tu colección de cartas.',
                 'status' => 'error',
-                'message' => $e->getMessage()
-            ], Response::HTTP_BAD_REQUEST);
+                'message' => $e->getMessage(),
+                Response::HTTP_BAD_REQUEST
+            ]);
         }
     }
 
