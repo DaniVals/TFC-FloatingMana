@@ -39,17 +39,17 @@ class DeckApiController extends AbstractController
         
         $deckId = $data['deckId'];
         $cardId = $data['cardId'];
+        $cardName = $data['cardName'] ?? $data['cardId'];
         $quantity = (int)$data['quantity'];
-        $isSideboard = $data['isSideboard'] ?? false;
         
         try {
             // Llamar al servicio para añadir la carta
             $result = $this->deckBuilderService->addCardToDeck(
                 $user,
                 $deckId,
+                $cardName,
                 $cardId,
                 $quantity,
-                $isSideboard
             );
             
             // Devolver respuesta con datos actualizados
@@ -57,18 +57,16 @@ class DeckApiController extends AbstractController
                 'success' => true,
                 'message' => 'Carta añadida correctamente',
                 'deck' => [
-                    'id' => $result['deck']->getId(),
-                    'name' => $result['deck']->getName(),
-                    'cardCount' => $result['cardCount'],
-                    'mainboardCount' => $result['mainboardCount'],
-                    'sideboardCount' => $result['sideboardCount'],
+                    'id' => $result['deck']->getIdDeck(),
+                    'name' => $result['deck']->getDeckName(),
+                    // 'cardCount' => $result['cardCount'],
+                    // 'mainboardCount' => $result['mainboardCount'],
                     'deckValue' => $result['deckValue']
                 ],
                 'card' => [
-                    'id' => $result['card']->getId(),
-                    'name' => $result['card']->getName(),
+                    'id' => $result['card']->getIdCard(),
+                    'name' => $result['card']->getCardName(),
                     'quantity' => $result['quantity'],
-                    'isSideboard' => $result['isSideboard']
                 ]
             ]);
 
@@ -80,7 +78,7 @@ class DeckApiController extends AbstractController
             
         } catch (\App\Exception\InvalidCardQuantityException $e) {
             return $this->json(['success' => false, 'message' => $e->getMessage()], 400);
-            
+
         } catch (\Exception $e) {
             return $this->json([
                 'success' => false, 
