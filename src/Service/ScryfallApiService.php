@@ -93,4 +93,27 @@ class ScryfallApiService
             throw new \Exception('Error during API request: ' . $e->getMessage());
         }
     }
+
+    public function getCardPrice(string $id): int
+    {
+        $url = 'https://api.scryfall.com/cards/' . $id;
+
+        try {
+            $response = $this->httpClient->request('GET', $url, [
+                'headers' => [
+                    'User-Agent' => 'MyMTGApp/1.0',
+                    'Accept' => 'application/json;q=0.9,*/*;q=0.8',
+                ]
+            ]);
+
+            if ($response->getStatusCode() !== 200) {
+                throw new \Exception("Error fetching card price: " . $response->getStatusCode());
+            }
+
+            $data = $response->toArray();
+            return (int)($data['prices']['eur'] ?? 0);  
+        } catch (TransportExceptionInterface | ClientExceptionInterface | ServerExceptionInterface | DecodingExceptionInterface $e) {
+            throw new \Exception('Error during API request: ' . $e->getMessage());
+        }
+    }
 }
