@@ -136,15 +136,15 @@ class DeckBuilderService
     }
     
     // Crear un mazo nuevo
-    public function createDeck(User $user, string $deckName, string $type): Deck
+    public function createDeck(User $user, string $deckName, string $deckFormat): Deck
     {
         $deck = new Deck();
         $deck->setDeckName($deckName);
-        $deck->setFormat($type);
+        $deck->setFormat($deckFormat);
         $deck->setUser($user);
         
         // Guardar el mazo en la base de datos
-        $this->deckRepository->createDeck($deck, true);
+        $this->deckRepository->create($deck, true);
         
         return $deck;
     }
@@ -153,5 +153,17 @@ class DeckBuilderService
     public function isDeckEmpty(Deck $deck): bool
     {
         return $this->deckCardRepository->countCardsInDeck($deck) === 0;
+    }
+
+    // Edit deck
+    public function editDeck(Deck $deck, string $deckName, string $deckFormat): Deck
+    {
+        $deck->setDeckName($deckName);
+        $deck->setFormat($deckFormat);
+
+        // Guardar los cambios en la base de datos
+        $this->deckRepository->save($deck, true);
+        
+        return $deck;
     }
 }

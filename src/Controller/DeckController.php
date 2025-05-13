@@ -53,17 +53,10 @@ class DeckController extends AbstractController {
 	$deckFormat = $request->request->get('_deckFormat');
 
 	try {
-	    $deck = $this->deckBuilderService->createDeck($user, (string)$deckName, (string)$deckFormat);
+	    $deck = $this->deckBuilderService->createDeck($user, $deckName, $deckFormat);
 	    $this->deckRepository->save($deck, true);
 
-	    return $this->render('deckManagement/deck.html.twig', [
-		'responseData' => [
-		    'success' => true,
-		    'message' => 'Mazo creado correctamente',
-		    'status'  => Response::HTTP_OK,
-		    'deck' => $deck
-		]
-	    ]);
+	    return $this->redirectToRoute('deck_show', ['id' => $deck->getIdDeck()]);
 	} catch (\Exception $e) {
 	    return $this->render('deckManagement/create.html.twig', [
 		'responseData' => [
@@ -71,9 +64,8 @@ class DeckController extends AbstractController {
 		    'message' => $e->getMessage(),
 		    'status'  => Response::HTTP_BAD_REQUEST
 		]
-
 	    ]);
-	}
+	} 
     }
 
     #[Route('/delete/{id}', name: 'delete', requirements: ['id' => '\d+'])]
@@ -125,7 +117,7 @@ class DeckController extends AbstractController {
     }
 
 
-    #[Route('/edit/{id}', name: 'edit_view', requirements: ['id' => '\d+'])]
+    #[Route('/edit/{id}', name: 'edit_view', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function edit_view(int $id): Response {
 	// Verificar que el usuario está autenticado
 	$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -161,7 +153,7 @@ class DeckController extends AbstractController {
 	]);
     }
 
-    #[Route('/edit/{id}', name: 'edit', requirements: ['id' => '\d+'])]
+    #[Route('/edit/{id}', name: 'edit', requirements: ['id' => '\d+'], methods: ['POST'])]
     public function edit(Request $request, int $id): Response {
 
 	// Verificar que el usuario está autenticado
@@ -174,7 +166,6 @@ class DeckController extends AbstractController {
 		    'success' => false,
 		    'message' => 'Mazo no encontrado',
 		    'status'  => Response::HTTP_NOT_FOUND
-
 		]
 	    ]);
 	}
@@ -191,19 +182,10 @@ class DeckController extends AbstractController {
 	$deckName = $request->request->get('_deckName');
 	$deckFormat = $request->request->get('_deckFormat');
 	try {
-	    $deck->setDeckName($deckName);
-	    $deck->setFormat($deckFormat);
-	    $this->deckRepository->save($deck, true);
+	    $this->deckBuilderService->editDeck($deck, $deckName, $deckFormat);
+	    
+	    return $this->redirectToRoute('deck_show', ['id' => $deck->getIdDeck()]);
 
-	    return $this->render('deckManagement/deck.html.twig', [
-		'responseData' => [
-		    'success' => true,
-		    'message' => 'Mazo editado correctamente',
-		    'status'  => Response::HTTP_OK,
-		    'deck' => $deck
-
-		]
-	    ]);
 	} catch (\Exception $e) {
 	    return $this->render('deckManagement/edit.html.twig', [
 		'responseData' => [
