@@ -61,10 +61,10 @@
         <div class="row justify-content-center no-deco" id="card-list" data-ajax-route="https://api.scryfall.com/cards/">
 		
             {% for card in deck.getDeckCards %}
-                <div class="col-12 col-sm-11 col-md-10   card-list-show" data-card-id="{{ card.getCard.getIdScryfall }}" data-card-name="{{ card.getCard.getCardName }}">
+                <div class="col-12 col-sm-11 col-md-10 ps-0    card-list-show" data-card-id="{{ card.getCard.getIdScryfall }}" data-card-name="{{ card.getCard.getCardName }}">
 					<a href=" {{ path('view_card', {id: card.getCard.getIdScryfall  }) }} "> 
 					<div class="d-flex justify-content-between align-items-center w-100">
-						<img id="card-image" class="col-4 col-md-2 col-sm-3 m-2" src="https://fepfi.es/wp-content/uploads/2021/10/placeholder-1.png" alt="card image">
+						<img id="card-image" class="col-4 col-md-2 col-sm-3" src="https://fepfi.es/wp-content/uploads/2021/10/placeholder-1.png" alt="card image">
 						<p class="col-6"> {{ card.getCard.getCardName }} </p>
 						<p class="col-2" id="card-price"></p>
 					</div>

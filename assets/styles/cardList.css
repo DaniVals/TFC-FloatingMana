@@ -6,18 +6,22 @@
 .card-list-show {
 	background-color: var(--card-list-background-color);
 	border-bottom: var(--card-list-border-separator);
+	overflow: hidden;
 }
 .card-list-show:first-of-type {
-	border-top-left-radius: 2em;
-	border-top-right-radius: 2em;
+	border-top-left-radius:  var(--card-list-border-radius);
+	border-top-right-radius: var(--card-list-border-radius);
 }
 .card-list-show:last-of-type {
-	border-bottom-left-radius: 2em;
-	border-bottom-right-radius: 2em;
+	border-bottom-left-radius:  var(--card-list-border-radius);
+	border-bottom-right-radius: var(--card-list-border-radius);
 	border-bottom: none;
 }
 .card-list-show img {
-	border-radius: 2em;
+	/* border-radius: 1em; */
 	aspect-ratio: 3/2;
 	object-fit: cover;
+
+	mask-image: var(--card-list-card-preview-transparent-gradient);
+	-webkit-mask-image: var(--card-list-card-preview-transparent-gradient);
 }

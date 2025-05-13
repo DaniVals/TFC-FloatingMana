@@ -18,6 +18,12 @@
 
 	--card-list-background-color: #343536;
 	--card-list-border-separator: solid var(--default-text-color) 1px;
+	--card-list-border-radius: 1em;
+	--card-list-card-preview-transparent-gradient: linear-gradient(to left,
+		rgba(0, 0, 0, 0) 0%,
+		rgba(0, 0, 0, 1) 10%, /* a partir de que punto empieza el degradado */
+		rgba(0, 0, 0, 1) 100%
+	);
 
 	--dashboard-option-background: #fff1;
 
