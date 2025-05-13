@@ -74,6 +74,7 @@ function addCardToDeck() {
 	
 	const params = {
 		cardId: document.getElementById('addCardPopUp-window-card-id').value,
+		cardName: document.getElementById('addCardPopUp-window-deck-name').innerText,
 		deckId: document.getElementById('addCardPopUp-window-deck-selected').value,
 		quantity: document.getElementById('addCardPopUp-window-deck-quantity').value
 	};
