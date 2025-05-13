@@ -35,12 +35,12 @@
 		method="post">
 
 			<div class="form-group">
-				<label for="deckName">Nombre del mazo:</label>
-				<input type="text" id="deckName" name="deckName" class="form-control" value="{{ deck.getDeckName }}" required>
+				<label for="_deckName">Nombre del mazo:</label>
+				<input type="text" id="deckName" name="_deckName" class="form-control" value="{{ deck.getDeckName }}" required>
 			</div>
 			<br>
 			<div class="form-group">
-				{% include "deckManagement/deckTypeInput.twig" %}
+				{% include "deckManagement/deckFormayInput.twig" %}
 			</div>
 			<br>
 			<div class="form-group text-center">
