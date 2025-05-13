@@ -5,30 +5,32 @@
 			<input type="hidden" id="addCardPopUp-window-card-id" value="">
 			<input type="hidden" id="addCardPopUp-window-card-name" value="">
 			<div class="row">
-				<div id="addCardPopUp-window-colecction" class="col mb-3">
+				<div id="addCardPopUp-window-collection" class="col mb-3" data-AJAX-route="{{ path('collection_add_card') }}">
 					<h2>Añadir a coleccion</h2>
-					<p id="addCardPopUp-window-colecction-name">Nombre de la carta</p>
+					<p id="addCardPopUp-window-collection-name">Nombre de la carta</p>
 					<hr class="fading-separation">
 					
-					<label for="colecction-purchacePrice">Precio de compra</label>
-					<input type="number" name="colecction-purchacePrice"
-					id="addCardPopUp-window-colecction-purchacePrice" class="form-control w-auto" style="display: inline;"
+					<label for="collection-purchacePrice">Precio de compra</label>
+					<input type="number" name="collection-purchacePrice"
+					id="addCardPopUp-window-collection-purchacePrice" class="form-control w-auto" style="display: inline;"
 					placeholder="No encontrado">€
 					<br>
 					
-					<label for="colecction-isFoil">Es foil</label>
-					<input type="checkbox" name="colecction-isFoil" class="form-check-input"
-					id="addCardPopUp-window-colecction-isFoil">
+					<label for="collection-isFoil">Es foil</label>
+					<input type="checkbox" name="collection-isFoil" class="form-check-input"
+					id="addCardPopUp-window-collection-isFoil">
 					<br>
 
-					<label for="colecction-status">Estado</label>
-					<select name="colecction-status" class="form-select"
-					id="addCardPopUp-window-colecction-status">
-					
+					<label for="collection-state">Estado</label>
+					<select name="collection-state" class="form-select"
+					id="addCardPopUp-window-collection-state">
+						{% for state in get_card_state_list() %}
+							<option value="{{ state.getIdState }}"> {{ state.getStateName }} </option>
+						{% endfor %}
 					</select>
 					<br>
 
-					<button id="addCardPopUp-window-colecction-button" class="btn btn-outline-success">Añadir a coleccion</button>
+					<button id="addCardPopUp-window-collection-button" class="btn btn-outline-success" onclick="addCardToCollection()">Añadir a coleccion</button>
 				</div>
 
 				<div id="addCardPopUp-window-deck" class="col" data-AJAX-route="{{ path('add_card_to_deck') }}">
