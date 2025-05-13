@@ -10,7 +10,7 @@ class InvalidCardQuantityException extends BadRequestHttpException
     private int $quantity;
     private string $cardName;
 
-    public function __construct(string $message = 'La cantidad de cartas especificada no es válida', \Throwable $previous = null, int $code = 0, array $headers = [])
+    public function __construct(string $message = 'La cantidad de cartas especificada no es válida', ?\Throwable $previous = null, int $code = 0, array $headers = [])
     {
         parent::__construct($message, $previous, $code, $headers);
     }

@@ -7,7 +7,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 // Excepción lanzada cuando no se encuentra un mazo en el sistema.
 class DeckNotFoundException extends NotFoundHttpException
 {
-    public function __construct(string $message = 'El mazo solicitado no fue encontrado', \Throwable $previous = null, int $code = 0, array $headers = [])
+    public function __construct(string $message = 'El mazo solicitado no fue encontrado', ?\Throwable $previous = null, int $code = 0, array $headers = [])
     {
         parent::__construct($message, $previous, $code, $headers);
     }
