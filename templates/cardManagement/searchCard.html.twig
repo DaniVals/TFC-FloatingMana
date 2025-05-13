@@ -8,14 +8,17 @@
 	
 	{% include "root.html.twig" %}
 	<link rel="stylesheet" href=" {{ asset('styles/card.css') }} ">
+	<link rel="stylesheet" href=" {{ asset('styles/addCardPopUp.css') }} ">
+
+	<script src=" {{asset('js/addCardPopUp.js')}} "></script>
 
 	{% import "macros/cardUtilities.twig" as cardUtilities %}
 
 </head>
 {% include "header.html.twig" %}
 <body>
-    <!-- Por cada carta, mostrar su nombre, precio y la imagen. -->
-    <!-- Leer el dato que se envia desde el controlador y mostrarlo en la vista. -->
+	{% include "cardManagement/addCardPopUp.twig" %}
+	
     <div class="container">
         <div class="row">
             <div class="col-12 text-center">
@@ -28,8 +31,8 @@
 			{% if cards is defined %}
             {% for card in cards %}
                 <div class="col-10 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-					<a href=" {{ path('view_card', {id: card.id}) }} " class="card-slide-link">
-						<div class="card-slide-preview mb-5">
+					<div class="card-slide-preview mb-5">
+						<a href=" {{ path('view_card', {id: card.id}) }} " class="card-slide-link">
 						
 							{# {% include "import/cardImage.twig" with { card: card, img_class: "card-img-top" } %} #}
 							{{ cardUtilities.mostrarImagen(card, "card-img-top", false) }}
@@ -43,8 +46,12 @@
 									<p class="card-slide-text-default text-center">Precio no disponible</p>
 								{% endif %}
 							</div>
-						</div>
-					</a>
+						</a>
+						{% if is_granted("IS_AUTHENTICATED_FULLY") %}
+							<button class="btn btn-outline-secondary btn-sm w-100" onclick="addCardPopUp( '{{ card.name }}' , '{{ card.id }}' , {{ card.prices|json_encode() }} )"> Añadir a... </button>
+						{% endif %}
+
+					</div>
                 </div>
             {% endfor %}
             {% endif %}
