@@ -62,7 +62,7 @@ class CollectionService
     /**
      * Añade una carta a la colección del usuario
      */
-    public function addCardToCollection(int $cardId, int $quantity = 1): Collection
+    public function addCardToCollection(int $cardId, int $quantity, string $price, int $foil, string $state): Collection
     {
         $user = $this->security->getUser();
         if (!$user) {
@@ -88,19 +88,24 @@ class CollectionService
         }
 
         // Verificar si la carta ya está en la colección
-        $collectionItem = $this->collectionRepository->findOneBy([
+        $collectionItem = $this->collectionRepository->$this->getEntityManager()->findOneBy([
             'user' => $user,
             'card' => $card
         ]);
 
         if ($collectionItem) {
             // Si ya existe, actualizamos la cantidad
-            $collectionItem->setQuantity($collectionItem->getQuantity() + $quantity);
+            $newQuantity = $collectionItem->getCardQuantity() + $quantity;
+            $collectionItem->setCardQuantity($newQuantity);
         } else {
             // Si no existe, creamos un nuevo registro
             $collectionItem = new Collection();
             $collectionItem->setUser($user);
             $collectionItem->setCard($card);
+            $collectionItem->setPurchasePrice($price);
+            $collectionItem->setIsFoil($foil);
+            $collectionItem->setState($state);
+
             $this->entityManager->persist($collectionItem);
         }
 
