@@ -7,7 +7,7 @@
 	<title>Colleccion</title>
 	
 	{% include "root.html.twig" %}
-	<link rel="stylesheet" href=" {{ asset('styles/card.css') }} ">
+	<link rel="stylesheet" href=" {{asset('styles/card.css') }} ">
 </head>
 {% include "header.html.twig" %}
 <body>
@@ -17,27 +17,71 @@
         <div class="row">
             <div class="col-12 text-center">
                 <h1>Tu collección</h1>
+                {% if status == 'error' %}
+                    <div class="alert alert-danger">
+                        {{ message }}
+                    </div>
+                {% endif %}
+                {% if stats is defined %}
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h2>Estadísticas de colección</h2>
+                        </div>
+                        <div class="card-body">
+                            <p>Total de cartas: {{ stats.total_cards|default(0) }}</p>
+                            <p>Valor total estimado: ${{ stats.estimated_value|default(0)|number_format(2, ',', '.') }}</p>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
 			{% include "separation.twig" %}
         </div>
         <div class="row justify-content-center">
-			{# {{ dump(user) }} #}
+			 {# {{ dump(collection) }} #}
 		
-            {# {% for card in user.collection %}
-                <div class="col-10 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                    <div class="card-slide-preview mb-5">
-                        <img src="{{ card.image_uris.small }}" class="card-img-top" alt="..." id="cardImg">
-                        <div class="card-body">
-                            <h5 class="card-slide-title text-center">{{ card.name }}</h5>
-							{% if card.prices.eur is not empty %}
-								<p class="card-slide-text text-center">{{ card.prices.eur }}€</p>
-							{% else %}
-								<p class="card-slide-text-default text-center">Precio no disponible</p>
-							{% endif %}
-                        </div>
+            {% if collection is empty %}
+                <div class="col-12">
+                    <div class="alert alert-info">
+                        No hay cartas en tu alección. ¡Añade algunas!
                     </div>
                 </div>
-            {% endfor %} #}
+            {% else %}
+                {% for card in collection %}
+                    <div class="col-10 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                        <div class="card-slide-preview mb-5">
+                            {% if card.image_uris is defined and card.image_uris.small is defined %}
+                                <img src="{{ card.image_uris.small }}" class="card-img-top" alt="..." id="cardImg">
+                            {% else %}
+                                <div class="placeholder-img">No image available</div>
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-slide-title text-center">
+                                    {% if card.getName is defined %}
+                                        {{ card.getName() }}
+                                    {% elseif card.name is defined %}
+                                        {{ card.name }}
+                                    {% else %}
+                                        Unnamed Card
+                                    {% endif %}
+                                </h5>
+                                {% if card.purchasePrice is defined %}
+                                    <p class="card-slide-text text-center">{{ card.purchasePrice }}€</p>
+                                {% elseif card.prices.eur is defined and card.prices.eur is not empty %}
+                                    <p class="card-slide-text text-center">{{ card.prices.eur }}€</p>
+                                {% else %}
+                                    <p class="card-slide-text-default text-center">Precio no disponible</p>
+                                {% endif %}
+                                {% if card.isFoil is defined and card.isFoil == 1 %}
+                                    <span class="badge bg-primary">Foil</span>
+                                {% endif %}
+                                {% if card.state is defined %}
+                                    <span class="badge bg-secondary">{{ card.state }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 </body>

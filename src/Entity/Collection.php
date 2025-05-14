@@ -36,7 +36,7 @@ class Collection
 	)]
     private $card;
 
-	#[ORM\Column(type: "decimal", precision: 6, scale: 2)]
+	#[ORM\Column(type: "decimal", precision: 6, scale: 2, name: "purchasePrice")]
 	private $purchasePrice;
 
 	#[ORM\Column(type: "integer", length: 1, name: "isFoil")]
@@ -49,6 +49,7 @@ class Collection
 	//----- Variables auxiliares -----
 
 	private $cards;
+    private $name; // Added name property 
 
 	//----- Getters y setters -----
 
@@ -97,15 +98,26 @@ class Collection
 		return $this;
 	}
 
-	public function getState(): ?int
+	public function getState(): ?State
 	{
 		return $this->state;
 	}
-	public function setState(int $state): self
+	public function setState(State $state): self
 	{
 		$this->state = $state;
 		return $this;
 	}
+
+    // Added name getter and setter
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+        return $this;
+    }
 
 	//----- Funciones -----
 	
@@ -131,8 +143,22 @@ class Collection
 		return $this;
 	}
 
-    public function __construct()
-    {
-        $this->cards = new ArrayCollection();
-    }
+	public function toArray(): array {
+		return [
+			'user' => $this->getUser()?->getName(),
+			'idCollection' => $this->getIdCollection(),
+			'cards' => array_map(
+				fn($card) => $card->toArray(),
+				$this->getCards()->toArray()
+			),
+			'purchasePrice' => $this->getPurchasePrice(),
+			'isFoil' => $this->getIsFoil(),
+			'state' => $this->getState()?->getStateName(),
+			'name' => $this->getName() // Added name to the array output
+		];
+	}
+
+	public function __construct() {
+		$this->cards = new ArrayCollection();
+	}
 }

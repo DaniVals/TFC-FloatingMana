@@ -38,4 +38,9 @@ class State
 		$this->stateName = $stateName;
 		return $this;
 	}
+
+	public function __toString(): string
+	{
+		return $this->stateName;
+	}
 }

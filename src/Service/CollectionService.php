@@ -33,9 +33,8 @@ class CollectionService
     /**
      * Obtiene la colección completa del usuario actual
      */
-    public function getUserCollection(): array
+    public function getUserCollection(User $user): array
     {
-        $user = $this->security->getUser();
         if (!$user) {
             throw new \Exception('Usuario no autenticado');
         }
@@ -293,4 +292,12 @@ class CollectionService
         }
         return $results;
     }
+
+    public function getUserCollectionArray(User $user): array
+    {
+        $collections = $this->entityManager->getRepository(Collection::class)->findBy(['user' => $user]);
+
+        return array_map(fn(Collection $c) => $c->toArray(), $collections);
+    }
+
 }

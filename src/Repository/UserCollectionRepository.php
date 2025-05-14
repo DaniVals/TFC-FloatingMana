@@ -4,18 +4,15 @@ namespace App\Repository;
 
 use App\Entity\Collection;
 use App\Entity\User;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 
-class UserCollectionRepository
+class UserCollectionRepository extends ServiceEntityRepository
 {
-    private $entityManager;
-    private $repository;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(ManagerRegistry $registry)
     {
-        $this->entityManager = $entityManager;
-        $this->repository = $entityManager->getRepository(Collection::class);
+        parent::__construct($registry, Collection::class);
     }
 
     /**
@@ -25,31 +22,20 @@ class UserCollectionRepository
      * @param array $orderBy Campos para ordenar los resultados
      * @return Collection[]
      */
-    public function findByUser(User $user, array $orderBy = ['card.name' => 'ASC']): array
+
+    public function findByUser(User $user, array $orderBy = ['idCollection' => 'ASC']): array
     {
         $qb = $this->createQueryBuilder('c')
-            ->join('c.card', 'card')
             ->where('c.user = :user')
             ->setParameter('user', $user);
 
-        // Agregar ordenamiento
         foreach ($orderBy as $field => $direction) {
-            $qb->addOrderBy($field, $direction);
+            $qb->addOrderBy('c.' . $field, $direction);
         }
 
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * Encuentra una carta específica en la colección de un usuario
-     *
-     * @param array $criteria Criterios de búsqueda
-     * @return Collection|null
-     */
-    public function findOneBy(array $criteria): ?Collection
-    {
-        return $this->repository->findOneBy($criteria);
-    }
 
     /**
      * Encuentra cartas en la colección por nombre
@@ -271,19 +257,6 @@ class UserCollectionRepository
     }
 
     /**
-     * Crea un QueryBuilder para la entidad Collection
-     * 
-     * @param string $alias
-     * @return QueryBuilder
-     */
-    private function createQueryBuilder(string $alias): QueryBuilder
-    {
-        return $this->entityManager->createQueryBuilder()
-            ->select($alias)
-            ->from(Collection::class, $alias);
-    }
-
-    /**
      * Guarda una entidad Collection en la base de datos
      * 
      * @param Collection $collection
@@ -291,10 +264,10 @@ class UserCollectionRepository
      */
     public function save(Collection $collection, bool $flush = true): void
     {
-        $this->entityManager->persist($collection);
+        $this->_em->persist($collection);
         
         if ($flush) {
-            $this->entityManager->flush();
+            $this->_em->flush();
         }
     }
 
@@ -306,10 +279,10 @@ class UserCollectionRepository
      */
     public function remove(Collection $collection, bool $flush = true): void
     {
-        $this->entityManager->remove($collection);
+        $this->_em->remove($collection);
         
         if ($flush) {
-            $this->entityManager->flush();
+            $this->_em->flush();
         }
     }
 }

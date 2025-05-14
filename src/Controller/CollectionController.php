@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Service\CollectionService;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,34 +14,38 @@ use Symfony\Component\Routing\Attribute\Route;
 class CollectionController extends AbstractController
 {
     private $collectionService;
+    private $userRepository;
 
     public function __construct(
         CollectionService $collectionService,
+        UserRepository $userRepository
     ) {
         $this->collectionService = $collectionService;
+        $this->userRepository = $userRepository;
     }
 
     #[Route('', name: 'index', methods: ['GET'])]
-    public function index(): JsonResponse
+    public function index(): Response
     {
-        try {
-            $collection = $this->collectionService->getUserCollection();
+        /*try {*/
+            $user = $this->getUser();
+            $collectionArray = $this->collectionService->getUserCollection($user);
+            
             return $this->render('collectionManagement/collection.html.twig', [
                 'title' => 'Mi colección',
                 'description' => 'Aquí puedes ver y gestionar tu colección de cartas.',
                 'status' => 'success',
-                'collection' => $collection,
-                Response::HTTP_OK
+                'collection' => $collectionArray
             ]);
-        } catch (\Exception $e) {
+        /*} catch (\Exception $e) {
             return $this->render('collectionManagement/collection.html.twig', [
                 'title' => 'Mi colección',
                 'description' => 'Aquí puedes ver y gestionar tu colección de cartas.',
                 'status' => 'error',
                 'message' => $e->getMessage(),
-                Response::HTTP_BAD_REQUEST
+                'collection' => [] // Provide an empty array as fallback
             ]);
-        }
+        } */
     }
 
     #[Route('/stats', name: 'stats', methods: ['GET'])]
@@ -222,6 +227,8 @@ class CollectionController extends AbstractController
             $stats = $this->collectionService->getCollectionStats();
 
             return $this->render('collectionManagement/collection.html.twig', [
+                'title' => 'Mi colección',
+                'description' => 'Aquí puedes ver y gestionar tu colección de cartas.',
                 'collection' => $collection,
                 'stats' => $stats
             ]);
