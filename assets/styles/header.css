@@ -7,7 +7,6 @@ header .flex-row{
 }
 
 header img{
-	border: 1px solid;
 	width:  100px;
 	height: 100px;
 }
@@ -17,10 +16,6 @@ header input{
 }
 
 .search-input,
-header svg{
-	border-top-right-radius: 50%;
-	border-bottom-right-radius: 50%;
-}
 .search-input {
 	width:  1.7em;
 	height: 1.7em;
@@ -28,8 +23,8 @@ header svg{
 	color: #fff0;
 }
 header svg{
-	width:  1.55em;
-	height: 1.55em;
+	width:  1.5em;
+	height: 1.5em;
 	margin-left: -6px;
 	position: relative;
 	transform: translate(-100%, -1px);

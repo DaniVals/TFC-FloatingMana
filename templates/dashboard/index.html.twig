@@ -16,7 +16,7 @@
 <body>
 	<div class="container">
 		<div class="row justify-content-center pe-sm-5 ps-sm-5">
-			<h1 class="text-center">¡Hola 
+			<h1 class="text-center">¡Hola, 
 			{% if responseData is defined %}
 				{{ responseData.user.username }}!
 			{% elseif is_granted("IS_AUTHENTICATED_FULLY") %}
@@ -34,27 +34,27 @@
 
 	<div class="container">
 		<div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center pe-sm-5 ps-sm-5">
-			<div class="col option">
+			<div class="col option" id="coll">
 				<a href="{{ path('collection_index') }}" class="text-center">
 					<h2>Colección</h2>
-					<p>Explora y organiza tu coleccion</p>
+					<p>Explora y organiza tu colección</p>
 				</a>
 			</div>
-			<div class="col option">
+			<div class="col option" id="decks">
 				<a href="{{ path('deck_index') }}" class="text-center">
 					<h2>Mazos</h2>
 					<p>Crea, edita y comparte mazos</p>
 				</a>
 			</div>
-			<div class="col option">
+			<div class="col option" id="search">
 				<a href="#" class="text-center">
 					<h2>Buscar</h2>
-					<p>Busca cartas para añadir a tu coleccion</p>
+					<p>Busca cartas para añadir a tu colección</p>
 				</a>
 			</div>
-			<div class="col option">
+			<div class="col option" id="profile">
 				<a href="{{ path('profile') }}" class="text-center">
-					<h2>Ir a mi perfil</h2>
+					<h2>Perfil</h2>
 					<p>Visita tu perfil</p>
 				</a>
 			</div>
@@ -66,17 +66,17 @@
 			</div> #}
 			
 			{% if is_granted("IS_AUTHENTICATED_FULLY") %}
-				<div class="col option">
+				<div class="col option" id="login">
 					<a href="{{ path('app_logout') }}" class="text-center">
-						<h2>Cerrar Sesión</h2>
+						<h2>Cerrar sesión</h2>
 						<p>¡Hasta pronto!</p>
 					</a>
 				</div>
 			{% else %}
-				<div class="col option">
+				<div class="col option" id="logout">
 					<a href="{{ path('app_login') }}" class="text-center">
-						<h2>Iniciar Sesión</h2>
-						<p>¡Unete a nosotros y empieza a gestionar tus cartas!</p>
+						<h2>Iniciar sesión</h2>
+						<p>¡Únete a nosotros y empieza a gestionar tus cartas!</p>
 					</a>
 				</div>
 			{% endif %}

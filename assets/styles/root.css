@@ -25,7 +25,12 @@
 		rgba(0, 0, 0, 1) 100%
 	);
 
-	--dashboard-option-background: #fff1;
+	--dashboard-colourless: #313131;
+	--dashboard-collection: #FDCD66;
+	--dashboard-decks: #1592C7;
+	--dashboard-search: #AAA398;
+	--dashboard-profile: #FD6600;
+	--dashboard-session: #15C83E;
 
 	--status-message-ok-background: #696;
 	--status-message-warning-background: #996;
@@ -50,6 +55,7 @@ body {
 
 a{
 	color: var(--default-text-color);
+	text-decoration: none;
 }
 
 
@@ -59,11 +65,4 @@ a{
 	background: linear-gradient(to right, transparent, var(--default-text-color), transparent);
 	margin-top: 1.5em;
 	margin-bottom: 0.5em;
-}
-
-a.no-deco {
-	text-decoration: none;
-}
-.no-deco a {
-	text-decoration: none;
 }
