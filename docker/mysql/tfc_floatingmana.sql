@@ -147,9 +147,9 @@ CREATE TABLE IF NOT EXISTS `collection` (
   CONSTRAINT `FK_CidC_CidC` FOREIGN KEY (`idCard`) REFERENCES `card` (`idCard`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_CidU_UIdU` FOREIGN KEY (`idUser`) REFERENCES `user` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_CS_SidS` FOREIGN KEY (`state`) REFERENCES `state` (`idState`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla tfc_floatingmana.collection: ~7 rows (aproximadamente)
+-- Volcando datos para la tabla tfc_floatingmana.collection: ~22 rows (aproximadamente)
 INSERT INTO `collection` (`idCollection`, `idUser`, `idCard`, `purchasePrice`, `isFoil`, `state`) VALUES
 	(1, 1, 5, 3.14, 0, 2),
 	(2, 1, 66, 0.15, 1, 2),
@@ -157,7 +157,22 @@ INSERT INTO `collection` (`idCollection`, `idUser`, `idCard`, `purchasePrice`, `
 	(5, 1, 84, 0.27, 0, 3),
 	(6, 1, 63, 0.00, 0, 2),
 	(7, 1, 88, 1.30, 0, 2),
-	(8, 1, 57, 32.20, 1, 2);
+	(8, 1, 57, 32.20, 1, 2),
+	(9, 1, 11, 0.12, 0, 2),
+	(10, 4, 1, 91.86, 1, 1),
+	(11, 1, 2, 0.06, 0, 2),
+	(12, 2, 3, 0.30, 0, 2),
+	(13, 2, 4, 0.43, 0, 2),
+	(14, 2, 6, 0.15, 0, 2),
+	(15, 4, 7, 0.42, 0, 2),
+	(16, 3, 8, 0.15, 0, 3),
+	(17, 2, 9, 0.16, 0, 2),
+	(18, 3, 10, 0.19, 1, 2),
+	(19, 4, 12, 0.36, 0, 2),
+	(20, 2, 13, 0.31, 0, 2),
+	(21, 4, 14, 6.50, 1, 1),
+	(22, 3, 15, 0.16, 0, 2),
+	(23, 2, 16, 0.12, 0, 2);
 
 -- Volcando estructura para tabla tfc_floatingmana.deck
 CREATE TABLE IF NOT EXISTS `deck` (
@@ -169,11 +184,15 @@ CREATE TABLE IF NOT EXISTS `deck` (
   PRIMARY KEY (`idDeck`),
   KEY `FK_DDO_UUN` (`idUser`),
   CONSTRAINT `FK_DidU_UidU` FOREIGN KEY (`idUser`) REFERENCES `user` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla tfc_floatingmana.deck: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla tfc_floatingmana.deck: ~5 rows (aproximadamente)
 INSERT INTO `deck` (`idDeck`, `deckName`, `idUser`, `format`, `coverImg`) VALUES
-	(1, 'patata', 1, 'commander', '""');
+	(1, 'patata', 1, 'commander', '""'),
+	(2, 'cebolla', 1, 'modern', '""'),
+	(3, 'naranja', 2, 'commander', '""'),
+	(4, 'mazorca', 3, 'commander', '""'),
+	(5, 'piñas', 4, 'commander', '""');
 
 -- Volcando estructura para tabla tfc_floatingmana.deckcard
 CREATE TABLE IF NOT EXISTS `deckcard` (
@@ -186,14 +205,30 @@ CREATE TABLE IF NOT EXISTS `deckcard` (
   KEY `FK_DCidC_CidC` (`idCard`),
   CONSTRAINT `FK_DCidC_CidC` FOREIGN KEY (`idCard`) REFERENCES `card` (`idCard`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_DCidD_DidD` FOREIGN KEY (`idDeck`) REFERENCES `deck` (`idDeck`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='tabla resultado de la relación (N:M) de Deck y Card';
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='tabla resultado de la relación (N:M) de Deck y Card';
 
--- Volcando datos para la tabla tfc_floatingmana.deckcard: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla tfc_floatingmana.deckcard: ~20 rows (aproximadamente)
 INSERT INTO `deckcard` (`idDeckCard`, `idDeck`, `idCard`, `cardQuantity`) VALUES
 	(1, 1, 88, 1),
 	(2, 1, 84, 1),
 	(3, 1, 5, 1),
-	(4, 1, 66, 1);
+	(4, 1, 66, 1),
+	(5, 2, 1, 1),
+	(6, 2, 11, 1),
+	(7, 2, 2, 1),
+	(8, 2, 3, 5),
+	(9, 3, 4, 1),
+	(10, 5, 6, 1),
+	(11, 2, 7, 1),
+	(12, 3, 8, 1),
+	(13, 4, 9, 1),
+	(14, 4, 10, 1),
+	(15, 4, 11, 1),
+	(16, 4, 12, 1),
+	(17, 3, 13, 1),
+	(18, 5, 14, 7),
+	(19, 3, 15, 4),
+	(20, 5, 16, 1);
 
 -- Volcando estructura para tabla tfc_floatingmana.state
 CREATE TABLE IF NOT EXISTS `state` (
@@ -203,7 +238,7 @@ CREATE TABLE IF NOT EXISTS `state` (
   UNIQUE KEY `stateName` (`stateName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla tfc_floatingmana.state: ~6 rows (aproximadamente)
+-- Volcando datos para la tabla tfc_floatingmana.state: ~0 rows (aproximadamente)
 INSERT INTO `state` (`idState`, `stateName`) VALUES
 	(3, 'excellent'),
 	(4, 'good'),
@@ -238,7 +273,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `profilePic` (`profilePic`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla tfc_floatingmana.user: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla tfc_floatingmana.user: ~0 rows (aproximadamente)
 INSERT INTO `user` (`idUser`, `username`, `email`, `password`, `isAuth`, `profilePic`) VALUES
 	(1, 'alexmm', 'alexmm@gmail.com', '$2y$13$Fch38As4hedtIp62PBoTOuFod3L7yvKACInkuj28w4ELFEva8Fbca', 1, NULL),
 	(2, 'ivanag', 'ivanag@gmail.com', '$2y$13$Fch38As4hedtIp62PBoTOuFod3L7yvKACInkuj28w4ELFEva8Fbca', 1, NULL),
