@@ -19,8 +19,9 @@
 }
 .card-list-show img {
 	/* border-radius: 1em; */
-	aspect-ratio: 3/2;
+	aspect-ratio: 4/3;
 	object-fit: cover;
+	object-position: center;
 
 	mask-image: var(--card-list-card-preview-transparent-gradient);
 	-webkit-mask-image: var(--card-list-card-preview-transparent-gradient);

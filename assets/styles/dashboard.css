@@ -10,21 +10,55 @@
 }
 
 .option h2, p {
-	color: var(--default-background-color);
+	color: var(--dashboard-colourless);
 }
 
 #coll {
 	background-color: var(--dashboard-collection);
 }
+#coll:hover {
+	background-color: var(--dashboard-colourless);
+	& h2, p {
+		color: var(--dashboard-collection);
+	}
+}
+
 #decks {
 	background-color: var(--dashboard-decks);
 }
+#decks:hover {
+	background-color: var(--dashboard-colourless);
+	& h2, p {
+		color: var(--dashboard-decks);
+	}
+}
+
 #search {
 	background-color: var(--dashboard-search);
 }
+#search:hover {
+	background-color: var(--dashboard-colourless);
+	& h2, p {
+		color: var(--dashboard-search);
+	}
+}
+
 #profile {
 	background-color: var(--dashboard-profile);
 }
+#profile:hover {
+	background-color: var(--dashboard-colourless);
+	& h2, p {
+		color: var(--dashboard-profile);
+	}
+}
+
 #login, #logout {
 	background-color: var(--dashboard-session);
+}
+#login:hover, #logout:hover {
+	background-color: var(--dashboard-colourless);
+	& h2, p {
+		color: var(--dashboard-session);
+	}
 }

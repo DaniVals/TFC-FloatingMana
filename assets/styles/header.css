@@ -7,8 +7,9 @@ header .flex-row{
 }
 
 header img{
-	width:  100px;
 	height: 100px;
+	position: relative;
+	margin-top: .75em;
 }
 
 header input{
