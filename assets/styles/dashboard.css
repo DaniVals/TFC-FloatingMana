@@ -7,58 +7,39 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+
+	background: var(--dashboard-background-colourless);
+}
+.option h2 {
+	transition: font-size 0.3s;
+}
+.option:hover h2 {
+	/* font-weight: bold; */
+	font-size: 2.5em;
 }
 
 .option h2, p {
-	color: var(--dashboard-colourless);
+	color: var(--dashboard-color);
 }
 
-#coll {
-	background-color: var(--dashboard-collection);
-}
+#coll {background: var(--dashboard-background-collection);}
 #coll:hover {
-	background-color: var(--dashboard-colourless);
-	& h2, p {
-		color: var(--dashboard-collection);
-	}
+	background: var(--dashboard-background-hover-collection);
 }
-
-#decks {
-	background-color: var(--dashboard-decks);
-}
+#decks {background: var(--dashboard-background-decks);}
 #decks:hover {
-	background-color: var(--dashboard-colourless);
-	& h2, p {
-		color: var(--dashboard-decks);
-	}
+	background: var(--dashboard-background-hover-decks);
 }
-
-#search {
-	background-color: var(--dashboard-search);
-}
+#search {background: var(--dashboard-background-search);}
 #search:hover {
-	background-color: var(--dashboard-colourless);
-	& h2, p {
-		color: var(--dashboard-search);
-	}
+	background: var(--dashboard-background-hover-search);
 }
-
-#profile {
-	background-color: var(--dashboard-profile);
-}
+#profile {background: var(--dashboard-background-profile);}
 #profile:hover {
-	background-color: var(--dashboard-colourless);
-	& h2, p {
-		color: var(--dashboard-profile);
-	}
+	background: var(--dashboard-background-hover-profile);
+}
+#login, #logout {background: var(--dashboard-background-session);}
+#login:hover, #logout:hover {
+	background: var(--dashboard-background-hover-session);
 }
 
-#login, #logout {
-	background-color: var(--dashboard-session);
-}
-#login:hover, #logout:hover {
-	background-color: var(--dashboard-colourless);
-	& h2, p {
-		color: var(--dashboard-session);
-	}
-}

@@ -25,12 +25,75 @@
 		rgba(0, 0, 0, 1) 100%
 	);
 
-	--dashboard-colourless: #454545;
-	--dashboard-collection: #FDCD66;
-	--dashboard-decks: #1592C7;
-	--dashboard-search: #AAA398;
-	--dashboard-profile: #FD6600;
-	--dashboard-session: #15C83E;
+	--dashboard-color: #242526;
+
+	--dashboard-background-colourless: #313131;
+	--dashboard-background-collection: #FDCD66;
+	--dashboard-background-decks: #1592C7;
+	--dashboard-background-search: #AAA398;
+	--dashboard-background-profile: #FD6600;
+	--dashboard-background-session: #15C83E;
+	
+	/* variables para que los degradados del hover sean mas automaticos y modificables */
+	--dashboard-background-hover-aditive-white: #FFF;
+	--dashboard-background-hover-aditive-white-percent: 40%;
+	--dashboard-background-hover-aditive-color-percent: 60%;
+	--dashboard-background-hover-circle-position: circle at 50% 15%;
+	
+	--dashboard-background-hover-colourless: radial-gradient(
+		var(--dashboard-background-hover-circle-position),
+		color-mix(
+			in srgb,
+			var(--dashboard-background-colourless) var(--dashboard-background-hover-aditive-color-percent),
+			var(--dashboard-background-hover-aditive-white) var(--dashboard-background-hover-aditive-white-percent)
+		) 20%,
+		var(--dashboard-background-colourless) 100%
+	);
+	--dashboard-background-hover-collection: radial-gradient(
+		var(--dashboard-background-hover-circle-position), 
+		color-mix(
+			in srgb,
+			var(--dashboard-background-collection) var(--dashboard-background-hover-aditive-color-percent),
+			var(--dashboard-background-hover-aditive-white) var(--dashboard-background-hover-aditive-white-percent)
+		) 20%, 
+		var(--dashboard-background-collection) 100%
+	);
+	--dashboard-background-hover-decks: radial-gradient(
+		var(--dashboard-background-hover-circle-position),
+		color-mix(
+			in srgb,
+			var(--dashboard-background-decks) var(--dashboard-background-hover-aditive-color-percent),
+			var(--dashboard-background-hover-aditive-white) var(--dashboard-background-hover-aditive-white-percent)
+		) 20%,
+		var(--dashboard-background-decks) 100%
+	);
+	--dashboard-background-hover-search: radial-gradient(
+		var(--dashboard-background-hover-circle-position),
+		color-mix(
+			in srgb,
+			var(--dashboard-background-search) var(--dashboard-background-hover-aditive-color-percent),
+			var(--dashboard-background-hover-aditive-white) var(--dashboard-background-hover-aditive-white-percent)
+		) 20%,
+		var(--dashboard-background-search) 100%
+	);
+	--dashboard-background-hover-profile: radial-gradient(
+		var(--dashboard-background-hover-circle-position),
+		color-mix(
+			in srgb,
+			var(--dashboard-background-profile) var(--dashboard-background-hover-aditive-color-percent),
+			var(--dashboard-background-hover-aditive-white) var(--dashboard-background-hover-aditive-white-percent)
+		) 20%,
+		var(--dashboard-background-profile) 100%
+	);
+	--dashboard-background-hover-session: radial-gradient(
+		var(--dashboard-background-hover-circle-position),
+		color-mix(
+			in srgb,
+			var(--dashboard-background-session) var(--dashboard-background-hover-aditive-color-percent),
+			var(--dashboard-background-hover-aditive-white) var(--dashboard-background-hover-aditive-white-percent)
+		) 20%,
+		var(--dashboard-background-session) 100%
+	);
 
 	--status-message-ok-background: #696;
 	--status-message-warning-background: #996;

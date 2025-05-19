@@ -34,51 +34,51 @@
 
 	<div class="container">
 		<div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center pe-sm-5 ps-sm-5">
-			<div class="col option" id="coll">
-				<a href="{{ path('collection_index') }}" class="text-center">
+			<a class="col option d-block" id="coll" href="{{ path('collection_index') }}" class="text-center">
+				<div class="d-flex flex-column justify-content-center align-items-center h-100" style="height: 100%;">
 					<h2>Colección</h2>
 					<p>Explora y organiza tu colección</p>
-				</a>
-			</div>
-			<div class="col option" id="decks">
-				<a href="{{ path('deck_index') }}" class="text-center">
+				</div>
+			</a>
+			<a class="col option d-block" id="decks" href="{{ path('deck_index') }}" class="text-center">
+				<div class="d-flex flex-column justify-content-center align-items-center h-100" style="height: 100%;">
 					<h2>Mazos</h2>
 					<p>Crea, edita y comparte mazos</p>
-				</a>
-			</div>
-			<div class="col option" id="search">
-				<a href="#" class="text-center">
+				</div>
+			</a>
+			<a class="col option d-block" id="search" href="#" class="text-center">
+				<div class="d-flex flex-column justify-content-center align-items-center h-100" style="height: 100%;">
 					<h2>Buscar</h2>
 					<p>Busca cartas para añadir a tu colección</p>
-				</a>
-			</div>
-			<div class="col option" id="profile">
-				<a href="{{ path('profile') }}" class="text-center">
+				</div>
+			</a>
+			<a class="col option d-block" id="profile" href="{{ path('profile') }}" class="text-center">
+				<div class="d-flex flex-column justify-content-center align-items-center h-100" style="height: 100%;">
 					<h2>Perfil</h2>
 					<p>Visita tu perfil</p>
-				</a>
-			</div>
-			{# <div class="col option">
-				<a href="#" class="text-center">
+				</div>
+			</a>
+			{# <a class="col option d-block" href="#" class="text-center">
+				<div class="d-flex flex-column justify-content-center align-items-center h-100" style="height: 100%;">
 					<h2>🤝 Gestionar Intercambios</h2>
 					<p>Organiza tus cartas para cambiar con otros usuarios.</p>
-				</a>
-			</div> #}
+				</div>
+			</a> #}
 			
 			{% if is_granted("IS_AUTHENTICATED_FULLY") %}
-				<div class="col option" id="login">
-					<a href="{{ path('app_logout') }}" class="text-center">
+				<a class="col option d-block" id="login" href="{{ path('app_logout') }}" class="text-center">
+					<div class="d-flex flex-column justify-content-center align-items-center h-100" style="height: 100%;">
 						<h2>Cerrar sesión</h2>
 						<p>¡Hasta pronto!</p>
-					</a>
-				</div>
+					</div>
+				</a>
 			{% else %}
-				<div class="col option" id="logout">
-					<a href="{{ path('app_login') }}" class="text-center">
+				<a class="col option d-block" id="logout" href="{{ path('app_login') }}" class="text-center">
+					<div class="d-flex flex-column justify-content-center align-items-center h-100" style="height: 100%;">
 						<h2>Iniciar sesión</h2>
 						<p>¡Únete a nosotros y empieza a gestionar tus cartas!</p>
-					</a>
-				</div>
+					</div>
+				</a>
 			{% endif %}
 
 		</div>
