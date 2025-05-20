@@ -54,17 +54,17 @@
 					<div class="d-flex justify-content-between align-items-center w-100">
 						<img id="card-image" class="col-4 col-md-2 col-sm-3" src="https://fepfi.es/wp-content/uploads/2021/10/placeholder-1.png" alt="card image">
 						
-						<p class="col-6" title="{{ card.getCard.getCardName }}"> 
+						<p class="col-4 col-sm-6" title="{{ card.getCard.getCardName }}"> 
 							{% if card.getIsFoil %} <span title="Foil" class="foil-text">Foil</span>
 							{% endif %} {{ card.getCard.getCardName }} 
 						</p>
 
-						<div id="card-prices" class="col-1 d-flex flex-column align-items-start" data-price-improvement="0">
+						<div id="card-prices" class="col-2 col-sm-1 d-flex flex-column align-items-start" data-price-improvement="0">
 							<span id="card-price"></span>
 							<span id="card-purcharse-price"> {{ card.getPurchasePrice }}€ </span>
 						</div>
 
-						<div id="card-prices" class="col-2 d-flex flex-column align-items-start" data-price-improvement="0">
+						<div id="card-prices" class="col-3 col-sm-2 d-flex flex-column align-items-start" data-price-improvement="0">
 							<p class="card-state card-state-{{ card.getState.getStateName }}">{{ card.getState.getStateName }}</p>
 						</div>
 					</div>
