@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<title>Colleccion</title>
+	<title>Tu colleccion</title>
 	
 	{% include "root.html.twig" %}
-	<link rel="stylesheet" href=" {{asset('styles/card.css') }} ">
+	<link rel="stylesheet" href=" {{ asset('styles/cardList.css') }} ">
+	<script src=" {{asset('js/CardClass.js')}} "></script>
+	<script src=" {{asset('js/cardList.js')}} "></script>
 </head>
 {% include "header.html.twig" %}
 <body>
@@ -16,73 +18,64 @@
     <div class="container">
         <div class="row">
             <div class="col-12 text-center">
-                <h1>Tu colección</h1>
-                {% if status == 'error' %}
-                    <div class="alert alert-danger">
-                        {{ message }}
-                    </div>
-                {% endif %}
-                {% if stats is defined %}
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <h2>Estadísticas de la colección</h2>
-                        </div>
-                        <div class="card-body">
-                            <p>Total de cartas: {{ stats.total_cards|default(0) }}</p>
-                            <p>Valor total estimado: ${{ stats.estimated_value|default(0)|number_format(2, ',', '.') }}</p>
-                        </div>
-                    </div>
-                {% endif %}
+				<h1 class="fw-bold"> Tu colleccion </h1>
             </div>
-			{% include "separation.twig" %}
         </div>
-        <div class="row justify-content-center">
-			 {# {{ dump(collection) }} #}
+
+		{% include "separation.twig" %}
+
+        <div class="row">
+            <div class="col-12 text-center">
+			 	{# <button onclick="addToBody()">mostrar lista</button> #}
+				<select id="sortMode" class="form-select w-auto d-inline-block" onchange="sortBy('sortMode')">
+					{# <option value="id">No ordenar</option> #}
+					<option value="name">Nombre</option>
+					<option value="price">Precio</option>
+					<option value="purchace-price">Precio de compra</option>
+				</select>
+				<select id="groupMode" class="form-select w-auto d-inline-block" onchange="groupBy('groupMode')">
+			 		<option value="none">No agrupar</option>
+			 		<option value="type">Tipo</option>
+			 		<option value="set">Expansion</option>
+			 	</select>
+            </div>
+        </div>
+
+		<br>
 		
-            {% if collection is empty %}
-                <div class="col-12">
-                    <div class="alert alert-info">
-                        No hay cartas en tu colección. ¡Añade algunas!
-                    </div>
+        <div class="row justify-content-center no-deco" id="card-list" data-ajax-route="https://api.scryfall.com/cards/">
+            {% for card in collection %}
+				{# {{ dump(card) }} #}
+                <div class="col-12 col-sm-11 col-md-10 ps-0    card-list-show" 
+				data-card-id="{{ card.getCard.getIdScryfall }}" data-card-name="{{ card.getCard.getCardName }}"
+				data-card-purchase-price="{{ card.getPurchasePrice }}" data-card-is-foil="{{ card.getIsFoil }}"
+				data-card-state="{{ card.getState.getStateName }}">
+					<a href=" {{ path('view_card', {id: card.getCard.getIdScryfall  }) }} "> 
+					<div class="d-flex justify-content-between align-items-center w-100">
+						<img id="card-image" class="col-4 col-md-2 col-sm-3" src="https://fepfi.es/wp-content/uploads/2021/10/placeholder-1.png" alt="card image">
+						
+						<p class="col-6" title="{{ card.getCard.getCardName }}"> 
+							{% if card.getIsFoil %} <span title="Foil" class="foil-text">Foil</span>
+							{% endif %} {{ card.getCard.getCardName }} 
+						</p>
+
+						<div id="card-prices" class="col-1 d-flex flex-column align-items-start" data-price-improvement="0">
+							<span id="card-price"></span>
+							<span id="card-purcharse-price"> {{ card.getPurchasePrice }}€ </span>
+						</div>
+
+						<div id="card-prices" class="col-2 d-flex flex-column align-items-start" data-price-improvement="0">
+							<p class="card-state card-state-{{ card.getState.getStateName }}">{{ card.getState.getStateName }}</p>
+						</div>
+					</div>
+					</a>
                 </div>
-            {% else %}
-                {% for card in collection %}
-                    <div class="col-10 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                        <div class="card-slide-preview mb-5">
-                            {% if card.image_uris is defined and card.image_uris.small is defined %}
-                                <img src="{{ card.image_uris.small }}" class="card-img-top" alt="..." id="cardImg">
-                            {% else %}
-                                <div class="placeholder-img">No image available</div>
-                            {% endif %}
-                            <div class="card-body">
-                                <h5 class="card-slide-title text-center">
-                                    {% if card.getName is defined %}
-                                        {{ card.getName() }}
-                                    {% elseif card.name is defined %}
-                                        {{ card.name }}
-                                    {% else %}
-                                        Unnamed card
-                                    {% endif %}
-                                </h5>
-                                {% if card.purchasePrice is defined %}
-                                    <p class="card-slide-text text-center">{{ card.purchasePrice }}€</p>
-                                {% elseif card.prices.eur is defined and card.prices.eur is not empty %}
-                                    <p class="card-slide-text text-center">{{ card.prices.eur }}€</p>
-                                {% else %}
-                                    <p class="card-slide-text-default text-center">Precio no disponible</p>
-                                {% endif %}
-                                {% if card.isFoil is defined and card.isFoil == 1 %}
-                                    <span class="badge bg-primary">Foil</span>
-                                {% endif %}
-                                {% if card.state is defined %}
-                                    <span class="badge bg-secondary">{{ card.state }}</span>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            {% endif %}
+            {% endfor %}
         </div>
+		{# dejar un pequeño pie de pagina #}
+		<br> 
     </div>
+		{# {{ dump(collection) }} #}
+		{# {{ dump(app.user) }} #}
 </body>
 </html>

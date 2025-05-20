@@ -26,3 +26,24 @@
 	mask-image: var(--card-list-card-preview-transparent-gradient);
 	-webkit-mask-image: var(--card-list-card-preview-transparent-gradient);
 }
+
+/* detecting the increment in the card price */
+#card-prices[data-price-improvement]:not([data-price-improvement="0"]):not([data-price-improvement=""]) {
+	color: var(--card-list-price-increment-color);
+}
+/* Detect if its a negative number */
+#card-prices[data-price-improvement^="-"] {
+	color:var(--card-list-price-decrement-color) !important;
+}
+
+
+.foil-text {
+	background-color: var(--card-list-foil-background);
+	color: var(--card-list-foil-color);
+	padding: 0.2em;
+	border-radius: 5px;
+}
+
+.card-state {
+	color: var(--card-list-state-color);
+}

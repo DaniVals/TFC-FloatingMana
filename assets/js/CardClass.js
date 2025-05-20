@@ -44,5 +44,10 @@ class CardCollection {
 		} else {
 			this.type = "other"
 		}
+
+		const cardPrices = this.element.querySelector("#card-prices");
+		if (cardPrices) {
+			cardPrices.setAttribute("data-price-improvement", this.purchasePrice - this.price);
+		}
 	}
 }

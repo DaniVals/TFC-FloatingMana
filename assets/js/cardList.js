@@ -66,12 +66,20 @@ function sortBy(selectId) {
 	console.log("sorting by: ", sortingMode);
 	
 	switch (sortingMode) {
+		case "id":
+			cards.sort((a, b) => a.id.localeCompare(b.id));
+			break;
+
 		case "name":
 			cards.sort((a, b) => a.name.localeCompare(b.name));
 			break;
 			
 		case "price":
 			cards.sort((a, b) => b.price - a.price);
+			break;
+			
+		case "purchace-price":
+			cards.sort((a, b) => b.purchasePrice - a.purchasePrice);
 			break;
 	
 		default:

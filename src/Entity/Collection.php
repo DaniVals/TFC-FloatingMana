@@ -24,17 +24,21 @@ class Collection
     private $user;
 
 	// #[ORM\JoinColumn(name: "idCard", referencedColumnName: "idCard")]
-    #[ORM\ManyToMany(targetEntity: Card::class)]
-	#[ORM\JoinTable(
-		name: "collection_card",
-		joinColumns: [
-			new ORM\JoinColumn(name: "idCollection", referencedColumnName: "idCollection")
-		],
-		inverseJoinColumns: [
-			new ORM\JoinColumn(name: "idCard", referencedColumnName: "idCard")
-		]
-	)]
-    private $card;
+    // #[ORM\ManyToMany(targetEntity: Card::class)]
+	// #[ORM\JoinTable(
+	// 	name: "collection_card",
+	// 	joinColumns: [
+	// 		new ORM\JoinColumn(name: "idCollection", referencedColumnName: "idCollection")
+	// 	],
+	// 	inverseJoinColumns: [
+	// 		new ORM\JoinColumn(name: "idCard", referencedColumnName: "idCard")
+	// 	]
+	// )]
+    // private $card;
+	
+	#[ORM\ManyToOne(targetEntity: Card::class, fetch: "EAGER")]
+	#[ORM\JoinColumn(name: "idCard", referencedColumnName: "idCard")]
+	private $card;
 
 	#[ORM\Column(type: "decimal", precision: 6, scale: 2, name: "purchasePrice")]
 	private $purchasePrice;
@@ -68,11 +72,20 @@ class Collection
 		return $this;
 	}
 
-	public function getCard(): ?ArrayCollection
+	// public function getCard(): ?ArrayCollection
+	// {
+	// 	return $this->card;
+	// }
+	// public function setCard(ArrayCollection $card): self
+	// {
+	// 	$this->card = $card;
+	// 	return $this;
+	// }
+	public function getCard(): ?Card
 	{
 		return $this->card;
 	}
-	public function setCard(ArrayCollection $card): self
+	public function setCard(Card $card): self
 	{
 		$this->card = $card;
 		return $this;

@@ -24,6 +24,11 @@
 		rgba(0, 0, 0, 1) 10%, /* a partir de que punto empieza el degradado */
 		rgba(0, 0, 0, 1) 100%
 	);
+	--card-list-price-increment-color: #15C83E;
+	--card-list-price-decrement-color: #ed2120;
+	--card-list-foil-background: #FDCD66;
+	--card-list-foil-color: #242526;
+	--card-list-state-color: #aaa;
 
 	--dashboard-color: #242526;
 
@@ -98,6 +103,7 @@
 	--status-message-ok-background: #696;
 	--status-message-warning-background: #996;
 	--status-message-error-background: #966;
+
 }
 
 
