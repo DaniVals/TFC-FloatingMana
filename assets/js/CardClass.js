@@ -47,7 +47,23 @@ class CardCollection {
 
 		const cardPrices = this.element.querySelector("#card-prices");
 		if (cardPrices) {
-			cardPrices.setAttribute("data-price-improvement", this.purchasePrice - this.price);
+			let improvement = parseFloat((this.price - this.purchasePrice).toFixed(2));
+
+			// show color only if there is a price to compare
+			if (JSON_DATA["prices"] && JSON_DATA["prices"]["eur"]) {
+				cardPrices.setAttribute("data-price-improvement", improvement);
+				if (0 == improvement) {
+					cardPrices.title = "= " + improvement + "€";
+				}
+				else if (0 < improvement) {
+					cardPrices.title = "↑ " + improvement + "€";
+				} 
+				else {
+					cardPrices.title = "↓ " + Math.abs(improvement) + "€";
+				}
+			}else{
+				cardPrices.title = "sin precio";
+			}
 		}
 	}
 }
