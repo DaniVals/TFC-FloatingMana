@@ -8,6 +8,17 @@
 	border-bottom: var(--card-list-border-separator);
 	overflow: hidden;
 }
+.card-list-show:has(.foil-text) {
+	background: linear-gradient(120deg, 
+		rgba(255, 0, 0, 0.3) 00%, 
+		rgba(255, 153, 0, 0.2)   25%, 
+		rgba(238, 255, 0, 0.2) 40%, 
+		rgba(21, 255, 0, 0.2) 55%, 
+		rgba(0, 191, 255, 0.2) 70%, 
+		rgba(13, 0, 255, 0.3) 85%,
+		rgba(238, 0, 255, 0.3) 100%
+	);
+}
 .card-list-show:first-of-type {
 	border-top-left-radius:  var(--card-list-border-radius);
 	border-top-right-radius: var(--card-list-border-radius);
