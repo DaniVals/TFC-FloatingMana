@@ -128,13 +128,10 @@ function addCardToCollection() {
 	const messageText = document.getElementById('addCardPopUp-window-message-text');
 
 	console.log("adding card to collection");
-	showMessaje("Añadiendo carta...", 1);
-
-	console.log(document.getElementById('addCardPopUp-window-collection-state'));
-	
+	showMessaje("Añadiendo carta...", 1);	
 	
 	const params = {
-		cardId: document.getElementById('addCardPopUp-window-card-id').value,
+		card_id: document.getElementById('addCardPopUp-window-card-id').value,
 		cardName: document.getElementById('addCardPopUp-window-collection-name').innerText,
 		isFoil: document.getElementById('addCardPopUp-window-collection-isFoil').checked,
 		purchasePrice: document.getElementById('addCardPopUp-window-collection-purchacePrice').value,
