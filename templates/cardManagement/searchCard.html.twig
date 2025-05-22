@@ -30,15 +30,11 @@
 
 			{% if cards is defined %}
             {% for card in cards %}
-                <div class="col-10 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-					<div class="card-slide-preview mb-5">
-						<a href=" {{ path('view_card', {id: card.id}) }} " class="card-slide-link">
-						
-							{# {% include "import/cardImage.twig" with { card: card, img_class: "card-img-top" } %} #}
+                <div class="col-10 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-3">
+					<div class="card-slide-preview d-flex flex-column justify-content-between align-items-center h-100">
+						<a href=" {{ path('view_card', {id: card.id}) }} " class="card-slide-link w-100 d-flex flex-column align-items-center">
 							{{ cardUtilities.mostrarImagen(card, "card-img-top", false) }}
-
-							
-							<div class="card-body">
+							<div class="card-body w-100 d-flex flex-column align-items-center">
 								<h5 class="card-slide-title text-center">{{ card.name }}</h5>
 								{% if card.prices.eur is not empty %}
 									<p class="card-slide-text text-center">{{ card.prices.eur }}€</p>
@@ -50,7 +46,6 @@
 						{% if is_granted("IS_AUTHENTICATED_FULLY") %}
 							<button class="btn btn-outline-secondary btn-sm w-100" onclick="addCardPopUp( '{{ card.name }}' , '{{ card.id }}' , {{ card.prices|json_encode() }} )"> Añadir a... </button>
 						{% endif %}
-
 					</div>
                 </div>
             {% endfor %}
