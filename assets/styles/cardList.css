@@ -17,7 +17,7 @@
 	border-bottom-right-radius: var(--card-list-border-radius);
 	border-bottom: none;
 }
-.card-list-show img {
+#card-image {
 	/* border-radius: 1em; */
 	aspect-ratio: 4/3;
 	object-fit: cover;
@@ -27,6 +27,12 @@
 	-webkit-mask-image: var(--card-list-card-preview-transparent-gradient);
 }
 
+#card-prices {
+	background-image: url('');
+	background-position: right;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
 /* detecting the increment in the card price */
 #card-prices[data-price-improvement]:not([data-price-improvement="0"]):not([data-price-improvement=""]) {
 	color: var(--card-list-price-increment-color);

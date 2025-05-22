@@ -59,12 +59,15 @@
 							{% endif %} {{ card.getCard.getCardName }} 
 						</p>
 
-						<div id="card-prices" class="col-2 col-sm-1 d-flex flex-column align-items-start" data-price-improvement="0">
-							<span id="card-price"></span>
-							<span id="card-purcharse-price"> {{ card.getPurchasePrice }}€ </span>
+						<div id="card-prices" class="col-2 col-sm-1 d-flex flex-row align-items-start" data-price-improvement="0">
+							<div class="d-flex flex-column align-items-center justify-content-center">
+								<span class="d-block" id="card-price"></span>
+								<span class="d-block" id="card-purcharse-price"> {{ card.getPurchasePrice }}€ </span>
+							</div>
+							{# <img src="https://www.svgrepo.com/show/384726/pointer-up.svg" alt="" class="w-100 h-auto"> #}
 						</div>
 
-						<div id="card-prices" class="col-3 col-sm-2 d-flex flex-column align-items-start" data-price-improvement="0">
+						<div id="card-state" class="col-3 col-sm-2 d-flex flex-column align-items-start" data-price-improvement="0">
 							<p class="card-state card-state-{{ card.getState.getStateName }}">{{ card.getState.getStateName }}</p>
 						</div>
 					</div>
