@@ -14,34 +14,34 @@
 </head>
 <body>
 
-	{% if responseData is defined %}
-		<div class="alert alert-danger" role="alert">
-            {{ responseData.message }}
-		</div>
-	{% endif %}
-
-
 	<div class="container">
-		<form action="{{ path('app_login') }}" method="post" 
-		class="center-in-page-vert row justify-content-center">
-			<table class="col-12 col-md-8 pop-up-bordered">
-				<tr class="p-5">
-					<td class="col-6 col-md-4 p-2">Correo</td>
-					<td class="col-6 col-md-4 p-2"><input type="text" id="username" name="_username" class="form-control"/></td>
-				</tr>
-				<tr>
-					<td class="p-2">Contraseña</td>
-					<td class="p-2"><input type="password" id="password" name="_password" class="form-control" /></td>
-				</tr>
-				<tr>
-					<td colspan="2" class="p-2 text-center"><button type="submit" class="btn btn-primary">Iniciar sesión</button></td>
-				</tr>
-				<tr>
-					<td colspan="1" class="mb-1 text-center"> <a href="{{ path('app_register_view') }}">Registrarse</a> </td>
-					{#<td> <a href="{{ path('app_recovery_view') }}">Recover Password</a> </td>#}
-				</tr>
-			</table>
-		</form>
+		<div class="d-flex justify-content-center align-items-center p-5" style="min-height: 90vh;">
+			<form action="{{ path('app_login') }}" method="post" 
+			class="row justify-content-center w-100">
+				<p class="text-center">
+					{% if responseData is defined %}
+						{{ responseData.message }}
+					{% endif %}
+				</p>
+				<table class="col-12 col-md-8 pop-up-bordered w-100">
+					<tr class="p-5">
+						<td class="col-6 col-md-4 p-2">Correo</td>
+						<td class="col-6 col-md-4 p-2"><input type="text" id="username" name="_username" class="form-control"/></td>
+					</tr>
+					<tr>
+						<td class="p-2">Contraseña</td>
+						<td class="p-2"><input type="password" id="password" name="_password" class="form-control" /></td>
+					</tr>
+					<tr>
+						<td colspan="2" class="p-2 text-center"><button type="submit" class="btn btn-primary">Iniciar sesión</button></td>
+					</tr>
+					<tr>
+						<td colspan="1" class="mb-1 text-center"> <a href="{{ path('app_register_view') }}">Registrarse</a> </td>
+						{#<td> <a href="{{ path('app_recovery_view') }}">Recover Password</a> </td>#}
+					</tr>
+				</table>
+			</form>
+		</div>
 	</div>
 </body>
 </html>
