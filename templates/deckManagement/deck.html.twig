@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<title>Mazo</title>
+	{% if not deck %}
+		<title>Mazo no encontrado</title>
+	{% else %}
+		<title>Mazo: {{ deck.getDeckName }}</title>
+	{% endif %}
 	
 	{% include "root.html.twig" %}
 	<link rel="stylesheet" href=" {{ asset('styles/cardList.css') }} ">
@@ -13,71 +17,81 @@
 </head>
 {% include "header.html.twig" %}
 <body>
-    <!-- Por cada carta, mostrar su nombre, precio y la imagen. -->
-    <!-- Leer el dato que se envia desde el controlador y mostrarlo en la vista. -->
-    <div class="container">
-        <div class="row">
-            <div class="col-12 text-center">
-				<h1 class="fw-bold"> {{ deck.getDeckName }} </h1>
-            </div>
-			<div class="col-6 col-sm-2 text-center">
-				<a href="{{ path('deck_index') }}" class="btn btn-outline-secondary me-auto">
-					Volver
-				</a>
+	{% if not deck %}
+		<div class="container">
+			<div class="row">
+				<div class="col-12 text-center d-flex justify-content-center align-items-center" style="height: 50vh;">
+					<p class="fs-3">Mazo no encontrado</p>
+				</div>
 			</div>
-			<div class="col-0 col-sm-8 text-center">
-            </div>
-			<div class="col-6 col-sm-2 text-center">
-					<a href="{{ path('deck_edit_view', {id: deck.getIdDeck}) }}" class="btn btn-outline-primary">
-						Editar mazo
+		</div>
+	{% else %}
+		<div class="container">
+			<div class="row">
+				<div class="col-12 text-center">
+					<h1 class="fw-bold"> {{ deck.getDeckName }} </h1>
+				</div>
+				<div class="col-6 col-sm-2 text-center">
+					<a href="{{ path('deck_index') }}" class="btn btn-outline-secondary me-auto">
+						Volver
 					</a>
+				</div>
+				<div class="col-0 col-sm-8 text-center">
+				</div>
+				<div class="col-6 col-sm-2 text-center">
+						{% if app.user and deck.getUser and app.user.id == deck.getUser.id %}
+							<a href="{{ path('deck_edit_view', {id: deck.getIdDeck}) }}" class="btn btn-outline-primary">
+								Editar mazo
+							</a>
+						{% endif %}
+				</div>
 			</div>
-        </div>
 
-		{% include "separation.twig" %}
+			{% include "separation.twig" %}
 
-        <div class="row">
-            <div class="col-12 text-center">
-			 	{# <button onclick="addToBody()">mostrar lista</button> #}
-				<select id="sortMode" class="form-select w-auto d-inline-block" onchange="sortBy('sortMode')">
-					{# <option value="id">No ordenar</option> #}
-					<option value="name">Nombre</option>
-					<option value="price">Precio</option>
-				</select>
-				<select id="groupMode" class="form-select w-auto d-inline-block" onchange="groupBy('groupMode')">
-			 		<option value="none">No agrupar</option>
-			 		<option value="type">Tipo</option>
-			 		<option value="set">Expansion</option>
-			 	</select>
-            </div>
-        </div>
+			<div class="row">
+				<div class="col-12 text-center">
+					{# <button onclick="addToBody()">mostrar lista</button> #}
+					<select id="sortMode" class="form-select w-auto d-inline-block" onchange="sortBy('sortMode')">
+						{# <option value="id">No ordenar</option> #}
+						<option value="name">Nombre</option>
+						<option value="price">Precio</option>
+					</select>
+					<select id="groupMode" class="form-select w-auto d-inline-block" onchange="groupBy('groupMode')">
+						<option value="none">No agrupar</option>
+						<option value="type">Tipo</option>
+						<option value="set">Expansion</option>
+					</select>
+				</div>
+			</div>
 
-		<br>
-		
-		{# <div >
-			<span class="card-data" data-card-id="4b4390f4-451f-4575-96e0-dc4dcb45ad8f"></span>
-			<span class="card-data" data-card-id="047f196b-a9d1-4cd3-b665-3b304cc59767"></span>
-		</div> #}
+			<br>
+			
+			{# <div >
+				<span class="card-data" data-card-id="4b4390f4-451f-4575-96e0-dc4dcb45ad8f"></span>
+				<span class="card-data" data-card-id="047f196b-a9d1-4cd3-b665-3b304cc59767"></span>
+			</div> #}
 
-        <div class="row justify-content-center no-deco" id="card-list" data-ajax-route="https://api.scryfall.com/cards/">
-		
-            {% for card in deck.getDeckCards %}
-                <div class="col-12 col-sm-11 col-md-10 ps-0    card-list-show" data-card-id="{{ card.getCard.getIdScryfall }}" data-card-name="{{ card.getCard.getCardName }}">
-					<a href=" {{ path('view_card', {id: card.getCard.getIdScryfall  }) }} "> 
-					<div class="d-flex justify-content-between align-items-center w-100">
-						<img id="card-image" class="col-4 col-md-2 col-sm-3" src="https://fepfi.es/wp-content/uploads/2021/10/placeholder-1.png" alt="card image">
-						<p class="col-6"> {{ card.getCard.getCardName }} </p>
-						<p class="col-1" id="card-price"></p>
-						<p class="col-1"> {{ card.getCardQuantity }} </p>
+			<div class="row justify-content-center no-deco" id="card-list" data-ajax-route="https://api.scryfall.com/cards/">
+			
+				{% for card in deck.getDeckCards %}
+					<div class="col-12 col-sm-11 col-md-10 ps-0    card-list-show" data-card-id="{{ card.getCard.getIdScryfall }}" data-card-name="{{ card.getCard.getCardName }}">
+						<a href=" {{ path('view_card', {id: card.getCard.getIdScryfall  }) }} "> 
+						<div class="d-flex justify-content-between align-items-center w-100">
+							<img id="card-image" class="col-4 col-md-2 col-sm-3" src="https://fepfi.es/wp-content/uploads/2021/10/placeholder-1.png" alt="card image">
+							<p class="col-6"> {{ card.getCard.getCardName }} </p>
+							<p class="col-1" id="card-price"></p>
+							<p class="col-1"> {{ card.getCardQuantity }} </p>
+						</div>
+						</a>
 					</div>
-					</a>
-                </div>
-            {% endfor %}
-        </div>
-		{# dejar un pequeño pie de pagina #}
-		<br> 
-    </div>
-		{# {{ dump(deck) }}
-		{{ dump(app.user) }} #}
+				{% endfor %}
+			</div>
+			{# dejar un pequeño pie de pagina #}
+			<br> 
+		</div>
+			{# {{ dump(deck) }} #}
+			{# {{ dump(app.user) }} #}
+	{% endif %}
 </body>
 </html>
