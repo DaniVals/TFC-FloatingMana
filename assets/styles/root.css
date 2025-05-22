@@ -2,6 +2,14 @@
 :root{
 	--default-text-color: antiquewhite;
 	--semiclear-text-color: #fff9;
+	--default-background-color: #242526;
+
+	--mana-colorless-color: #313131;
+	--mana-white-color: #FDCD66;
+	--mana-blue-color: #1592C7;
+	--mana-black-color: #AAA398;
+	--mana-red-color: #FD6600;
+	--mana-green-color: #15C83E;
 
 	--card-legal-text: var(--default-background-color);
 	--card-legal-default-background: #ccc;
@@ -11,7 +19,6 @@
 
 	--card-flip-button-height: 2em;
 
-	--default-background-color: #242526;
 	--slide-background-color: radial-gradient(circle at 100% 100%, #fff3, #fff1);
 	--popup-background-color: #343536;
 	--popup-back-background-color: #34353699;
@@ -32,12 +39,12 @@
 
 	--dashboard-color: #242526;
 
-	--dashboard-background-colourless: #313131;
-	--dashboard-background-collection: #FDCD66;
-	--dashboard-background-decks: #1592C7;
-	--dashboard-background-search: #AAA398;
-	--dashboard-background-profile: #FD6600;
-	--dashboard-background-session: #15C83E;
+	--dashboard-background-colourless: var(--mana-colorless-color);
+	--dashboard-background-collection: var(--mana-green-color);
+	--dashboard-background-decks: var(--mana-white-color);
+	--dashboard-background-search: var(--mana-red-color);
+	--dashboard-background-profile: var(--mana-blue-color);
+	--dashboard-background-session: var(--mana-black-color);
 	
 	/* variables para que los degradados del hover sean mas automaticos y modificables */
 	--dashboard-background-hover-aditive-white: #FFF;
@@ -134,4 +141,13 @@ a{
 	background: linear-gradient(to right, transparent, var(--default-text-color), transparent);
 	margin-top: 1.5em;
 	margin-bottom: 0.5em;
+}
+
+
+/* override boostrap classes */
+.form-control,
+.form-select {
+	background-color: var(--default-background-color);
+	color: var(--default-text-color);
+	border-color: var(--default-text-color);
 }
