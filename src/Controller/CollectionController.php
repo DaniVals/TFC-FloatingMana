@@ -118,18 +118,23 @@ class CollectionController extends AbstractController
     public function addCard(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-
-        if (!isset($data['card_id'])) {
+        
+        // Validar datos necesarios
+        if (!isset($data['cardId']) || !isset($data['quantity']) || !isset($data['isFoil']) || !isset($data['state']) || !isset($data['price'])) {
             return $this->json([
                 'status' => 'error',
-                'message' => 'ID de carta no proporcionado'
+                'message' => 'Parámetros requeridos no proporcionados: cardId, quantity, isFoil, state, price'
             ], Response::HTTP_BAD_REQUEST);
         }
+        $cardId = $data['cardId'];
+        $quantity = (int)$data['quantity'];
+        $isFoil = $data['isFoil'] ?? false;
+        $state = $data['state'] ?? 'NM'; // Default to 'NM' if not provided
+        $price = $data['price'] ?? 0.0; // Default to 0.0 if not provided
 
-        $quantity = $data['quantity'] ?? 1;
 
         try {
-            $collectionItem = $this->collectionService->addCardToCollection($data['card_id'], $quantity);
+            $collectionItem = $this->collectionService->addCardToCollection((int)$cardId, (int)$quantity, $isFoil, $state, $price);
             return $this->json([
                 'status' => 'success',
                 'message' => 'Carta añadida a la colección',
