@@ -8,7 +8,7 @@
 	align-items: center;
 	justify-content: center;
 
-	background: var(--dashboard-background-colourless);
+	/* background: var(--dashboard-background-colourless); */
 }
 .option h2 {
 	transition: font-size 0.3s;
@@ -20,26 +20,5 @@
 
 .option h2, p {
 	color: var(--dashboard-color);
-}
-
-#coll {background: var(--dashboard-background-collection);}
-#coll:hover {
-	background: var(--dashboard-background-hover-collection);
-}
-#decks {background: var(--dashboard-background-decks);}
-#decks:hover {
-	background: var(--dashboard-background-hover-decks);
-}
-#search {background: var(--dashboard-background-search);}
-#search:hover {
-	background: var(--dashboard-background-hover-search);
-}
-#profile {background: var(--dashboard-background-profile);}
-#profile:hover {
-	background: var(--dashboard-background-hover-profile);
-}
-#login, #logout {background: var(--dashboard-background-session);}
-#login:hover, #logout:hover {
-	background: var(--dashboard-background-hover-session);
 }
 

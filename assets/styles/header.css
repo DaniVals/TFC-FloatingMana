@@ -1,3 +1,11 @@
+header {
+	background: var(--header-background);
+	border-bottom: var(--header-top-border);
+	margin-bottom: 1em;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+}
+
 header .flex-row{
 	display: flex;
 	flex-direction: row;
@@ -22,11 +30,47 @@ header input{
 	border: 0px;
 	color: #fff0;
 }
-header svg{
-	width:  1.5em;
-	height: 1.5em;
-	margin-left: -6px;
-	position: relative;
-	transform: translate(-100%, -1px);
-	pointer-events: none;
+
+#sideHeaderButtonClose,
+#sideHeaderButtonOpen {
+	width:  100px;
+	height: 100px;
+	
+	border: none;
+	background: #0000;
+
+	background-repeat: no-repeat;
+	background-size: 70px;
+	background-position: center center;
+
+	/* filtro para que los svg sean blancos */
+	filter: invert(1) sepia(1) saturate(4) hue-rotate(180deg);
+}
+#sideHeaderButtonOpen {
+	background-image: url('https://www.svgrepo.com/show/408970/show-sidebar-horiz.svg');
+}
+#sideHeaderButtonClose {
+	background-image: url('https://www.svgrepo.com/show/408970/show-sidebar-horiz.svg');
+	transform: scaleX(-1);
+}
+
+header[data-is-open="0"] #open-header-background {
+	display: none;
+}
+
+header #open-header-background {
+	position: absolute;
+	background-color: var(--header-background);
+	z-index: 99;
+
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+}
+
+header #open-header {
+	padding-top: 0.5em;
+	background-color: var(--header-side-background);
+	border-right: var(--header-side-border);
 }

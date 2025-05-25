@@ -1,9 +1,13 @@
 
 :root{
+
+	/* BASE COLORS */
 	--default-text-color: antiquewhite;
 	--semiclear-text-color: #fff9;
 	--default-background-color: #242526;
+	--semisolid-background-color: #34353699;
 
+	/* MANA COLORS */
 	--mana-colorless-color: #313131;
 	--mana-white-color: #FDCD66;
 	--mana-blue-color: #1592C7;
@@ -17,11 +21,77 @@
 	--card-legal-not-background: #aa0;
 	--card-legal-banned-background: #a00;
 
+	/* variables para que los degradados del hover sean mas automaticos y modificables */
+	--background-hover-aditive-white: #FFF;
+	--background-hover-aditive-white-percent: 40%;
+	--background-hover-aditive-color-percent: 60%;
+	--background-hover-circle-position: circle at 50% 15%;
+
+	--background-hover-colorless: radial-gradient(
+		var(--background-hover-circle-position),
+		color-mix(
+			in srgb,
+			var(--mana-colorless-color) var(--background-hover-aditive-color-percent),
+			var(--background-hover-aditive-white) var(--background-hover-aditive-white-percent)
+		) 20%,
+		var(--mana-colorless-color) 100%
+	);
+	--background-hover-white: radial-gradient(
+		var(--background-hover-circle-position), 
+		color-mix(
+			in srgb,
+			var(--mana-white-color) var(--background-hover-aditive-color-percent),
+			var(--background-hover-aditive-white) var(--background-hover-aditive-white-percent)
+		) 20%, 
+		var(--mana-white-color) 100%
+	);
+	--background-hover-blue: radial-gradient(
+		var(--background-hover-circle-position),
+		color-mix(
+			in srgb,
+			var(--mana-blue-color) var(--background-hover-aditive-color-percent),
+			var(--background-hover-aditive-white) var(--background-hover-aditive-white-percent)
+		) 20%,
+		var(--mana-blue-color) 100%
+	);
+	--background-hover-black: radial-gradient(
+		var(--background-hover-circle-position),
+		color-mix(
+			in srgb,
+			var(--mana-black-color) var(--background-hover-aditive-color-percent),
+			var(--background-hover-aditive-white) var(--background-hover-aditive-white-percent)
+		) 20%,
+		var(--mana-black-color) 100%
+	);
+	--background-hover-red: radial-gradient(
+		var(--background-hover-circle-position),
+		color-mix(
+			in srgb,
+			var(--mana-red-color) var(--background-hover-aditive-color-percent),
+			var(--background-hover-aditive-white) var(--background-hover-aditive-white-percent)
+		) 20%,
+		var(--mana-red-color) 100%
+	);
+	--background-hover-green: radial-gradient(
+		var(--background-hover-circle-position),
+		color-mix(
+			in srgb,
+			var(--mana-green-color) var(--background-hover-aditive-color-percent),
+			var(--background-hover-aditive-white) var(--background-hover-aditive-white-percent)
+		) 20%,
+		var(--mana-green-color) 100%
+	);
+
+
+
+
+
+
 	--card-flip-button-height: 2em;
 
 	--slide-background-color: radial-gradient(circle at 100% 100%, #fff3, #fff1);
 	--popup-background-color: #343536;
-	--popup-back-background-color: #34353699;
+	--popup-back-background-color: var(--semisolid-background-color);
 
 	--card-list-background-color: #343536;
 	--card-list-border-separator: solid var(--default-text-color) 1px;
@@ -38,79 +108,15 @@
 	--card-list-state-color: #aaa;
 
 	--dashboard-color: #242526;
-
-	--dashboard-background-colourless: var(--mana-colorless-color);
-	--dashboard-background-collection: var(--mana-green-color);
-	--dashboard-background-decks: var(--mana-white-color);
-	--dashboard-background-search: var(--mana-red-color);
-	--dashboard-background-profile: var(--mana-blue-color);
-	--dashboard-background-session: var(--mana-black-color);
 	
-	/* variables para que los degradados del hover sean mas automaticos y modificables */
-	--dashboard-background-hover-aditive-white: #FFF;
-	--dashboard-background-hover-aditive-white-percent: 40%;
-	--dashboard-background-hover-aditive-color-percent: 60%;
-	--dashboard-background-hover-circle-position: circle at 50% 15%;
-	
-	--dashboard-background-hover-colourless: radial-gradient(
-		var(--dashboard-background-hover-circle-position),
-		color-mix(
-			in srgb,
-			var(--dashboard-background-colourless) var(--dashboard-background-hover-aditive-color-percent),
-			var(--dashboard-background-hover-aditive-white) var(--dashboard-background-hover-aditive-white-percent)
-		) 20%,
-		var(--dashboard-background-colourless) 100%
-	);
-	--dashboard-background-hover-collection: radial-gradient(
-		var(--dashboard-background-hover-circle-position), 
-		color-mix(
-			in srgb,
-			var(--dashboard-background-collection) var(--dashboard-background-hover-aditive-color-percent),
-			var(--dashboard-background-hover-aditive-white) var(--dashboard-background-hover-aditive-white-percent)
-		) 20%, 
-		var(--dashboard-background-collection) 100%
-	);
-	--dashboard-background-hover-decks: radial-gradient(
-		var(--dashboard-background-hover-circle-position),
-		color-mix(
-			in srgb,
-			var(--dashboard-background-decks) var(--dashboard-background-hover-aditive-color-percent),
-			var(--dashboard-background-hover-aditive-white) var(--dashboard-background-hover-aditive-white-percent)
-		) 20%,
-		var(--dashboard-background-decks) 100%
-	);
-	--dashboard-background-hover-search: radial-gradient(
-		var(--dashboard-background-hover-circle-position),
-		color-mix(
-			in srgb,
-			var(--dashboard-background-search) var(--dashboard-background-hover-aditive-color-percent),
-			var(--dashboard-background-hover-aditive-white) var(--dashboard-background-hover-aditive-white-percent)
-		) 20%,
-		var(--dashboard-background-search) 100%
-	);
-	--dashboard-background-hover-profile: radial-gradient(
-		var(--dashboard-background-hover-circle-position),
-		color-mix(
-			in srgb,
-			var(--dashboard-background-profile) var(--dashboard-background-hover-aditive-color-percent),
-			var(--dashboard-background-hover-aditive-white) var(--dashboard-background-hover-aditive-white-percent)
-		) 20%,
-		var(--dashboard-background-profile) 100%
-	);
-	--dashboard-background-hover-session: radial-gradient(
-		var(--dashboard-background-hover-circle-position),
-		color-mix(
-			in srgb,
-			var(--dashboard-background-session) var(--dashboard-background-hover-aditive-color-percent),
-			var(--dashboard-background-hover-aditive-white) var(--dashboard-background-hover-aditive-white-percent)
-		) 20%,
-		var(--dashboard-background-session) 100%
-	);
-
 	--status-message-ok-background: #696;
 	--status-message-warning-background: #996;
 	--status-message-error-background: #966;
 
+	--header-background: var(--semisolid-background-color);
+	--header-top-border:  2px solid var(--semisolid-background-color);
+	--header-side-background: var(--default-background-color);
+	--header-side-border: 2px solid var(--semisolid-background-color);
 }
 
 
@@ -150,4 +156,36 @@ a{
 	background-color: var(--default-background-color);
 	color: var(--default-text-color);
 	border-color: var(--default-text-color);
+}
+
+
+
+
+.mana-bg-green {background: var(--mana-green-color);}
+.mana-bg-green:hover {
+	background: var(--background-hover-green);
+}
+.mana-bg-red {background: var(--mana-red-color);}
+.mana-bg-red:hover {
+	background: var(--background-hover-red);
+}
+.mana-bg-white {background: var(--mana-white-color);}
+.mana-bg-white:hover {
+	background: var(--background-hover-white);
+}
+.mana-bg-blue {background: var(--mana-blue-color);}
+.mana-bg-blue:hover {
+	background: var(--background-hover-blue);
+}
+.mana-bg-black {background: var(--mana-black-color);}
+.mana-bg-black:hover {
+	background: var(--background-hover-black);
+}
+.mana-bg-colorless {background: var(--mana-colorless-color);}
+.mana-bg-colorless:hover {
+	background: var(--background-hover-colorless);
+}
+
+.default-text-color {
+	color: var(--default-text-color);
 }
