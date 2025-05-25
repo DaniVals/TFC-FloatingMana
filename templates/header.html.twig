@@ -9,12 +9,12 @@
 			</a>
 			<button id="sideHeaderButtonOpen"></button>
 		</div>
-		<div class="col flex-row justify-content-center d-md-flex d-none">
+		{# <div class="col flex-row justify-content-center d-md-flex d-none">
 			<p class="m-1"><a href="{{ path('dashboard') }}">Dashboard</a></p>
-			<p class="m-1"><a href="{{ path('random_card') }}">Carta Aleatoria</a></p>
-		</div>
+		</div> #}
 
 		<div class="col flex-row justify-content-center d-md-flex d-none">
+			<a href="{{ path('random_card') }}" class="d-block btn mana-bg-colorless default-text-color me-2">Carta Aleatoria</a>
 			<form id="search-card-form" action=" {{path('search_card', {nombre: '__name__'})}} ">
 				<input class="form-control w-100" type="text" name="cardName" placeholder="Search a card...">
 			</form>
