@@ -140,6 +140,7 @@ CREATE TABLE IF NOT EXISTS `collection` (
   `purchasePrice` decimal(6,2) NOT NULL,
   `isFoil` int NOT NULL,
   `state` int NOT NULL,
+  `quantity` int NOT NULL,
   PRIMARY KEY (`idCollection`),
   KEY `FK_CidC_CidC` (`idCard`),
   KEY `FK_CS_SidS` (`state`),
@@ -150,29 +151,29 @@ CREATE TABLE IF NOT EXISTS `collection` (
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Volcando datos para la tabla tfc_floatingmana.collection: ~22 rows (aproximadamente)
-INSERT INTO `collection` (`idCollection`, `idUser`, `idCard`, `purchasePrice`, `isFoil`, `state`) VALUES
-	(1, 1, 5, 3.14, 0, 2),
-	(2, 1, 66, 0.15, 1, 2),
-	(4, 1, 79, 0.05, 0, 2),
-	(5, 1, 84, 0.27, 0, 3),
-	(6, 1, 63, 0.00, 0, 2),
-	(7, 1, 88, 1.30, 0, 2),
-	(8, 1, 57, 32.20, 1, 2),
-	(9, 1, 11, 0.12, 0, 2),
-	(10, 4, 1, 91.86, 1, 1),
-	(11, 1, 2, 0.06, 0, 2),
-	(12, 2, 3, 0.30, 0, 2),
-	(13, 2, 4, 0.43, 0, 2),
-	(14, 2, 6, 0.15, 0, 2),
-	(15, 4, 7, 0.42, 0, 2),
-	(16, 3, 8, 0.15, 0, 3),
-	(17, 2, 9, 0.16, 0, 2),
-	(18, 3, 10, 0.19, 1, 2),
-	(19, 4, 12, 0.36, 0, 2),
-	(20, 2, 13, 0.31, 0, 2),
-	(21, 4, 14, 6.50, 1, 1),
-	(22, 3, 15, 0.16, 0, 2),
-	(23, 2, 16, 0.12, 0, 2);
+INSERT INTO `collection` (`idCollection`, `idUser`, `idCard`, `purchasePrice`, `isFoil`, `state`, `quantity`) VALUES
+	(1, 1, 5, 3.14, 0, 2, 1),
+	(2, 1, 66, 0.15, 1, 2, 1),
+	(4, 1, 79, 0.05, 0, 2, 1),
+	(5, 1, 84, 0.27, 0, 3, 1),
+	(6, 1, 63, 0.00, 0, 2, 1),
+	(7, 1, 88, 1.30, 0, 2, 1),
+	(8, 1, 57, 32.20, 1, 2, 1),
+	(9, 1, 11, 0.12, 0, 2, 1),
+	(10, 4, 1, 91.86, 1, 1, 1),
+	(11, 1, 2, 0.06, 0, 2, 1),
+	(12, 2, 3, 0.30, 0, 2, 1),
+	(13, 2, 4, 0.43, 0, 2, 1),
+	(14, 2, 6, 0.15, 0, 2, 1),
+	(15, 4, 7, 0.42, 0, 2, 1),
+	(16, 3, 8, 0.15, 0, 3, 1),
+	(17, 2, 9, 0.16, 0, 2, 1),
+	(18, 3, 10, 0.19, 1, 2, 1),
+	(19, 4, 12, 0.36, 0, 2, 1),
+	(20, 2, 13, 0.31, 0, 2, 1),
+	(21, 4, 14, 6.50, 1, 1, 1),
+	(22, 3, 15, 0.16, 0, 2, 1),
+	(23, 2, 16, 0.12, 0, 2, 1);
 
 -- Volcando estructura para tabla tfc_floatingmana.deck
 CREATE TABLE IF NOT EXISTS `deck` (
