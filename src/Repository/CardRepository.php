@@ -26,8 +26,17 @@ class CardRepository extends ServiceEntityRepository
     public function findId(string $cardId): ?Card
     {
        return $this->createQueryBuilder('c')
-            ->andWhere('c.idScryfall = :id')
+            ->andWhere('c.idCard = :id')
             ->setParameter('id', $cardId)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findIdScryfall(string $cardId): ?Card
+    {
+       return $this->createQueryBuilder('c')
+            ->andWhere('c.idScryfall = :idCard')
+            ->setParameter('idCard', $cardId)
             ->getQuery()
             ->getOneOrNullResult();
     }

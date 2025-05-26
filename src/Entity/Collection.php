@@ -8,23 +8,25 @@ use App\Repository\UserCollectionRepository;
 use App\Entity\Card;
 use App\Entity\User;
 use App\Entity\State;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: UserCollectionRepository::class)]
 #[ORM\Table(name: "collection")]
 
 class Collection 
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: "integer", name: "idCollection")]
-    private $idCollection;
+	#[ORM\Id]
+	#[ORM\GeneratedValue]
+	#[ORM\Column(type: "integer", name: "idCollection")]
+	private $idCollection;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "collectionCards", fetch: "EAGER")]
+	#[ORM\ManyToOne(targetEntity: User::class, inversedBy: "collectionCards", fetch: "EAGER")]
 	#[ORM\JoinColumn(name: "idUser", referencedColumnName: "idUser")]
-    private $user;
+	#[Ignore]
+	private $user;
 
 	// #[ORM\JoinColumn(name: "idCard", referencedColumnName: "idCard")]
-    // #[ORM\ManyToMany(targetEntity: Card::class)]
+	// #[ORM\ManyToMany(targetEntity: Card::class)]
 	// #[ORM\JoinTable(
 	// 	name: "collection_card",
 	// 	joinColumns: [
@@ -34,8 +36,8 @@ class Collection
 	// 		new ORM\JoinColumn(name: "idCard", referencedColumnName: "idCard")
 	// 	]
 	// )]
-    // private $card;
-	
+	// private $card;
+
 	#[ORM\ManyToOne(targetEntity: Card::class, fetch: "EAGER")]
 	#[ORM\JoinColumn(name: "idCard", referencedColumnName: "idCard")]
 	private $card;
@@ -45,15 +47,18 @@ class Collection
 
 	#[ORM\Column(type: "integer", length: 1, name: "isFoil")]
 	private $isFoil;
-	
+
 	#[ORM\ManyToOne(targetEntity: State::class)]
 	#[ORM\JoinColumn(name: "state", referencedColumnName: "idState")]
 	private $state;
-	
+
+	#[ORM\Column(type: "integer", name: "quantity")]
+	private $quantity;
+
 	//----- Variables auxiliares -----
 
 	private $cards;
-    private $name; // Added name property 
+	private $name; // Added name property 
 
 	//----- Getters y setters -----
 
@@ -63,11 +68,11 @@ class Collection
 	}
 
 	public function getUser(): ?User
-	{
-		return $this->user;
-	}
-	public function setUser(?User $user): self
-	{
+	{ 
+		return $this->user; 
+	} 
+
+	public function setUser(?User $user): self {
 		$this->user = $user;
 		return $this;
 	}
@@ -115,25 +120,36 @@ class Collection
 	{
 		return $this->state;
 	}
-	public function setState(State $state): self
+	public function setState(?State $state): self
 	{
 		$this->state = $state;
 		return $this;
 	}
 
-    // Added name getter and setter
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-        return $this;
-    }
+	public function getQuantity(): ?int
+	{
+		return $this->quantity;
+	}
+
+	public function setQuantity(int $quantity): self
+	{
+		$this->quantity = $quantity;
+		return $this;
+	}
+
+	// Added name getter and setter
+	public function getName(): ?string
+	{
+		return $this->name;
+	}
+	public function setName(string $name): self
+	{
+		$this->name = $name;
+		return $this;
+	}
 
 	//----- Funciones -----
-	
+
 	/**
 	 * @return ArrayCollection|Card[]
 	 */

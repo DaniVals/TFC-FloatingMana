@@ -10,6 +10,7 @@ use App\Entity\Deck;
 use App\Entity\Collection;
 use App\Entity\TokenAuth;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: "user")]
@@ -28,6 +29,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 	// ----- Relación de username con otras entidades -----
 
 	#[ORM\OneToMany(targetEntity: Collection::class, mappedBy: "user")]
+	#[MaxDepth(1)]
 	private $collectionCards;
 	
 	#[ORM\OneToMany(targetEntity: Deck::class, mappedBy: "user", fetch: "EAGER")]

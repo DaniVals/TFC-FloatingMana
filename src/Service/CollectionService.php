@@ -5,10 +5,11 @@ namespace App\Service;
 use App\Entity\Card;
 use App\Entity\Collection;
 use App\Entity\User;
+use App\Entity\State;
 use App\Repository\CardRepository;
 use App\Repository\UserCollectionRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class CollectionService
 {
@@ -22,12 +23,14 @@ class CollectionService
         EntityManagerInterface $entityManager,
         UserCollectionRepository $collectionRepository,
         CardRepository $cardRepository,
-        ScryfallApiService $scryfallApiService
+        ScryfallApiService $scryfallApiService,
+        Security $security
     ) {
         $this->entityManager = $entityManager;
         $this->collectionRepository = $collectionRepository;
         $this->cardRepository = $cardRepository;
         $this->scryfallApiService = $scryfallApiService;
+        $this->security = $security;
     }
 
     /**
@@ -61,54 +64,57 @@ class CollectionService
     /**
      * Añade una carta a la colección del usuario
      */
-    public function addCardToCollection(int $cardId, int $quantity, string $price, int $foil, string $state): Collection
+    public function addCardToCollection(string $cardId, int $quantity, int $price, int $foil, string $state): ?Collection
     {
+        if ($quantity <= 0) {
+            throw new \InvalidArgumentException('La cantidad debe ser mayor que cero');
+        }
+
         $user = $this->security->getUser();
         if (!$user) {
             throw new \Exception('Usuario no autenticado');
         }
 
-        $card = $this->cardRepository->find($cardId);
+        $card = $this->cardRepository->findIdScryfall($cardId);
         if (!$card) {
-            // Si la carta no existe en nuestra base de datos, intentamos buscarla en Scryfall
+            // Crear una nueva carta si no existe
             $cardData = $this->scryfallApiService->getCardById($cardId);
             if (!$cardData) {
-                throw new \Exception('Carta no encontrada');
+                throw new \Exception('Carta no encontrada en Scryfall');
             }
-
-            // Crear la carta en nuestra base de datos
             $card = new Card();
             $card->setCardName($cardData['name']);
             $card->setIdScryfall($cardData['id']);
             // Configurar más campos según la estructura de la entidad Card
-            
             $this->entityManager->persist($card);
             $this->entityManager->flush();
         }
 
-        // Verificar si la carta ya está en la colección
-        $collectionItem = $this->collectionRepository->$this->getEntityManager()->findOneBy([
-            'user' => $user,
-            'card' => $card
-        ]);
+        $state = $this->entityManager->getRepository(State::class)->findOneBy(['stateName' => $state]);
+        if (!$state) {
+            throw new \Exception('Estado de la carta no válido');
+        }
+
+        // Verificar si ya existe en la colección
+        $collectionItem = $this->collectionRepository->findOneByCardAndUser($card, $user);
 
         if ($collectionItem) {
             // Si ya existe, actualizamos la cantidad
-            $newQuantity = $collectionItem->getCardQuantity() + $quantity;
-            $collectionItem->setCardQuantity($newQuantity);
+            $collectionItem->setQuantity($collectionItem->getQuantity() + $quantity);
         } else {
             // Si no existe, creamos un nuevo registro
             $collectionItem = new Collection();
             $collectionItem->setUser($user);
             $collectionItem->setCard($card);
-            $collectionItem->setPurchasePrice($price);
-            $collectionItem->setIsFoil($foil);
+            $collectionItem->setQuantity($quantity);
+            $collectionItem->setpurchasePrice($price);
+            $collectionItem->setisFoil($foil);
             $collectionItem->setState($state);
-
-            $this->entityManager->persist($collectionItem);
         }
 
+        $this->entityManager->persist($collectionItem);
         $this->entityManager->flush();
+
         return $collectionItem;
     }
 

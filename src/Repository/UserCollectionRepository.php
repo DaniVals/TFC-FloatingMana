@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Collection;
 use App\Entity\User;
+use App\Entity\Card;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -36,6 +37,40 @@ class UserCollectionRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * Encontrar por id de carta
+     * @param int $idCard ID de la carta
+     * @return Collection[]|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\NoResultException
+     */
+    public function findOneByCardId(int $idCard): ?array
+    {
+        return $this->createQueryBuilder('c')
+            ->join('c.card', 'card')
+            ->where('card.idCard = :idCard')
+            ->setParameter('idCard', $idCard)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Encuentra una carta específica en la colección de un usuario
+     *
+     * @param int $idCard ID de la carta
+     * @param User $user
+     * @return Collection|null
+     */
+    public function findOneByCardAndUser(Card $idCard, User $user): ?Collection
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.user = :user')
+            ->andWhere('c.card = :card')
+            ->setParameter('user', $user)
+            ->setParameter('card', $idCard)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 
     /**
      * Encuentra cartas en la colección por nombre
