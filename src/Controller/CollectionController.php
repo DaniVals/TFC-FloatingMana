@@ -120,21 +120,18 @@ class CollectionController extends AbstractController
         $data = json_decode($request->getContent(), true);
         
         // Validar datos necesarios
-        if (!isset($data['card_id']) || /*!isset($data['quantity']) ||*/ !isset($data['isFoil']) || !isset($data['state']) || !isset($data['purchasePrice'])) {
+        if (!isset($data['card_id']) || !isset($data['quantity']) || !isset($data['isFoil']) || !isset($data['state']) || !isset($data['purchasePrice'])) {
             return $this->json([
                 'status' => 'error',
-                'message' => 'Parámetros requeridos no proporcionados: cardId, quantity, isFoil, state, price'
+                'message' => 'Parámetros requeridos no proporcionados.'
             ], Response::HTTP_BAD_REQUEST);
         }
 
         $cardId = $data['card_id'];
-        $cardName = $data['cardName'] ?? null; // Optional, can be null
-        $quantity = 1;
-        // $quantity = (int)$data['quantity'] ?? 1;
+        $quantity = (int)$data['quantity'] ?? 1;
         $isFoil = (int)$data['isFoil'] ?? 0;
-        $state = 'good';
-        // $state = $data['state'] ?? 'good'; // Default to 'NM' if not provided
-        $price = (int)$data['purchasePrice'] ?? 0.0; // Default to 0.0 if not provided
+        $state = $data['state'] ?? 'near mint';
+        $price = (int)$data['purchasePrice'] ?? 0.0;
 
 
         try {
