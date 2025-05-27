@@ -5,6 +5,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use App\Repository\UserRepository;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProfileController extends AbstractController {
 
@@ -39,19 +42,31 @@ class ProfileController extends AbstractController {
 	}
 
 	// Eliminar cuenta de usuairo
-	#[Route('/app/profile_delete', name: 'profile_delete', methods: ['POST'])]
-	public function deleteProfile()
-	{
-		$this->denyAccessUnlessGranted('ROLE_USER');
 
+	#[Route('/app/profile_delete', name: 'profile_delete', methods: ['POST'])]
+	public function deleteProfile(Request $request, Security $security): Response
+	{
 		$user = $this->getUser();
 		if (!$user) {
 			throw $this->createAccessDeniedException('You are not logged in.');
 		}
 
-		// Eliminar el usuario
-		$this->userRepository->remove($user, true);
+		$this->denyAccessUnlessGranted('ROLE_USER');
+
+		// Invalida el token de seguridad
+		$security->logout(false); // Solo disponible en Symfony 6.4+ (ver más abajo)
+
+		// Elimina manualmente el usuario
+		$this->delete($user);
+
+		// Invalida sesión
+		$request->getSession()->invalidate();
 
 		return $this->redirectToRoute('app_logout');
+	}
+
+
+	private function delete(User $user): void{
+		$this->userRepository->remove($user, true);
 	}
 }
