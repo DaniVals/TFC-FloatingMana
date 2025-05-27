@@ -138,6 +138,12 @@ function addCardToCollection() {
 		state: document.getElementById('addCardPopUp-window-collection-state').value,
 		quantity: document.getElementById('addCardPopUp-window-collection-quantity').value
 	};
+	
+	if (params["quantity"] <= 0) {
+		console.log("missing quantity");
+		showMessaje("Introduzca una cantidad valida", 404);
+		return;
+	}
 
 	const xhr = new XMLHttpRequest();
 	xhr.open('POST', AJAXroute);
