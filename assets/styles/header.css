@@ -71,7 +71,8 @@ header #open-header-background {
 }
 
 header #open-header {
-	overflow-x: scroll;
+	overflow-y: auto;
+	overflow-x: hidden;
 
 	padding-top: 0.5em;
 	background-color: var(--header-side-background);
