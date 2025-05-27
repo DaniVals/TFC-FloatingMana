@@ -59,10 +59,11 @@ header[data-is-open="0"] #open-header-background {
 }
 
 header #open-header-background {
-	position: absolute;
+	position: fixed;
 	background-color: var(--header-background);
 	z-index: 99;
 
+	
 	top: 0px;
 	bottom: 0px;
 	left: 0px;
@@ -70,6 +71,8 @@ header #open-header-background {
 }
 
 header #open-header {
+	overflow-x: scroll;
+
 	padding-top: 0.5em;
 	background-color: var(--header-side-background);
 	border-right: var(--header-side-border);
