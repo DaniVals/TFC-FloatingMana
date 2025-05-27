@@ -18,7 +18,7 @@ services:
   #     # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
   #     # - ./docker/db/data:/var/lib/postgresql/data:rw
   mysql:
-    image: mysql:8.0
+    image: mariadb:8.0
     container_name: mysql_container
     environment:
       MYSQL_DATABASE: tfc_floatingmana
