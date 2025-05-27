@@ -28,7 +28,7 @@
             <div class="col-12 text-center">
 			 	{# <button onclick="addToBody()">mostrar lista</button> #}
 				<select id="sortMode" class="form-select w-auto d-inline-block" onchange="sortBy('sortMode')">
-					{# <option value="id">No ordenar</option> #}
+					<option value="id">No ordenar</option>
 					<option value="name">Nombre</option>
 					<option value="price">Precio</option>
 					<option value="purchace-price">Precio de compra</option>
@@ -48,19 +48,22 @@
 				{# {{ dump(card) }} #}
                 <div class="col-12 col-sm-11 col-md-10 ps-0    card-list-show" 
 				data-card-id="{{ card.getCard.getIdScryfall }}" data-card-name="{{ card.getCard.getCardName }}"
+				data-card-quantity="{{ card.getQuantity }}" data-card-order="{{ card.getIdCollection }}"
 				data-card-purchase-price="{{ card.getPurchasePrice }}" data-card-is-foil="{{ card.getIsFoil }}"
 				data-card-state="{{ card.getState.getStateName }}">
-					<a href=" {{ path('view_card', {id: card.getCard.getIdScryfall  }) }} " class="d-flex justify-content-between align-items-center w-100"> 
+					<div class="d-flex justify-content-between align-items-center w-100"> 
 
+						<a class="col-sm-7 col-6   d-flex justify-content-between"
+						href=" {{ path('view_card', {id: card.getCard.getIdScryfall  }) }} ">
+							<img id="card-image" class="col-sm-4 col-6" src="https://fepfi.es/wp-content/uploads/2021/10/placeholder-1.png" alt="card image">
+							
+							<p class="col d-flex flex-column align-items-start justify-content-center" title="{{ card.getCard.getCardName }}"> 
+								{% if card.getIsFoil %} <span title="Foil" class="foil-text">Foil</span>
+								{% endif %} {{ card.getCard.getCardName }} 
+							</p>
+						</a>
 
-						<img id="card-image" class="col-md-2 col-sm-3 col-3" src="https://fepfi.es/wp-content/uploads/2021/10/placeholder-1.png" alt="card image">
-						
-						<p class="col-md-3 col-sm-3 col-3" title="{{ card.getCard.getCardName }}"> 
-							{% if card.getIsFoil %} <span title="Foil" class="foil-text">Foil</span>
-							{% endif %} {{ card.getCard.getCardName }} 
-						</p>
-
-						<div id="card-prices" class="col-sm-2 col-2 d-flex flex-row align-items-start" data-price-improvement="0">
+						<div id="card-prices" class="col-sm-1 col-2 d-flex flex-row align-items-start" data-price-improvement="0">
 							<div class="d-flex flex-column align-items-center justify-content-center">
 								<span class="d-block" id="card-price"></span>
 								<span class="d-block" id="card-purcharse-price"> {{ card.getPurchasePrice }}€ </span>
@@ -68,16 +71,16 @@
 							{# <img src="https://www.svgrepo.com/show/384726/pointer-up.svg" alt="" class="w-100 h-auto"> #}
 						</div>
 
-						<div id="card-state" class="col-sm-2 col-2 d-flex flex-column justify-content-center align-items-center" data-price-improvement="0">
+						<div id="card-state" class="col-sm-1 col-2 d-flex flex-column justify-content-center align-items-center" data-price-improvement="0">
 							<p class="card-state card-state-{{ card.getState.getStateName }}">{{ card.getState.getStateName }}</p>
 						</div>
 
-						<div class="col-sm-1 col-2 d-flex flex-column align-items-center">
-							<button>+</button>
-							<p class="m-0"> {{ card.getQuantity }} </p>
-							<button>-</button>
+						<div class="col-sm-2 col-2 d-flex flex-row align-items-center justify-content-evenly">
+							<button class="btn btn-outline-secondary" onclick="modifyCardQuantity({{ card.getIdCollection }}, +1)">+</button>
+							<p class="m-0 mx-sm-1"> {{ card.getQuantity }} </p>
+							<button class="btn btn-outline-secondary" onclick="modifyCardQuantity({{ card.getIdCollection }}, -1)">-</button>
 						</div>
-					</a>
+                	</div>
                 </div>
             {% endfor %}
         </div>

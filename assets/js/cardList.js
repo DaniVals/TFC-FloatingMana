@@ -6,6 +6,8 @@ var group = "none";
 var groups = {};
 groups["noni"] = 0;
 
+var modifiedCards = [];
+
 document.addEventListener('DOMContentLoaded', () => {
 	const cardList = document.getElementById(CARD_LIST_ID);
 	groups["none"] = cardList;
@@ -18,7 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		Array.from(document.getElementsByClassName("card-list-show")).forEach(cardSlide => {
 			// console.log(cardSlide);
 			let card = new CardCollection(
+				cardSlide.getAttribute("data-card-order"),
 				cardSlide.getAttribute("data-card-id"), cardSlide.getAttribute("data-card-name"),
+				cardSlide.getAttribute("data-card-quantity"),
 				cardSlide,
 				"", 0.0, "",
 				cardSlide.getAttribute("data-card-purchase-price"), 
@@ -67,7 +71,7 @@ function sortBy(selectId) {
 	
 	switch (sortingMode) {
 		case "id":
-			cards.sort((a, b) => a.id.localeCompare(b.id));
+			cards.sort((a, b) => a.order.localeCompare(b.order));
 			break;
 
 		case "name":
@@ -123,4 +127,15 @@ function createGroupDiv(group) {
 	div.setAttribute("data-group-id", group);
 	div.setAttribute("data-show", 0);
 	return div;
+}
+
+function modifyCardQuantity(cardId, quantityMod) {
+	console.log("CP1");
+	
+	for (let i = 0; i < cards.length; i++) {
+		if (cards[i].order === cardId) {
+			cards[i].modifyQuantity(quantityMod);
+			break;
+		}
+	}
 }

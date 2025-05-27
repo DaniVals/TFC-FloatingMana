@@ -1,12 +1,16 @@
 class CardCollection {
 	constructor(
-		id, name,
+		order,
+		id, name, quantity,
 		element,
 		image, price, type,
 		purchasePrice, isFoil, state
 	) {
+		this.order = order;
 		this.id = id;
 		this.name = name;
+		this.quantity = quantity;
+		this.newQuantity = quantity;
 		this.element = element;
 		this.image = image;
 		this.price = price;
@@ -65,5 +69,10 @@ class CardCollection {
 				cardPrices.title = "sin precio";
 			}
 		}
+	}
+
+	modifyQuantity(quantityMod) {
+		this.newQuantity += quantityMod;
+		console.log(this.quantity, " - ", this.newQuantity)
 	}
 }
