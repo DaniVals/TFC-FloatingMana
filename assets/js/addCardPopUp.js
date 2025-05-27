@@ -135,7 +135,8 @@ function addCardToCollection() {
 		cardName: document.getElementById('addCardPopUp-window-collection-name').innerText,
 		isFoil: document.getElementById('addCardPopUp-window-collection-isFoil').checked,
 		purchasePrice: document.getElementById('addCardPopUp-window-collection-purchacePrice').value,
-		state: document.getElementById('addCardPopUp-window-collection-state').value
+		state: document.getElementById('addCardPopUp-window-collection-state').value,
+		quantity: document.getElementById('addCardPopUp-window-collection-quantity').value
 	};
 
 	const xhr = new XMLHttpRequest();

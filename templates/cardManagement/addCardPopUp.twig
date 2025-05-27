@@ -9,6 +9,20 @@
 					<h2>Añadir a coleccion</h2>
 					<p id="addCardPopUp-window-collection-name">Nombre de la carta</p>
 					<hr class="fading-separation">
+
+					<label for="collection-quantity">Cantidad</label>
+					<input name="collection-quantity" type="number" value="1"
+					id="addCardPopUp-window-collection-quantity" class="form-control w-auto" style="display: inline;">
+					<br>
+
+					<label for="collection-state">Estado</label>
+					<select name="collection-state" class="form-select"
+					id="addCardPopUp-window-collection-state">
+						{% for state in get_card_state_list() %}
+							<option value="{{ state.getIdState }}"> {{ state.getStateName }} </option>
+						{% endfor %}
+					</select>
+					<br>
 					
 					<label for="collection-purchacePrice">Precio de compra</label>
 					<input type="number" name="collection-purchacePrice"
@@ -20,14 +34,6 @@
 					<input type="checkbox" name="collection-isFoil" class="form-check-input"
 					id="addCardPopUp-window-collection-isFoil">
 					<br>
-
-					<label for="collection-state">Estado</label>
-					<select name="collection-state" class="form-select"
-					id="addCardPopUp-window-collection-state">
-						{% for state in get_card_state_list() %}
-							<option value="{{ state.getIdState }}"> {{ state.getStateName }} </option>
-						{% endfor %}
-					</select>
 					<br>
 
 					<button id="addCardPopUp-window-collection-button" class="btn btn-outline-success" onclick="addCardToCollection()">Añadir a coleccion</button>
