@@ -7,6 +7,7 @@
 	<title>Tus mazos</title>
 	
 	{% include "root.html.twig" %}
+	<link rel="stylesheet" href=" {{ asset('styles/deck.css') }} ">
 </head>
 {% include "header.html.twig" %}
 <body>
@@ -34,12 +35,16 @@
 			</div>
 			{% include "separation.twig" %}
 
-			<div class="row justify-content-center" id="deck-list" data-ajax-route="https://api.scryfall.com/cards/">
+			<div class="row justify-content-center justify-content-sm-start" id="deck-list" data-ajax-route="https://api.scryfall.com/cards/">
 				{# {{ dump(app.user.getDecks) }} #}
 
 				{% for deck in app.user.getDecks %}
 					{# {{ dump(deck) }} #}
-					<a href="{{ path('deck_show', { id: deck.getIdDeck }) }}"> {{ deck.getDeckName }} </a>
+					<a href="{{ path('deck_show', { id: deck.getIdDeck }) }}"
+					   class="deck col-md-3 col-sm-5 col-9 m-3 d-flex flex-column justify-content-center text-center"
+					   style="background-image:url('{{deck.getCoverImg}}');">
+						{{ deck.getDeckName }}
+					</a>
 				{% endfor %}
 			</div>
 		{% endif %}

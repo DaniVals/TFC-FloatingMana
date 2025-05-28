@@ -189,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `deck` (
 
 -- Volcando datos para la tabla tfc_floatingmana.deck: ~5 rows (aproximadamente)
 INSERT INTO `deck` (`idDeck`, `deckName`, `idUser`, `format`, `coverImg`) VALUES
-	(1, 'patata', 1, 'commander', '""'),
+	(1, 'patata', 1, 'commander', 'https://t4.ftcdn.net/jpg/00/44/04/81/360_F_44048126_MWdIBLh1qxNGQX6eF2pMHy7bUVRol0oy.jpg'),
 	(2, 'cebolla', 1, 'modern', '""'),
 	(3, 'naranja', 2, 'commander', '""'),
 	(4, 'mazorca', 3, 'commander', '""'),
