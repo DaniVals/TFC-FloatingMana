@@ -44,7 +44,7 @@
 							</div>
 						</a>
 						{% if is_granted("IS_AUTHENTICATED_FULLY") %}
-							<button class="btn btn-outline-secondary btn-sm w-100" onclick="addCardPopUp( '{{ card.name }}' , '{{ card.id }}' , {{ card.prices|json_encode() }} )"> Añadir a... </button>
+							<button class="btn btn-outline-secondary btn-sm w-100" onclick='addCardPopUp( "{{ card.name }}" , "{{ card.id }}" , {{ card.prices|json_encode() }} )'> Añadir a... </button>
 						{% endif %}
 					</div>
                 </div>

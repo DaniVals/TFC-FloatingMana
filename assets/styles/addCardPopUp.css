@@ -8,7 +8,7 @@
 	background: var(--popup-back-background-color);
 	z-index: 5;
 
-	overflow-x: scroll;
+	overflow-x: hidden;
 }
 
 #addCardPopUp-window {
