@@ -40,13 +40,19 @@
 			 	</select>
             </div>
         </div>
+        <div class="row justify-content-end" id="save-changes-popup" data-has-changes="0" data-save-route="">
+			<div class="p-2 col-md-8 col-sm-10 col-12 d-flex flex-row">
+				<p      class="col-md-10 col-8 text-center">Pulsa el boton para guardar cambios</p>
+				<button class="col-md-2  col-4 btn btn-success" onclick="saveChanges()">Guardar Cambios</button>
+			</div>
+        </div>
 
 		<br>
 		
         <div class="row justify-content-center no-deco" id="card-list" data-ajax-route="https://api.scryfall.com/cards/">
             {% for card in collection %}
 				{# {{ dump(card) }} #}
-                <div class="col-12 col-sm-11 col-md-10 ps-0    card-list-show" 
+                <div class="col-12 col-sm-11 col-md-10 ps-0 pe-md-0   card-list-show" 
 				data-card-id="{{ card.getCard.getIdScryfall }}" data-card-name="{{ card.getCard.getCardName }}"
 				data-card-quantity="{{ card.getQuantity }}" data-card-order="{{ card.getIdCollection }}"
 				data-card-purchase-price="{{ card.getPurchasePrice }}" data-card-is-foil="{{ card.getIsFoil }}"
@@ -57,7 +63,7 @@
 						href=" {{ path('view_card', {id: card.getCard.getIdScryfall  }) }} ">
 							<img id="card-image" class="col-sm-4 col-6" src="https://fepfi.es/wp-content/uploads/2021/10/placeholder-1.png" alt="card image">
 							
-							<p class="col d-flex flex-column align-items-start justify-content-center" title="{{ card.getCard.getCardName }}"> 
+							<p class="col d-flex flex-row align-items-center justify-content-start m-0" title="{{ card.getCard.getCardName }}"> 
 								{% if card.getIsFoil %} <span title="Foil" class="foil-text">Foil</span>
 								{% endif %} {{ card.getCard.getCardName }} 
 							</p>
@@ -72,12 +78,12 @@
 						</div>
 
 						<div id="card-state" class="col-sm-1 col-2 d-flex flex-column justify-content-center align-items-center" data-price-improvement="0">
-							<p class="card-state card-state-{{ card.getState.getStateName }}">{{ card.getState.getStateName }}</p>
+							<p class="m-0 card-state card-state-{{ card.getState.getStateName }}">{{ card.getState.getStateName }}</p>
 						</div>
 
 						<div class="col-sm-2 col-2 d-flex flex-row align-items-center justify-content-evenly">
 							<button class="btn btn-outline-secondary" onclick="modifyCardQuantity({{ card.getIdCollection }}, +1)">+</button>
-							<p class="m-0 mx-sm-1"> {{ card.getQuantity }} </p>
+							<p data-quantity-status="default" id="card-quantity" class="m-0 mx-sm-1"> {{ card.getQuantity }} </p>
 							<button class="btn btn-outline-secondary" onclick="modifyCardQuantity({{ card.getIdCollection }}, -1)">-</button>
 						</div>
                 	</div>

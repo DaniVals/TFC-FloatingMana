@@ -6,8 +6,6 @@ var group = "none";
 var groups = {};
 groups["noni"] = 0;
 
-var modifiedCards = [];
-
 document.addEventListener('DOMContentLoaded', () => {
 	const cardList = document.getElementById(CARD_LIST_ID);
 	groups["none"] = cardList;
@@ -130,12 +128,68 @@ function createGroupDiv(group) {
 }
 
 function modifyCardQuantity(cardId, quantityMod) {
-	console.log("CP1");
-	
 	for (let i = 0; i < cards.length; i++) {
 		if (cards[i].order === cardId) {
 			cards[i].modifyQuantity(quantityMod);
 			break;
 		}
 	}
+	let changedCardsCont = 0;
+	let deletedCardsCont = 0;
+	for (let i = 0; i < cards.length; i++) {
+		if (cards[i].newQuantity != cards[i].quantity) {
+			if (cards[i].newQuantity == 0) {
+				deletedCardsCont++;
+			} else {
+				changedCardsCont++;
+			}
+		}
+	}
+	const SAVE_CHANGES_POPUP = document.getElementById('save-changes-popup');
+
+	const TEXT_SAVE_CHANGES_POPUP = SAVE_CHANGES_POPUP.querySelector('p')
+	TEXT_SAVE_CHANGES_POPUP.innerText = "";
+	
+	if (changedCardsCont != 0) {
+		TEXT_SAVE_CHANGES_POPUP.innerText += "Cartas modificadas " + changedCardsCont + "\n";
+	}
+	if (deletedCardsCont != 0) {
+		TEXT_SAVE_CHANGES_POPUP.innerText += "  Cartas borradas " + deletedCardsCont;
+	}
+	
+	if (changedCardsCont == 0 && deletedCardsCont == 0) {
+		SAVE_CHANGES_POPUP.setAttribute('data-has-changes', 0)
+	} else {
+		SAVE_CHANGES_POPUP.setAttribute('data-has-changes', 1)
+	}
+}
+
+function saveChanges() {
+	const SAVE_CHANGES_POPUP = document.getElementById('save-changes-popup');
+	let changed_cards = [];
+	for (let i = 0; i < cards.length; i++) {
+		if (cards[i].newQuantity != cards[i].quantity) {
+			changed_cards.push({"card_id":cards[i].order, "quantity":cards[i].newQuantity});
+		}
+	}
+
+	const TEXT_SAVE_CHANGES_POPUP = SAVE_CHANGES_POPUP.querySelector('p')
+	const AJAXroute = SAVE_CHANGES_POPUP.getAttribute('data-save-route');
+
+	TEXT_SAVE_CHANGES_POPUP.innerText = "Guardando cambios...";
+	const xhr = new XMLHttpRequest();
+	xhr.open('POST', AJAXroute);
+	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.send(JSON.stringify(changed_cards));
+
+	xhr.onload = function () {
+		if (xhr.status === 200) {
+			const data = JSON.parse(xhr.responseText);
+			TEXT_SAVE_CHANGES_POPUP.innerText = data["message"];
+		}
+	};
+	xhr.onerror = function () {
+		TEXT_SAVE_CHANGES_POPUP.innerText = "Error al guardar cambios";
+		console.error('Error al guardar cambios en el mazo');
+	};
 }

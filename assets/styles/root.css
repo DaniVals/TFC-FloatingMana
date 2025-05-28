@@ -5,6 +5,8 @@
 	--default-text-color: antiquewhite;
 	--semiclear-text-color: #fff9;
 	--default-background-color: #242526;
+	--clear-background-color: #343536;
+	--light-background-color: #444546;
 	--semisolid-background-color: #34353699;
 
 	/* MANA COLORS */
@@ -90,10 +92,10 @@
 	--card-flip-button-height: 2em;
 
 	--slide-background-color: radial-gradient(circle at 100% 100%, #fff3, #fff1);
-	--popup-background-color: #343536;
+	--popup-background-color: var(--clear-background-color);
 	--popup-back-background-color: var(--semisolid-background-color);
 
-	--card-list-background-color: #343536;
+	--card-list-background-color: var(--clear-background-color);
 	--card-list-border-separator: solid var(--default-text-color) 1px;
 	--card-list-border-radius: 1em;
 	--card-list-card-preview-transparent-gradient: linear-gradient(to left,
@@ -106,6 +108,9 @@
 	--card-list-foil-background: #FDCD66;
 	--card-list-foil-color: #242526;
 	--card-list-state-color: #aaa;
+	--card-list-quantity-bg-modified: var(--mana-green-color);
+	--card-list-quantity-bg-removed: var(--mana-red-color);
+	--card-list-save-background: var(--light-background-color);
 
 	--dashboard-color: #242526;
 	

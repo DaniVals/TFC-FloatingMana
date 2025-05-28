@@ -64,3 +64,34 @@
 .card-state {
 	color: var(--card-list-state-color);
 }
+
+#card-quantity {
+	margin: 0px;
+	display: block;
+	min-width: 1em;
+	border-radius: 5px;
+	text-align: center;
+}
+
+#card-quantity[data-quantity-status="modified"] {
+	background: var(--card-list-quantity-bg-modified);
+}
+#card-quantity[data-quantity-status="removed"] {
+	background: var(--card-list-quantity-bg-removed);
+}
+
+#save-changes-popup[data-has-changes="0"] {
+	display: none;
+}
+
+#save-changes-popup {
+	position: fixed;
+	bottom: 50px;	
+	left:   50px;
+	right:  50px;
+	z-index: 999;
+}
+#save-changes-popup > *{
+	background: var(--card-list-save-background);
+	border-radius: 5px;
+}

@@ -6,11 +6,11 @@ class CardCollection {
 		image, price, type,
 		purchasePrice, isFoil, state
 	) {
-		this.order = order;
+		this.order = parseInt(order, 10);
 		this.id = id;
 		this.name = name;
-		this.quantity = quantity;
-		this.newQuantity = quantity;
+		this.quantity = parseInt(quantity, 10);
+		this.newQuantity = parseInt(quantity, 10);
 		this.element = element;
 		this.image = image;
 		this.price = price;
@@ -72,7 +72,25 @@ class CardCollection {
 	}
 
 	modifyQuantity(quantityMod) {
-		this.newQuantity += quantityMod;
-		console.log(this.quantity, " - ", this.newQuantity)
+		this.newQuantity += parseInt(quantityMod, 10);
+		if (this.newQuantity < 0) {
+			this.newQuantity = 0;
+		}
+		this.updateElementQuantity()
+	}
+
+	updateElementQuantity() {
+		const P_QUANTITY = this.element.querySelector("#card-quantity");
+		
+		P_QUANTITY.innerText = this.newQuantity;
+		if (this.newQuantity <= 0) {
+			P_QUANTITY.setAttribute("data-quantity-status", "removed");
+		}
+		else if (this.quantity == this.newQuantity) {
+			P_QUANTITY.setAttribute("data-quantity-status", "default");	
+		}
+		else {
+			P_QUANTITY.setAttribute("data-quantity-status", "modified");
+		}
 	}
 }
