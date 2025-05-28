@@ -16,9 +16,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function openSideHeader() {
 	document.querySelector('header').setAttribute('data-is-open', '1');
+	document.getElementById('sideHeaderButtonClose')?.focus();
 }
 
 
 function closeSideHeader() {
 	document.querySelector('header').setAttribute('data-is-open', '0');
+	document.getElementById('sideHeaderButtonOpen')?.focus();
 }
