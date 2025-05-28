@@ -167,26 +167,32 @@ a{
 
 
 .mana-bg-green {background: var(--mana-green-color);}
+.mana-bg-green:focus-visible,
 .mana-bg-green:hover {
 	background: var(--background-hover-green);
 }
 .mana-bg-red {background: var(--mana-red-color);}
+.mana-bg-red:focus-visible,
 .mana-bg-red:hover {
 	background: var(--background-hover-red);
 }
 .mana-bg-white {background: var(--mana-white-color);}
+.mana-bg-white:focus-visible,
 .mana-bg-white:hover {
 	background: var(--background-hover-white);
 }
 .mana-bg-blue {background: var(--mana-blue-color);}
+.mana-bg-blue:focus-visible,
 .mana-bg-blue:hover {
 	background: var(--background-hover-blue);
 }
 .mana-bg-black {background: var(--mana-black-color);}
+.mana-bg-black:focus-visible,
 .mana-bg-black:hover {
 	background: var(--background-hover-black);
 }
 .mana-bg-colorless {background: var(--mana-colorless-color);}
+.mana-bg-colorless:focus-visible,
 .mana-bg-colorless:hover {
 	background: var(--background-hover-colorless);
 }

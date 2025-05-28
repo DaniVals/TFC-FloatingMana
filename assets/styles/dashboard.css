@@ -13,6 +13,7 @@
 .option h2 {
 	transition: font-size 0.3s;
 }
+.option:focus-visible h2,
 .option:hover h2 {
 	/* font-weight: bold; */
 	font-size: 2.5em;
