@@ -207,3 +207,22 @@ a{
 	height: 1.5em;
 	fill: currentColor;
 }
+
+
+
+.default-profile-picture {
+	background-image: url('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png');
+
+	border-radius: 9999999px;
+
+	background-size: cover;
+	background-position: center;
+	text-indent: -9999px;
+	overflow: hidden;
+	white-space: nowrap;
+	/* Oculta el icono de imagen rota si la imagen no carga */
+	font-size: 0;
+	color: transparent;
+
+	aspect-ratio: 1/1;
+}

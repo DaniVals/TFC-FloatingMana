@@ -56,7 +56,11 @@
 		</div>
 
 		<div class="col-6 col-md-3 d-flex justify-content-end">
-			<img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="foto de perfil">
+			<img class="default-profile-picture" 
+			src="{% if is_granted("IS_AUTHENTICATED_FULLY") %}
+			{{app.user.getProfilePic}}
+			{% endif %}" 
+			alt="">
 		</div>
 	</div>
 
