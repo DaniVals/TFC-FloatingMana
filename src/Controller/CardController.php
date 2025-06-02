@@ -34,6 +34,11 @@ class CardController extends AbstractController {
         return $this->render('cardManagement/viewCard.html.twig', ['card' => $cardInfo]);
     }
 
+    #[Route('/buscar', name: 'search_card_form')]
+    public function buscarForm(): Response {
+        return $this->render('cardManagement/searchCard.html.twig');
+    }
+
     #[Route('/buscar/{nombre}', name: 'search_card')]
     public function buscar(string $nombre): Response {
         // Gestionar busquedas vacías
