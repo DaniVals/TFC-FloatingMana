@@ -17,12 +17,11 @@ class CardController extends AbstractController {
     #[Route('/carta', name: 'random_card')]   
     public function index(): Response {
         $cardInfo = $this->scryfallApiService->getRandomCard();
-        return $this->render('cardManagement/viewCard.html.twig', ['card' => $cardInfo]);
+        return $this->redirectToRoute('view_card', ['id' => $cardInfo['id']]);
     }
 
     #[Route('/carta/{id}', name: 'view_card')]
     public function viewCard(string $id): Response {
-        // Gestionar busquedas vacías
         if (empty($id)) {
             return $this->render('cardManagement/searchCard.html.twig', [
                 'cards' => [],
@@ -30,8 +29,17 @@ class CardController extends AbstractController {
                 Response::HTTP_BAD_REQUEST
             ]);
         }
-        $cardInfo = $this->scryfallApiService->getCardById($id);
-        return $this->render('cardManagement/viewCard.html.twig', ['card' => $cardInfo]);
+
+        try {
+            $cardInfo = $this->scryfallApiService->getCardById($id);
+            return $this->render('cardManagement/viewCard.html.twig', ['card' => $cardInfo]);
+        } catch (\Exception $e) {
+            return $this->render('cardManagement/viewCard.html.twig', [
+                'error' => 'Error al obtener la carta: ' . $e->getMessage(),
+                'card' => [],
+                Response::HTTP_NOT_FOUND
+            ]);
+        }
     }
 
     #[Route('/buscar', name: 'search_card_form')]
@@ -49,7 +57,18 @@ class CardController extends AbstractController {
                 Response::HTTP_BAD_REQUEST
             ]);
         }
-        $cards = $this->scryfallApiService->searchCards($nombre);
-        return $this->render('cardManagement/searchCard.html.twig', ['cards' => $cards]);
+        try {
+            $cards = $this->scryfallApiService->searchCards($nombre);
+            return $this->render('cardManagement/searchCard.html.twig', [
+                'cards' => $cards,
+                'nombre' => $nombre
+            ]);
+        } catch (\Exception $e) {
+            return $this->render('cardManagement/searchCard.html.twig', [
+                'error' => 'Error al buscar cartas: ' . $e->getMessage(),
+                'cards' => [],
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            ]);
+        }
     }
 }
