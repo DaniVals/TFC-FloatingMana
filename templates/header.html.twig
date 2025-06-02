@@ -18,8 +18,7 @@
 			{# <a href="{{ path('random_card') }}" class="d-block btn mana-bg-colorless default-text-color me-2">Carta Aleatoria</a>
 			<form id="search-card-form" action=" {{path('search_card', {nombre: '__name__'})}} ">
 				<input class="form-control w-100" type="text" name="cardName" placeholder="Search a card...">
-			</form>
-			<script src="{{ asset('js/searchCardForm.js') }}"></script> #}
+			</form> #}
 		
 			
 			<a class="mt-2 d-block btn mana-bg-colorless default-text-color" href="{{ path('dashboard') }}" title="dashboard">
@@ -75,9 +74,6 @@
 
 				<br>
 
-				<form id="search-card-form" action=" {{path('search_card', {nombre: '__name__'})}} ">
-					<input class="form-control w-100" type="text" name="cardName" placeholder="Search a card...">
-				</form>
 
 				<a class="mt-2 d-block btn mana-bg-colorless default-text-color" href="{{ path('dashboard') }}">
 					{{ svg.dashboard("side-header-svg") }} Dashboard
