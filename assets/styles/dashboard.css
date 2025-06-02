@@ -21,5 +21,6 @@
 
 .option h2, p {
 	color: var(--dashboard-color);
+	fill: var(--dashboard-color);
 }
 

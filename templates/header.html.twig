@@ -1,3 +1,4 @@
+{% import "macros/svgs.twig" as svg %}
 
 <header class="container-fluid" data-is-open="0">
 
@@ -13,14 +14,48 @@
 			<p class="m-1"><a href="{{ path('dashboard') }}">Dashboard</a></p>
 		</div> #}
 
-		<div class="col flex-row justify-content-center d-md-flex d-none">
-			<a href="{{ path('random_card') }}" class="d-block btn mana-bg-colorless default-text-color me-2">Carta Aleatoria</a>
+		<div class="col flex-row justify-content-between d-md-flex d-none">
+			{# <a href="{{ path('random_card') }}" class="d-block btn mana-bg-colorless default-text-color me-2">Carta Aleatoria</a>
 			<form id="search-card-form" action=" {{path('search_card', {nombre: '__name__'})}} ">
 				<input class="form-control w-100" type="text" name="cardName" placeholder="Search a card...">
 			</form>
-			<script src="{{ asset('js/searchCardForm.js') }}"></script>
+			<script src="{{ asset('js/searchCardForm.js') }}"></script> #}
 		
+			
+			<a class="mt-2 d-block btn mana-bg-colorless default-text-color" href="{{ path('dashboard') }}" title="dashboard">
+				{{ svg.dashboard("side-header-svg") }}
+			</a>
+			<a class="mt-2 d-block btn mana-bg-colorless default-text-color" href="{{ path('random_card') }}" title="carta aleatoria">
+				{{ svg.randomCard("side-header-svg") }}
+			</a>
+
+			<br>
+
+			<a class="mt-2 d-block btn mana-bg-green" href="{{ path('collection_index') }}" title="coleccion">
+				{{ svg.collection("side-header-svg") }}
+			</a>
+			<a class="mt-2 d-block btn mana-bg-white" href="{{ path('deck_index') }}" title="mazos">
+				{{ svg.decks("side-header-svg") }}
+			</a>
+			<a class="mt-2 d-block btn mana-bg-red" href="{{ path('search_card_form') }}">
+				{{ svg.search("side-header-svg") }}
+			</a>
+			<a class="mt-2 d-block btn mana-bg-blue" href="{{ path('collection_index') }}" title="perfil">
+				{{ svg.profile("side-header-svg") }}
+			</a>
+
+			{% if is_granted("IS_AUTHENTICATED_FULLY") %}
+				<a class="mt-2 d-block btn mana-bg-black" href="{{ path('app_logout') }}" title="cerrar sesion">
+				{{ svg.logout("side-header-svg") }}
+			</a>
+			{% else %}
+				<a class="mt-2 d-block btn mana-bg-black" href="{{ path('app_login') }}" title="iniciar sesion">
+				{{ svg.login("side-header-svg") }}
+			</a>
+			{% endif %}
+
 		</div>
+
 		<div class="col-6 col-md-3 d-flex justify-content-end">
 			<img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="foto de perfil">
 		</div>
@@ -44,20 +79,36 @@
 					<input class="form-control w-100" type="text" name="cardName" placeholder="Search a card...">
 				</form>
 
-				<a class="mt-2 d-block btn mana-bg-colorless default-text-color" href="{{ path('dashboard') }}">Dashboard</a>
-				<a class="mt-2 d-block btn mana-bg-colorless default-text-color" href="{{ path('random_card') }}">Carta Aleatoria</a>
+				<a class="mt-2 d-block btn mana-bg-colorless default-text-color" href="{{ path('dashboard') }}">
+					{{ svg.dashboard("side-header-svg") }} Dashboard
+				</a>
+				<a class="mt-2 d-block btn mana-bg-colorless default-text-color" href="{{ path('random_card') }}">
+					{{ svg.randomCard("side-header-svg") }} Carta Aleatoria
+				</a>
 
 				<br>
 
-				<a class="mt-2 d-block btn mana-bg-green" href="{{ path('collection_index') }}">Colección</a>
-				<a class="mt-2 d-block btn mana-bg-white" href="{{ path('deck_index') }}">Mazos</a>
-				<a class="mt-2 d-block btn mana-bg-red" href="#">Buscar</a>
-				<a class="mt-2 d-block btn mana-bg-blue" href="{{ path('collection_index') }}">Perfil</a>
+				<a class="mt-2 d-block btn mana-bg-green" href="{{ path('collection_index') }}">
+					{{ svg.collection("side-header-svg") }} Colección
+				</a>
+				<a class="mt-2 d-block btn mana-bg-white" href="{{ path('deck_index') }}">
+					{{ svg.decks("side-header-svg") }} Mazos
+				</a>
+				<a class="mt-2 d-block btn mana-bg-red" href="{{ path('search_card_form') }}">
+					{{ svg.search("side-header-svg") }} Buscar
+				</a>
+				<a class="mt-2 d-block btn mana-bg-blue" href="{{ path('collection_index') }}">
+					{{ svg.profile("side-header-svg") }} Perfil
+				</a>
 
 				{% if is_granted("IS_AUTHENTICATED_FULLY") %}
-					<a class="mt-2 d-block btn mana-bg-black" href="{{ path('app_logout') }}">Cerrar sesión</a>
+					<a class="mt-2 d-block btn mana-bg-black" href="{{ path('app_logout') }}">
+					{{ svg.logout("side-header-svg") }} Cerrar sesión
+				</a>
 				{% else %}
-					<a class="mt-2 d-block btn mana-bg-black" href="{{ path('app_login') }}">Iniciar sesión</a>
+					<a class="mt-2 d-block btn mana-bg-black" href="{{ path('app_login') }}">
+					{{ svg.login("side-header-svg") }} Iniciar sesión
+				</a>
 				{% endif %}
 				
 

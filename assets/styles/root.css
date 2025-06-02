@@ -199,4 +199,11 @@ a{
 
 .default-text-color {
 	color: var(--default-text-color);
+	fill: var(--default-text-color);
+}
+
+
+.side-header-svg {
+	height: 1.5em;
+	fill: currentColor;
 }
