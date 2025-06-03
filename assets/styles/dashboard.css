@@ -19,7 +19,7 @@
 	font-size: 2.5em;
 }
 
-.option h2, p {
+.option h2, .option p {
 	color: var(--dashboard-color);
 	fill: var(--dashboard-color);
 }
