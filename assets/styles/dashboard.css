@@ -24,3 +24,28 @@
 	fill: var(--dashboard-color);
 }
 
+#carrousel{
+	background-color: aqua;
+}
+#carrousel #elements {
+	background-color: green;
+
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: start;
+	align-items: center;
+
+	overflow-x: hidden;
+	scroll-behavior: smooth;
+
+	width: 100%;
+	box-sizing: border-box;
+	position: relative; /* Ensure children are positioned relative to this container */
+}
+
+#carrousel #elements .element {
+	background-color: blue;
+	flex: 0 0 100%; /* Hace que cada hijo tenga el mismo ancho que el padre */
+	width: 100%;
+	display: block !important;
+}

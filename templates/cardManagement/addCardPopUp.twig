@@ -43,7 +43,7 @@
 					<h2>Añadir a mazo</h2>
 					<p id="addCardPopUp-window-deck-name">Nombre de la carta</p>
 					<hr class="fading-separation">
-					
+					{% if is_granted("IS_AUTHENTICATED_FULLY") %}
 					{% if not app.user.getDecks or app.user.getDecks|length <= 0 %}
 						<a href="{{ path('deck_create_view') }}"
 						class="btn btn-outline-success btn-lg">
@@ -66,6 +66,7 @@
 						<br>
 						
 						<button id="addCardPopUp-window-deck-button" class="btn btn-outline-success" onclick="addCardToDeck()">Añadir a mazo</button>
+					{% endif %}
 					{% endif %}
 				</div>
 			</div>

@@ -11,6 +11,7 @@
 	{% include "root.html.twig" %}
 	<link rel="stylesheet" href=" {{ asset('styles/dashboard.css') }} ">
 
+	<script src=" {{asset('js/carrousel.js')}} "></script>
 </head>
 {% include "header.html.twig" %}
 <body>
@@ -33,47 +34,68 @@
 	<br>
 
 	<div class="container">
-		<div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center pe-sm-5 ps-sm-5">
-			<a class="col option d-block mana-bg-green" href="{{ path('collection_index') }}" class="text-center">
-				<div class="d-flex flex-column justify-content-center align-items-center h-100" style="height: 100%;">
-					<h2>Colección</h2>
-					<p>Explora y organiza tu colección</p>
+		<div class="row row-cols-1 row-cols-md-2 flex-md-row-reverse">
+			{# Cosas de bienvenida #}
+			<div class="col justify-content-center">
+				<div id="carrousel">
+					
+					<div id="elements">
+						<img src="https://cards.scryfall.io/large/front/3/b/3bd9e99a-ae8c-4323-aa86-b19288c877d4.jpg?1673307584" alt="Img 1" class="element">
+						<img src="https://cards.scryfall.io/large/front/3/b/f0944759-ee9f-4ae0-9d1b-2533ff6791a2.jpg?1562448331" alt="Img 2" class="element">
+						<img src="https://cards.scryfall.io/large/front/3/b/3bd9e99a-ae8c-4323-aa86-b19288c877d4.jpg?1673307584" alt="Img 3" class="element">
+						<img src="https://cards.scryfall.io/large/front/f/0/f0944759-ee9f-4ae0-9d1b-2533ff6791a2.jpg?1562448331" alt="Img 4" class="element">
+					</div>
+
+					<ul class="dots">
+						<li class="dot" onclick="changeIndex(1)">  > </li>
+						<li class="dot" onclick="changeIndex(-1)"> < </li>
+					</ul>
 				</div>
-			</a>
-			<a class="col option d-block mana-bg-white" href="{{ path('deck_index') }}" class="text-center">
-				<div class="d-flex flex-column justify-content-center align-items-center h-100" style="height: 100%;">
-					<h2>Mazos</h2>
-					<p>Crea, edita y comparte mazos</p>
-				</div>
-			</a>
-			<a class="col option d-block mana-bg-red" href="{{ path('search_card_form') }}" class="text-center">
-				<div class="d-flex flex-column justify-content-center align-items-center h-100" style="height: 100%;">
-					<h2>Buscar</h2>
-					<p>Busca cartas para añadir a tu colección</p>
-				</div>
-			</a>
-			<a class="col option d-block mana-bg-blue" href="{{ path('profile') }}" class="text-center">
-				<div class="d-flex flex-column justify-content-center align-items-center h-100" style="height: 100%;">
-					<h2>Perfil</h2>
-					<p>Visita tu perfil</p>
-				</div>
-			</a>
-			
-			{% if is_granted("IS_AUTHENTICATED_FULLY") %}
-				<a class="col option d-block mana-bg-black" href="{{ path('app_logout') }}" class="text-center">
-					<div class="d-flex flex-column justify-content-center align-items-center h-100" style="height: 100%;">
-						<h2>Cerrar sesión</h2>
-						<p>¡Hasta pronto!</p>
+			</div>
+
+			{# BOTONES CABECERA #}
+			<div class="col justify-content-center">
+				<a class="option mana-bg-green" href="{{ path('collection_index') }}" class="text-center">
+					<div class="d-flex flex-column justify-content-center align-items-center h-100">
+						<h2>Colección</h2>
+						<p>Explora y organiza tu colección</p>
 					</div>
 				</a>
-			{% else %}
-				<a class="col option d-block mana-bg-black" href="{{ path('app_login') }}" class="text-center">
-					<div class="d-flex flex-column justify-content-center align-items-center h-100" style="height: 100%;">
-						<h2>Iniciar sesión</h2>
-						<p>¡Únete a nosotros y empieza a gestionar tus cartas!</p>
+				<a class="option mana-bg-white" href="{{ path('deck_index') }}" class="text-center">
+					<div class="d-flex flex-column justify-content-center align-items-center h-100">
+						<h2>Mazos</h2>
+						<p>Crea, edita y comparte mazos</p>
 					</div>
 				</a>
-			{% endif %}
+				<a class="option mana-bg-red" href="{{ path('search_card_form') }}" class="text-center">
+					<div class="d-flex flex-column justify-content-center align-items-center h-100">
+						<h2>Buscar</h2>
+						<p>Busca cartas para añadir a tu colección</p>
+					</div>
+				</a>
+				<a class="option mana-bg-blue" href="{{ path('profile') }}" class="text-center">
+					<div class="d-flex flex-column justify-content-center align-items-center h-100">
+						<h2>Perfil</h2>
+						<p>Visita tu perfil</p>
+					</div>
+				</a>
+				
+				{% if is_granted("IS_AUTHENTICATED_FULLY") %}
+					<a class="option mana-bg-black" href="{{ path('app_logout') }}" class="text-center">
+						<div class="d-flex flex-column justify-content-center align-items-center h-100">
+							<h2>Cerrar sesión</h2>
+							<p>¡Hasta pronto!</p>
+						</div>
+					</a>
+				{% else %}
+					<a class="option mana-bg-black" href="{{ path('app_login') }}" class="text-center">
+						<div class="d-flex flex-column justify-content-center align-items-center h-100">
+							<h2>Iniciar sesión</h2>
+							<p>¡Únete a nosotros y empieza a gestionar tus cartas!</p>
+						</div>
+					</a>
+				{% endif %}
+			</div>
 
 		</div>
 	</div>
