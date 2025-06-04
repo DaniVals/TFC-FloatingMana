@@ -23,6 +23,18 @@ class AuthController extends AbstractController {
         $this->authService = $authService;
     }
 
+    #[Route('/', name: 'root', methods: ['GET'])]
+    public function rootRedirect(): Response
+    {
+        return $this->redirectToRoute('app_view');
+    }
+
+    #[Route('/app', name: 'app_view', methods: ['GET'])]
+    public function appView(): Response
+    {
+        return $this->render('dashboard/app.html.twig');
+    }
+
     #[Route('/app/login', name: 'app_login_view', methods: ['GET'])]
     public function loginView(): Response
     {
