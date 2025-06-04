@@ -130,7 +130,7 @@ class CollectionController extends AbstractController
         $cardId = $data['card_id'];
         $quantity = (int)$data['quantity'] ?? 1;
         $isFoil = (int)$data['isFoil'] ?? 0;
-        $state = $data['state'] ?? 'near mint';
+        $state = $data['state'] ?? 2;
         $price = (int)$data['purchasePrice'] ?? 0.0;
 
 

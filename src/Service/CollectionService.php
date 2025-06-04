@@ -64,7 +64,7 @@ class CollectionService
     /**
      * Añade una carta a la colección del usuario
      */
-    public function addCardToCollection(string $cardId, int $quantity, int $price, int $foil, string $state): ?Collection
+    public function addCardToCollection(string $cardId, int $quantity, int $price, int $foil, int $state): ?Collection
     {
         if ($quantity <= 0) {
             throw new \InvalidArgumentException('La cantidad debe ser mayor que cero');
@@ -90,7 +90,7 @@ class CollectionService
             $this->entityManager->flush();
         }
 
-        $state = $this->entityManager->getRepository(State::class)->findOneBy(['stateName' => $state]);
+        $state = $this->entityManager->getRepository(State::class)->findOneBy(['idState' => $state]);
         if (!$state) {
             throw new \Exception('Estado de la carta no válido');
         }

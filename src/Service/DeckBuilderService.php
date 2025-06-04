@@ -33,7 +33,7 @@ class DeckBuilderService
         $this->scryfallApiService = $scryfallApiService;
     }
     
-    public function addCardToDeck(User $user, int $deckId, string $cardName, string $cardId, string $quantity, bool $isSideboard = false): array
+    public function addCardToDeck(User $user, int $deckId, string $cardName, string $cardId, int $quantity, bool $isSideboard = false): array
     {
         // Buscar el mazo
         $deck = $this->deckRepository->find($deckId);
@@ -44,7 +44,7 @@ class DeckBuilderService
         }
         
         // Buscar la carta
-        $card = $this->cardRepository->findId($cardId);
+        $card = $this->cardRepository->findIdScryfall($cardId);
         if (!$card) {
             // Añadir la carta a la base de datos si no existe
             $card_new = new Card();
@@ -54,7 +54,7 @@ class DeckBuilderService
 
         }
 
-        $card = $this->cardRepository->findId($cardId);
+        $card = $this->cardRepository->findIdScryfall($cardId);
 
 
         
