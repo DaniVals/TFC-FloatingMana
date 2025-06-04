@@ -1,0 +1,41 @@
+#addCardPopUp {
+	position: fixed;
+	top:    0px;
+	bottom: 0px;
+	left:   0px;
+	right:  0px;
+
+	background: var(--popup-back-background-color);
+	z-index: 5;
+
+	overflow-x: hidden;
+}
+
+#addCardPopUp-window {
+	background: var(--popup-background-color);
+}
+
+#addCardPopUp[data-show-status="0"] {
+	display: none;
+}
+
+
+#addCardPopUp-window-message {
+	margin-top: 1em;
+	padding: 1em 2em;
+	border-radius: 1em;
+
+	background: var(--status-message-warning-background);
+}
+#addCardPopUp-window-message p {
+	margin: 0px;
+}
+#addCardPopUp-window-message[data-status="-1"]{
+	display: none;
+}
+#addCardPopUp-window-message[data-status="200"] {
+	background: var(--status-message-ok-background);
+}
+#addCardPopUp-window-message[data-status="404"] {
+	background: var(--status-message-error-background);
+}
