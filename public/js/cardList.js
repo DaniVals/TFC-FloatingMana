@@ -166,10 +166,10 @@ function modifyCardQuantity(cardId, quantityMod) {
 
 function saveChanges() {
 	const SAVE_CHANGES_POPUP = document.getElementById('save-changes-popup');
-	let changed_cards = [];
+	let changed_cards = {"changed_card": []};
 	for (let i = 0; i < cards.length; i++) {
 		if (cards[i].newQuantity != cards[i].quantity) {
-			changed_cards.push({"card_id":cards[i].order, "quantity":cards[i].newQuantity});
+			changed_cards["changed_card"].push({"card_id":cards[i].order, "quantity":cards[i].newQuantity});
 		}
 	}
 
