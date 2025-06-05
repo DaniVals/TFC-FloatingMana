@@ -49,7 +49,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $isAuth = false;
 
     #[ORM\Column(type: "string", length: 255, nullable: true, name: "profilePic")]
-    private $profilePic;
+    private $profilePicture;
 
     private $active = true;
 
@@ -194,16 +194,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getProfilePic(): ?string
-    {
-        return $this->profilePic;
-    }
+public function getProfilePicture(): ?string
+{
+    return $this->profilePicture;
+}
 
-    public function setProfilePic(?string $profilePic): self
-    {
-        $this->profilePic = $profilePic;
-        return $this;
-    }
+public function setProfilePicture(?string $profilePicture): static
+{
+    $this->profilePicture = $profilePicture;
+    return $this;
+}
 
     // Comentado porque no está en uso actualmente
     public function getFailedLoginAttempts(): int

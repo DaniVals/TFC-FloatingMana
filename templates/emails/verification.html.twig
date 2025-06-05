@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Verifica tu cuenta</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	
+	{% include "root.html.twig" %}
+	<link rel="stylesheet" href=" {{ asset('styles/form.css') }} ">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2c3e50;
+            margin: 0;
+        }
+        .content {
+            margin-bottom: 30px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .button:hover {
+            background-color: #2980b9;
+        }
+        .footer {
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+        .warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>¡Bienvenido a nuestra plataforma!</h1>
+        </div>
+        
+        <div class="content">
+            <p>Hola <strong>{{ userName }}</strong>,</p>
+            
+            <p>Gracias por registrarte en nuestra plataforma. Para completar tu registro y activar tu cuenta, necesitas verificar tu dirección de correo electrónico.</p>
+            
+            <p>Haz clic en el siguiente botón para verificar tu cuenta:</p>
+            
+            <div style="text-align: center;">
+                <a href="{{ verificationUrl }}" class="button">Verificar mi cuenta</a>
+            </div>
+            
+            <p>Si el botón no funciona, puedes copiar y pegar el siguiente enlace en tu navegador:</p>
+            <p style="word-break: break-all; background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
+                {{ verificationUrl }}
+            </p>
+            
+            <div class="warning">
+                <strong>⚠️ Importante:</strong> Este enlace expirará en 24 horas. Si no verificas tu cuenta dentro de este tiempo, tendrás que solicitar un nuevo enlace de verificación.
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Si no te has registrado en nuestra plataforma, puedes ignorar este correo de forma segura.</p>
+            <p>Este es un correo automático, por favor no respondas a este mensaje.</p>
+        </div>
+    </div>
+</body>
+</html>

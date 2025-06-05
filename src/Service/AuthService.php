@@ -56,6 +56,13 @@ class AuthService {
         if ($this->userRepository->findOneByEmail($email)) {
             throw new \Exception('Este email ya está registrado');
         }
+
+        // Crear una carpeta para el usuario en public/profilePictures
+        $userDirectory = 'profilePictures/' . $email;
+        $userDirectoryPath = __DIR__ . '/../../public/' . $userDirectory;
+        if (!is_dir($userDirectoryPath)) {
+            mkdir($userDirectoryPath, 0777, true);
+        }
         
         // Crear nuevo usuario
         $user = new User();
@@ -74,7 +81,6 @@ class AuthService {
         
         return $user;
     }
-    
     
     //Incrementa el contador de intentos fallidos
     private function incrementFailedLoginAttempts($user): void

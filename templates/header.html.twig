@@ -64,7 +64,7 @@
 		<div class="col-6 col-md-3 d-flex justify-content-end">
 			<img class="default-profile-picture" 
 			src="{% if is_granted("IS_AUTHENTICATED_FULLY") %}
-			{{app.user.getProfilePic}}
+			{{app.user.getProfilePicture}}
 			{% endif %}" 
 			alt="">
 		</div>
