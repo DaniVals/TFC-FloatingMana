@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<title>Tu colleccion</title>
+	<title>Tu colección</title>
 	
 	{% include "root.html.twig" %}
 	<link rel="stylesheet" href=" {{ asset('styles/cardList.css') }} ">
@@ -18,7 +18,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12 text-center">
-				<h1 class="fw-bold"> Tu colleccion </h1>
+				<h1 class="fw-bold"> Tu colección </h1>
             </div>
         </div>
 
@@ -33,11 +33,11 @@
 					<option value="price">Precio</option>
 					<option value="purchace-price">Precio de compra</option>
 				</select>
-				<select id="groupMode" class="form-select w-auto d-inline-block" onchange="groupBy('groupMode')">
+				{# <select id="groupMode" class="form-select w-auto d-inline-block" onchange="groupBy('groupMode')">
 			 		<option value="none">No agrupar</option>
 			 		<option value="type">Tipo</option>
 			 		<option value="set">Expansion</option>
-			 	</select>
+			 	</select> #}
             </div>
         </div>
         <div class="row justify-content-end" id="save-changes-popup" data-has-changes="0" data-save-route="">
@@ -82,9 +82,9 @@
 						</div>
 
 						<div class="col-sm-2 col-2 d-flex flex-row align-items-center justify-content-evenly">
-							<button class="btn btn-outline-secondary" onclick="modifyCardQuantity({{ card.getIdCollection }}, +1)">+</button>
-							<p data-quantity-status="default" id="card-quantity" class="m-0 mx-sm-1"> {{ card.getQuantity }} </p>
 							<button class="btn btn-outline-secondary" onclick="modifyCardQuantity({{ card.getIdCollection }}, -1)">-</button>
+							<p data-quantity-status="default" id="card-quantity" class="m-0 mx-sm-1"> {{ card.getQuantity }} </p>
+							<button class="btn btn-outline-secondary" onclick="modifyCardQuantity({{ card.getIdCollection }}, +1)">+</button>
 						</div>
                 	</div>
                 </div>
