@@ -15,8 +15,19 @@
 {% macro randomCard(class) %}
 	<svg class="{{class}}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 512 512" xml:space="preserve">
 		<g>
-			<rect x="96" y="64" width="320" height="384" rx="32" fill="none" stroke="currentColor" stroke-width="32"/>
-			<text x="256" y="288" text-anchor="middle" font-size="320" font-family="Arial, sans-serif"  font-weight="bold" dominant-baseline="middle">?</text>
+			<rect x="48" y="16" width="416" height="464" rx="40" fill="none" stroke="currentColor" stroke-width="32"/>
+
+			<polygon points="256,64 416,160 416,352 256,448 96,352 96,160" fill="none" stroke="currentColor" stroke-width="24"/>
+			<line x1="416" y1="160" x2="256" y2="256" stroke="currentColor" stroke-width="8"/>
+			<line x1="256" y1="448" x2="256" y2="256" stroke="currentColor" stroke-width="8"/>
+			<line x1="96" y1="160" x2="256" y2="256" stroke="currentColor" stroke-width="8"/>
+
+			<circle cx="256" cy="160" r="32" fill="currentColor"/>
+			<circle cx="372" cy="238" r="24" fill="currentColor"/>
+			<circle cx="300" cy="364" r="24" fill="currentColor"/>
+			<circle cx="140" cy="238" r="16" fill="currentColor"/>
+			<circle cx="175" cy="301" r="16" fill="currentColor"/>
+			<circle cx="210" cy="364" r="16" fill="currentColor"/>
 		</g>
 	</svg>
 {% endmacro %}
