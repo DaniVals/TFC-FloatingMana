@@ -18,6 +18,8 @@ let prices;
 function addCardPopUp(cardName, cardId, cardPrices) {
 	console.log("opening pop up of " + cardName + " --- " + cardId);
 
+	showMessaje("", -1);
+
 	const popUp = document.getElementById('addCardPopUp');
 	popUp.setAttribute('data-show-status', '1');
 
@@ -34,6 +36,9 @@ function addCardPopUp(cardName, cardId, cardPrices) {
 
 	prices = cardPrices;
 	console.log(prices);
+
+	const cardPricecollection = document.getElementById('addCardPopUp-window-collection-purchacePrice');
+	cardPricecollection.value = "";
 
 	const cardFoilcollection = document.getElementById('addCardPopUp-window-collection-isFoil');
 	if (!prices["eur"] && prices["eur_foil"]) {
