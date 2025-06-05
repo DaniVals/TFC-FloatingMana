@@ -226,3 +226,42 @@ a{
 
 	aspect-ratio: 1/1;
 }
+
+.btn-accesibility {
+	position: absolute;
+	left: -9999px;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	white-space: nowrap;
+	border: 0;
+	padding: 0;
+	margin: 0;
+	background: none;
+	color: transparent;
+	outline: none;
+	transition: none;
+	pointer-events: none;
+	user-select: none;
+	z-index: 1;
+}
+
+.btn-accesibility:focus,
+.btn-accesibility:active {
+	position: static;
+	left: auto;
+	width: auto;
+	height: auto;
+	overflow: visible;
+	clip: auto;
+	clip-path: none;
+	white-space: normal;
+	color: inherit;
+	background: inherit;
+	outline: 2px solid #fff;
+	pointer-events: auto;
+	user-select: auto;
+	z-index: 1000;
+}

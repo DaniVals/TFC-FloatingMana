@@ -4,6 +4,20 @@
 		<div id="addCardPopUp-window" class="col-10 mt-5 p-5">
 			<input type="hidden" id="addCardPopUp-window-card-id" value="">
 			<input type="hidden" id="addCardPopUp-window-card-name" value="">
+
+			<div class="row">
+				{# el foco inicial del popup, mas el boton de cerrar #}
+				<div class="col-10">
+					<button class="btn-accesibility" id="addCardPopUp-window-goto-coll">Ir a formulario para añadir a coleccion</button>
+					<button class="btn-accesibility" id="addCardPopUp-window-goto-deck">Ir a formulario para añadir a mazo</button>
+				</div>
+				<div class="col-2 text-end">
+					<button class="btn btn-outline-secondary" 
+					id="addCardPopUp-window-close-button" 
+					title="cerrar popup">x</button>
+				</div>
+			</div>
+
 			<div class="row">
 				<div id="addCardPopUp-window-collection" class="col mb-3" data-AJAX-route="{{ path('collection_add_card') }}">
 					<h2>Añadir a coleccion</h2>

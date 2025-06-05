@@ -7,10 +7,22 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 		});
 	}
-	const collectionCheckBox = document.getElementById('addCardPopUp-window-collection-isFoil');
-	if (collectionCheckBox) {
-		collectionCheckBox.addEventListener('change', updatePrices);
+	const closeButton = document.getElementById('addCardPopUp-window-close-button');
+	if (closeButton) {
+		closeButton.addEventListener('click', (event) => {
+			popUp.setAttribute('data-show-status', '0');
+		});
 	}
+
+	document.getElementById('addCardPopUp-window-collection-isFoil')?.addEventListener('change', updatePrices);
+	
+	document.getElementById('addCardPopUp-window-goto-coll')?.addEventListener('click', (event) => {
+		document.getElementById('addCardPopUp-window-collection-quantity')?.focus();
+	});
+	
+	document.getElementById('addCardPopUp-window-goto-deck')?.addEventListener('click', (event) => {
+		document.getElementById('addCardPopUp-window-deck-quantity')?.focus();
+	});
 });
 
 let prices;
@@ -21,7 +33,6 @@ function addCardPopUp(cardName, cardId, cardPrices) {
 	showMessaje("", -1);
 
 	const popUp = document.getElementById('addCardPopUp');
-	popUp.setAttribute('data-show-status', '1');
 
 	const cardNamecollection = document.getElementById('addCardPopUp-window-collection-name');
 	cardNamecollection.innerText = cardName;
@@ -46,6 +57,9 @@ function addCardPopUp(cardName, cardId, cardPrices) {
 	}
 	
 	updatePrices();
+	popUp.setAttribute('data-show-status', '1');
+
+	document.getElementById('addCardPopUp-window-goto-coll')?.focus();
 }
 
 function updatePrices() {
