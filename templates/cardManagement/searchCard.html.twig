@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-	{# <title>Busqueda: {{ app.request.attributes.get('nombre') }}</title> #}
-	<title>Busqueda</title>
+	{% set meta_title = "Busqueda" %}
+	{% set meta_description = "Busca cartas para añadirlas a tu colección" %}
 	
 	{% include "root.html.twig" %}
 	<link rel="stylesheet" href=" {{ asset('styles/card.css') }} ">

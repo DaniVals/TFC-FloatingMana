@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-	<title>Tu colección</title>
+	{% set meta_title = "Tu colección" %}
+	{% set meta_description = "Gestiona tu colección de cartas" %}
 	
 	{% include "root.html.twig" %}
 	<link rel="stylesheet" href=" {{ asset('styles/cardList.css') }} ">

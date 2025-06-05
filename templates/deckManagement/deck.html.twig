@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+	
 	{% if not deck %}
-		<title>Mazo no encontrado</title>
+		{% set meta_title = "Mazo no encontrado" %}
+		{% set meta_description = "" %}
 	{% else %}
-		<title>Mazo: {{ deck.getDeckName }}</title>
+		{% set meta_title = "Mazo: " ~ deck.getDeckName %}
+		{% set meta_description = "Crea, gestiona y comparte tu mazo" %}
 	{% endif %}
 	
 	{% include "root.html.twig" %}

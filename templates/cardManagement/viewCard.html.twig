@@ -1,176 +1,174 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="description" content="">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
-		{% include "root.html.twig" %}
-		<link rel="stylesheet" href=" {{ asset('styles/card.css') }} ">
-		<link rel="stylesheet" href=" {{ asset('styles/addCardPopUp.css') }} ">
+<head>
+	{% if card is defined and card is not empty %}
+		{% set meta_title = card.name %}
+	{% else %}
+		{% set meta_title = "Carta no encontrada" %}
+	{% endif %}
+	{% set meta_description = "Busca cartas para añadirlas a tu colección" %}
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	
+	{% include "root.html.twig" %}
+	<link rel="stylesheet" href=" {{ asset('styles/card.css') }} ">
+	<link rel="stylesheet" href=" {{ asset('styles/addCardPopUp.css') }} ">
 
-		<script src=" {{asset('js/replaceSymbols.js')}} "></script>
-		<script src=" {{asset('js/flipCard.js')}} "></script>
-		<script src=" {{asset('js/addCardPopUp.js')}} "></script>
-		{% if card is defined and card is not empty %}
-			<title>{{ card.name }}</title>
-		{% else %}
-			<title>Carta no encontrada</title>
-		{% endif %}
+	<script src=" {{asset('js/replaceSymbols.js')}} "></script>
+	<script src=" {{asset('js/flipCard.js')}} "></script>
+	<script src=" {{asset('js/addCardPopUp.js')}} "></script>
 
-		{% import "macros/cardUtilities.twig" as cardUtilities %}
+	{% import "macros/cardUtilities.twig" as cardUtilities %}
 
-	</head>
-	{% include "header.html.twig" %}
-	<body>
+</head>
+{% include "header.html.twig" %}
+<body>
 
-		{% include "cardManagement/addCardPopUp.twig" %}
+	{% include "cardManagement/addCardPopUp.twig" %}
 
-		{% if card is defined and card is not empty%}
+	{% if card is defined and card is not empty%}
 
-		<div class="container-fluid"> 
+	<div class="container-fluid"> 
 
-			<div class="row justify-content-center pe-sm-5 ps-sm-5">
+		<div class="row justify-content-center pe-sm-5 ps-sm-5">
 
-				{# caratula de la carta (nombre y foto) #}
-				<div class="col-md-5 main-card mt-3">
-					<h1> {{ card.name }}</h1>
-						{# {% include "import/cardImage.twig" with { card: card, img_class: "contain-image" } %} #}
-						{{ cardUtilities.mostrarImagen(card, "card-img-top", true) }}
-				</div>
+			{# caratula de la carta (nombre y foto) #}
+			<div class="col-md-5 main-card mt-3">
+				<h1> {{ card.name }}</h1>
+					{# {% include "import/cardImage.twig" with { card: card, img_class: "contain-image" } %} #}
+					{{ cardUtilities.mostrarImagen(card, "card-img-top", true) }}
+			</div>
 
-				{# informacion de la carta #}
-				<div class="col-md-5 mt-3">
+			{# informacion de la carta #}
+			<div class="col-md-5 mt-3">
 
-					<h3 class="text-center">Estadisticas de la carta</h3>
+				<h3 class="text-center">Estadisticas de la carta</h3>
+				<hr class="fading-separation">
+				
+				{% if card.card_faces is defined %}
+					<h3 class="mt-5">Cara 1: {{ card.card_faces[0].name }} </h3>
 					<hr class="fading-separation">
+					{{ cardUtilities.datosDeLaCarta(card.card_faces[0]) }}
+					<hr class="fading-separation">
+					<h3 class="mt-5">Cara 2: {{ card.card_faces[1].name }} </h3>
+					<hr class="fading-separation">
+					{{ cardUtilities.datosDeLaCarta(card.card_faces[1]) }}
+
+				{% else %}
+					{{ cardUtilities.datosDeLaCarta(card) }}
 					
-					{% if card.card_faces is defined %}
-						<h3 class="mt-5">Cara 1: {{ card.card_faces[0].name }} </h3>
-						<hr class="fading-separation">
-						{{ cardUtilities.datosDeLaCarta(card.card_faces[0]) }}
-						<hr class="fading-separation">
-						<h3 class="mt-5">Cara 2: {{ card.card_faces[1].name }} </h3>
-						<hr class="fading-separation">
-						{{ cardUtilities.datosDeLaCarta(card.card_faces[1]) }}
+				{% endif %}
 
-					{% else %}
-						{{ cardUtilities.datosDeLaCarta(card) }}
-						
-					{% endif %}
-
-				</div>
 			</div>
-
-			
-			<div class="row justify-content-center pe-sm-5 ps-sm-5">
-
-				{# contenedor para alinear el resto #}
-				<div class="col-md-1">
-				</div>
-
-				{# Legalidades #}
-				<div class="col-md-5 mt-3">
-					<h3 class="text-center">Otros</h3>
-
-					{# boton para añadir a coleccion #}
-					{% if is_granted("IS_AUTHENTICATED_FULLY") %}
-						<hr class="fading-separation">
-						<button class="btn btn-outline-info w-100" onclick='addCardPopUp( "{{ card.name }}" , "{{ card.id }}" , {{ card.prices|json_encode() }} )'> Añadir a... </button>
-					{% endif %}
-
-					{# fecha de salida #}
-					{% if card.released_at is defined %}
-						<hr class="fading-separation">
-						<p> Fecha de salida: {{ card.released_at }} </p>
-					{% endif %}
-				
-					{# listar legalidades #}
-					{% if card.legalities is defined %}
-						<hr class="fading-separation">
-						<h4>Legalidades</h4>
-						<div class="card-legalities">
-							{% for key, value in card.legalities %}
-							<span class="card-legality card-{{value}}" title="{{value}}"> {{ key }} </span> {# el title para mayor accesibilidad #}
-							{% endfor %}
-						</div>
-						
-						<br>
-						<h5>Leyenda de colores</h5>
-						<div class="card-legalities">
-							<span class="card-legality card-legal"> legal </span>
-							<span class="card-legality card-not_legal"> no legal </span>
-							<span class="card-legality card-banned"> baneada </span>
-							<span class="card-legality"> no encontrado </span>
-						</div>
-					{% else %}
-						<p>No se encontraron datos sobre la legalidad de la carta</p>
-					{% endif %}
-				</div>
-
-				{# contenedor para alinear el resto #}
-				<div class="col-md-1">
-				</div>
-
-				{# Precios #}
-				<div class="col-md-5 mt-3">
-
-					<h3 class="text-center">Compra y Venta</h3>
-				
-
-					{# fecha de salida #}
-					{% if card.prices is defined %}
-						<hr class="fading-separation">
-						<h4>Precios</h4>
-						<ul>
-							{% if card.prices.usd is not null %}
-								<li> USD: {{ card.prices.usd }}$ </li>
-							{% endif %}
-							
-							{% if card.prices.usd_foil is not null %}
-								<li> USD Foil: {{ card.prices.usd_foil }}$ </li>
-							{% endif %}
-
-							{% if card.prices.usd_etched is not null %}
-								<li> USD Etched: {{ card.prices.usd_etched }}$ </li>
-							{% endif %}
-
-							{% if card.prices.eur is not null %}
-								<li> EUR: {{ card.prices.eur }}€ </li>
-							{% endif %}
-
-							{% if card.prices.eur_foil is not null %}
-								<li> EUR Foil: {{ card.prices.eur_foil }}€ </li>
-							{% endif %}
-
-							{% if card.prices.tix is not null %}
-								<li> TIX: {{ card.prices.tix }} </li>
-							{% endif %}
-						</ul>
-					{% endif %}
-					
-					{% if card.purchase_uris is defined %}
-						<hr class="fading-separation">
-						<h4>Paginas de compra</h4>
-						<div class="card-legalities">
-							{% for key, value in card.purchase_uris %}
-								<a class="btn btn-outline-light" href="{{value}}"> {{ key }} </a>
-							{% endfor %}
-						</div>
-					{% endif %}
-
-					{# <hr class="fading-separation">
-					{{ dump(card) }} #}
-				</div>
-			</div>
-			
-			<br><br><br><br>
 		</div>
-		{% else %}
-			<div class="row justify-content-center text-center">
-				<p>No existe ninguna carta con esa id</p>
+
+		
+		<div class="row justify-content-center pe-sm-5 ps-sm-5">
+
+			{# contenedor para alinear el resto #}
+			<div class="col-md-1">
 			</div>
-		{% endif %}
-	</body>
+
+			{# Legalidades #}
+			<div class="col-md-5 mt-3">
+				<h3 class="text-center">Otros</h3>
+
+				{# boton para añadir a coleccion #}
+				{% if is_granted("IS_AUTHENTICATED_FULLY") %}
+					<hr class="fading-separation">
+					<button class="btn btn-outline-info w-100" onclick='addCardPopUp( "{{ card.name }}" , "{{ card.id }}" , {{ card.prices|json_encode() }} )'> Añadir a... </button>
+				{% endif %}
+
+				{# fecha de salida #}
+				{% if card.released_at is defined %}
+					<hr class="fading-separation">
+					<p> Fecha de salida: {{ card.released_at }} </p>
+				{% endif %}
+			
+				{# listar legalidades #}
+				{% if card.legalities is defined %}
+					<hr class="fading-separation">
+					<h4>Legalidades</h4>
+					<div class="card-legalities">
+						{% for key, value in card.legalities %}
+						<span class="card-legality card-{{value}}" title="{{value}}"> {{ key }} </span> {# el title para mayor accesibilidad #}
+						{% endfor %}
+					</div>
+					
+					<br>
+					<h5>Leyenda de colores</h5>
+					<div class="card-legalities">
+						<span class="card-legality card-legal"> legal </span>
+						<span class="card-legality card-not_legal"> no legal </span>
+						<span class="card-legality card-banned"> baneada </span>
+						<span class="card-legality"> no encontrado </span>
+					</div>
+				{% else %}
+					<p>No se encontraron datos sobre la legalidad de la carta</p>
+				{% endif %}
+			</div>
+
+			{# contenedor para alinear el resto #}
+			<div class="col-md-1">
+			</div>
+
+			{# Precios #}
+			<div class="col-md-5 mt-3">
+
+				<h3 class="text-center">Compra y Venta</h3>
+			
+
+				{# fecha de salida #}
+				{% if card.prices is defined %}
+					<hr class="fading-separation">
+					<h4>Precios</h4>
+					<ul>
+						{% if card.prices.usd is not null %}
+							<li> USD: {{ card.prices.usd }}$ </li>
+						{% endif %}
+						
+						{% if card.prices.usd_foil is not null %}
+							<li> USD Foil: {{ card.prices.usd_foil }}$ </li>
+						{% endif %}
+
+						{% if card.prices.usd_etched is not null %}
+							<li> USD Etched: {{ card.prices.usd_etched }}$ </li>
+						{% endif %}
+
+						{% if card.prices.eur is not null %}
+							<li> EUR: {{ card.prices.eur }}€ </li>
+						{% endif %}
+
+						{% if card.prices.eur_foil is not null %}
+							<li> EUR Foil: {{ card.prices.eur_foil }}€ </li>
+						{% endif %}
+
+						{% if card.prices.tix is not null %}
+							<li> TIX: {{ card.prices.tix }} </li>
+						{% endif %}
+					</ul>
+				{% endif %}
+				
+				{% if card.purchase_uris is defined %}
+					<hr class="fading-separation">
+					<h4>Paginas de compra</h4>
+					<div class="card-legalities">
+						{% for key, value in card.purchase_uris %}
+							<a class="btn btn-outline-light" href="{{value}}"> {{ key }} </a>
+						{% endfor %}
+					</div>
+				{% endif %}
+
+				{# <hr class="fading-separation">
+				{{ dump(card) }} #}
+			</div>
+		</div>
+		
+		<br><br><br><br>
+	</div>
+	{% else %}
+		<div class="row justify-content-center text-center">
+			<p>No existe ninguna carta con esa id</p>
+		</div>
+	{% endif %}
+</body>
 </html>
