@@ -14,7 +14,7 @@
 			<p class="m-1"><a href="{{ path('dashboard') }}">Dashboard</a></p>
 		</div> #}
 
-		<div class="col flex-row justify-content-between d-md-flex d-none">
+		<div class="col-6 flex-row justify-content-between d-md-flex d-none">
 			{# <a href="{{ path('random_card') }}" class="d-block btn mana-bg-colorless default-text-color me-2">Carta Aleatoria</a>
 			<form id="search-card-form" action=" {{path('search_card', {nombre: '__name__'})}} ">
 				<input class="form-control w-100" type="text" name="cardName" placeholder="Search a card...">
@@ -36,10 +36,10 @@
 			<a class="mt-2 d-block btn mana-bg-white" href="{{ path('deck_index') }}" title="mazos">
 				{{ svg.decks("side-header-svg") }}
 			</a>
-			<a class="mt-2 d-block btn mana-bg-red" href="{{ path('search_card_form') }}">
+			<a class="mt-2 d-block btn mana-bg-red" href="{{ path('search_card_form') }}" title="buscador">
 				{{ svg.search("side-header-svg") }}
 			</a>
-			<a class="mt-2 d-block btn mana-bg-blue" href="{{ path('collection_index') }}" title="perfil">
+			<a class="mt-2 d-block btn mana-bg-blue" href="{{ path('profile') }}" title="perfil">
 				{{ svg.profile("side-header-svg") }}
 			</a>
 
@@ -52,6 +52,12 @@
 				{{ svg.login("side-header-svg") }}
 			</a>
 			{% endif %}
+			
+			<br>
+
+			<a class="mt-2 d-block btn mana-bg-colorless default-text-color" href="{{ path('app_view') }}" title="informacion">
+				{{ svg.info("side-header-svg") }}
+			</a>
 
 		</div>
 
@@ -97,7 +103,7 @@
 				<a class="mt-2 d-block btn mana-bg-red" href="{{ path('search_card_form') }}">
 					{{ svg.search("side-header-svg") }} Buscar
 				</a>
-				<a class="mt-2 d-block btn mana-bg-blue" href="{{ path('collection_index') }}">
+				<a class="mt-2 d-block btn mana-bg-blue" href="{{ path('profile') }}">
 					{{ svg.profile("side-header-svg") }} Perfil
 				</a>
 
@@ -110,7 +116,12 @@
 					{{ svg.login("side-header-svg") }} Iniciar sesión
 				</a>
 				{% endif %}
+
+				<br>
 				
+				<a class="mt-2 d-block btn mana-bg-colorless default-text-color" href="{{ path('app_view') }}">
+					{{ svg.info("side-header-svg") }} información
+				</a>
 
 			</div>
 		</div>
