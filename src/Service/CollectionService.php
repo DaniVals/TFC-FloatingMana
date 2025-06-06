@@ -81,8 +81,7 @@ class CollectionService
             $cardData = $this->scryfallApiService->getCardById($cardId);
             if (!$cardData) {
                 throw new \Exception('Carta no encontrada en Scryfall');
-            }
-            $card = new Card();
+            } $card = new Card();
             $card->setCardName($cardData['name']);
             $card->setIdScryfall($cardData['id']);
             // Configurar más campos según la estructura de la entidad Card
@@ -119,41 +118,140 @@ class CollectionService
     }
 
     /**
-     * Actualiza la cantidad de una carta en la colección
-     */
-    public function updateCardQuantity(int $cardId, int $quantity): Collection
+ * Actualiza la colección del usuario con los cambios proporcionados
+ * 
+ * @param User $user Usuario propietario de la colección
+ * @param array $changedCards Array de cartas con cambios
+ * @return array Resultado de la operación con contadores y errores
+ */
+    public function updateUserCollection(User $user, array $changedCards): array
     {
-        if ($quantity < 0) {
-            throw new \InvalidArgumentException('La cantidad no puede ser negativa');
-        }
+        $result = [
+            'success_count' => 0,
+            'errors' => []
+        ];
 
-        $user = $this->security->getUser();
         if (!$user) {
-            throw new \Exception('Usuario no autenticado');
+            throw new \InvalidArgumentException('Usuario no válido');
         }
 
-        $collectionItem = $this->collectionRepository->findOneBy([
-            'user' => $user,
-            'card' => $cardId
-        ]);
-
-        if (!$collectionItem) {
-            throw new \Exception('Carta no encontrada en tu colección');
+        if (empty($changedCards)) {
+            throw new \InvalidArgumentException('No se proporcionaron cartas para actualizar');
         }
 
-        if ($quantity === 0) {
-            // Si la cantidad es 0, eliminamos la carta de la colección
-            $this->entityManager->remove($collectionItem);
+        // Iniciar transacción para asegurar consistencia
+        $this->entityManager->beginTransaction();
+
+        try {
+            foreach ($changedCards as $cardData) {
+                try {
+                    // Validar estructura de datos de la carta
+                    if (!$this->validateCardData($cardData)) {
+                        $result['errors'][] = 'Datos de carta inválidos: ' . json_encode($cardData);
+                        continue;
+                    }
+
+                    // Soportar búsqueda por collection_id (recomendado) o card_id (compatibilidad)
+                    $collectionId = $cardData['card_id'] ?? $cardData['idCollection'] ?? null;
+                    $newQuantity = (int)($cardData['quantity'] ?? 0);
+
+                    // Buscar la entrada en la colección
+                    if ($collectionId) {
+                        // Búsqueda por ID de colección (recomendado)
+                        $collectionItem = $this->collectionRepository->findOneBy([
+                            'idCollection' => $collectionId,
+                            'user' => $user
+                        ]);
+                    } else {
+                        $result['errors'][] = 'Debe proporcionar collection_id o card_id';
+                        continue;
+                    }
+
+                    if (!$collectionItem) {
+                        $identifier = $collectionId ?? $cardId ?? 'desconocido';
+                        $type = $collectionId ? 'colección' : 'carta';
+                        $result['errors'][] = "Entrada de {$type} con ID {$identifier} no encontrada o no pertenece al usuario";
+                        continue;
+                    }
+
+                    // Si la nueva cantidad es 0 o menor, eliminar la carta de la colección
+                    if ($newQuantity <= 0) {
+                        $this->entityManager->remove($collectionItem);
+                        $result['success_count']++;
+                        continue;
+                    }
+
+                    // Actualizar cantidad
+                    if ($newQuantity !== $collectionItem->getQuantity()) {
+                        $collectionItem->setQuantity($newQuantity);
+                    }
+
+
+                    // Persistir los cambios
+                    $this->entityManager->persist($collectionItem);
+                    $result['success_count']++;
+
+                } catch (\Exception $e) {
+                    $identifier = $cardData['collection_id'] ?? $cardData['idCollection'] ?? $cardData['card_id'] ?? $cardData['idCard'] ?? 'desconocido';
+                    $result['errors'][] = "Error al actualizar entrada {$identifier}: " . $e->getMessage();
+                }
+            }
+
+            // Ejecutar todos los cambios
             $this->entityManager->flush();
-            return $collectionItem;
+            $this->entityManager->commit();
+
+        } catch (\Exception $e) {
+            $this->entityManager->rollback();
+            throw new \Exception('Error al actualizar la colección: ' . $e->getMessage());
         }
 
-        $collectionItem->setQuantity($quantity);
-        $this->entityManager->flush();
-        return $collectionItem;
+        return $result;
     }
 
     /**
+ * Valida la estructura de datos de una carta para actualización
+ * 
+ * @param array $cardData Datos de la carta
+ * @return bool True si los datos son válidos
+ */
+    private function validateCardData(array $cardData): bool
+    {
+        // Verificar que existe el identificador de colección o carta
+        $hasCollectionId = isset($cardData['collection_id']) || isset($cardData['idCollection']);
+        $hasCardId = isset($cardData['card_id']) || isset($cardData['idCard']);
+
+        if (!$hasCollectionId && !$hasCardId) {
+            return false;
+        }
+
+        // Verificar que la cantidad es un número válido si se proporciona
+        if (isset($cardData['quantity']) && (!is_numeric($cardData['quantity']) || $cardData['quantity'] < 0)) {
+            return false;
+        }
+
+        // Verificar que el precio es válido si se proporciona
+        if (isset($cardData['purchase_price']) && !is_numeric($cardData['purchase_price'])) {
+            return false;
+        }
+        if (isset($cardData['purchasePrice']) && !is_numeric($cardData['purchasePrice'])) {
+            return false;
+        }
+
+        // Verificar que el estado foil es válido si se proporciona
+        if (isset($cardData['is_foil']) && !in_array($cardData['is_foil'], [0, 1, '0', '1'])) {
+            return false;
+        }
+        if (isset($cardData['isFoil']) && !in_array($cardData['isFoil'], [0, 1, '0', '1'])) {
+            return false;
+        }
+
+        return true;
+    }
+
+
+
+    /*
      * Elimina una carta de la colección
      */
     public function removeCardFromCollection(int $cardId): void
@@ -269,7 +367,7 @@ class CollectionService
                     $card->setName($cardData['name']);
                     $card->setScryfallId($cardData['id']);
                     // Configurar más campos según la estructura de la entidad Card
-                    
+
                     $this->entityManager->persist($card);
                     $this->entityManager->flush();
                 }

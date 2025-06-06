@@ -28,15 +28,15 @@ class CollectionController extends AbstractController
     public function index(): Response
     {
         /*try {*/
-            $user = $this->getUser();
-            $collectionArray = $this->collectionService->getUserCollection($user);
-            
-            return $this->render('collectionManagement/collection.html.twig', [
-                'title' => 'Mi colección',
-                'description' => 'Aquí puedes ver y gestionar tu colección de cartas.',
-                'status' => 'success',
-                'collection' => $collectionArray
-            ]);
+        $user = $this->getUser();
+        $collectionArray = $this->collectionService->getUserCollection($user);
+
+        return $this->render('collectionManagement/collection.html.twig', [
+            'title' => 'Mi colección',
+            'description' => 'Aquí puedes ver y gestionar tu colección de cartas.',
+            'status' => 'success',
+            'collection' => $collectionArray
+        ]);
         /*} catch (\Exception $e) {
             return $this->render('collectionManagement/collection.html.twig', [
                 'title' => 'Mi colección',
@@ -118,7 +118,7 @@ class CollectionController extends AbstractController
     public function addCard(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        
+
         // Validar datos necesarios
         if (!isset($data['card_id']) || !isset($data['quantity']) || !isset($data['isFoil']) || !isset($data['state']) || !isset($data['purchasePrice'])) {
             return $this->json([
@@ -149,30 +149,87 @@ class CollectionController extends AbstractController
         }
     }
 
-    #[Route('/card/{cardId}', name: 'update_card', methods: ['PUT'])]
-    public function updateCard(int $cardId, Request $request): JsonResponse
+
+    #[Route('/update', name: 'update', methods: ['POST'])]
+    public function updateCollection(Request $request): Response
     {
-        $data = json_decode($request->getContent(), true);
-
-        if (!isset($data['quantity'])) {
-            return $this->json([
-                'status' => 'error',
-                'message' => 'Cantidad no proporcionada'
-            ], Response::HTTP_BAD_REQUEST);
-        }
-
         try {
-            $collectionItem = $this->collectionService->updateCardQuantity($cardId, $data['quantity']);
-            return $this->json([
-                'status' => 'success',
-                'message' => 'Cantidad actualizada',
-                'data' => $collectionItem
-            ]);
-        } catch (\Exception $e) {
+            // Obtener el usuario autenticado
+            $user = $this->getUser();
+            if (!$user) {
+                return $this->json([
+                    'status' => 'error',
+                    'message' => 'Usuario no autenticado'
+                ], Response::HTTP_UNAUTHORIZED);
+            }
+
+            // Decodificar el JSON del request
+            $data = json_decode($request->getContent(), true);
+
+            // Validar estructura del JSON
+            if (!is_array($data)) {
+                return $this->json([
+                    'status' => 'error',
+                    'message' => 'Formato JSON inválido'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+            // Verificar que existe el array changed_card
+            if (!isset($data['changed_card']) || !is_array($data['changed_card'])) {
+                return $this->json([
+                    'status' => 'error',
+                    'message' => 'El campo "changed_card" es requerido y debe ser un array'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+            $changedCards = $data['changed_card'];
+
+            // Verificar que no esté vacío
+            if (empty($changedCards)) {
+                return $this->json([
+                    'status' => 'error',
+                    'message' => 'No se encontraron cartas para actualizar'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+            // Procesar las actualizaciones usando el servicio
+            $result = $this->collectionService->updateUserCollection($user, $changedCards);
+
+            // Preparar respuesta basada en el resultado
+            if ($result['success_count'] > 0) {
+                $message = "Se actualizaron {$result['success_count']} cartas correctamente";
+                
+                if (!empty($result['errors'])) {
+                    $message .= ", pero se encontraron " . count($result['errors']) . " errores";
+                }
+                
+                // Recargar la web con un menaje de éxito
+                return $this->redirectToRoute('collection_index', [
+                    'status' => 'success',
+                    'message' => $message,
+                ]);
+                
+                
+            } else {
+                return $this->json([
+                    'status' => 'error',
+                    'message' => 'No se pudo actualizar ninguna carta',
+                    'data' => [
+                        'errors' => $result['errors']
+                    ]
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+        } catch (\InvalidArgumentException $e) {
             return $this->json([
                 'status' => 'error',
                 'message' => $e->getMessage()
             ], Response::HTTP_BAD_REQUEST);
+        } catch (\Exception $e) {
+            return $this->json([
+                'status' => 'error',
+                'message' => 'Error interno del servidor: ' . $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -229,7 +286,7 @@ class CollectionController extends AbstractController
     public function viewCollection(): Response
     {
         try {
-            $collection = $this->collectionService->getUserCollection();
+            $collection = $this->collectionService->getUserCollection($this->getUser());
             $stats = $this->collectionService->getCollectionStats();
 
             return $this->render('collectionManagement/collection.html.twig', [
