@@ -204,9 +204,13 @@ class CollectionController extends AbstractController
                 }
                 
                 // Recargar la web con un menaje de éxito
-                return $this->redirectToRoute('collection_index', [
+                return $this->json([
                     'status' => 'success',
                     'message' => $message,
+                    'data' => [
+                        'updated_count' => $result['success_count'],
+                        'errors' => $result['errors']
+                    ]
                 ]);
                 
                 
