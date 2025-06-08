@@ -41,6 +41,18 @@
 				{% include "deckManagement/deckFormatInput.twig" %}
 			</div>
 			<br>
+			<div class="form-group">
+				<label for="deck_cover">Portada del mazo:</label>
+				<select type="text" id="deckName" name="deck_cover" class="form-control" value="{{ deck.getDeckName }}" required>
+					<option value="mana_colorless">Colorless</option>
+					<option value="mana_green">Green</option>
+					<option value="mana_red">Red</option>
+					<option value="mana_blue">Blue</option>
+					<option value="mana_black">Black</option>
+					<option value="mana_white">White</option>
+				</select>
+			</div>
+			<br>
 			<div class="form-group text-center">
 				<button type="submit" class="btn btn-primary">Guardar cambios</button>
 			</div>
