@@ -106,4 +106,110 @@ class DeckApiController extends AbstractController
             'success' => true,
         ]);
     }
+
+        #[Route('/update', name: 'update', methods: ['POST'])]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function updateDeck(Request $request): JsonResponse
+    {
+        try {
+            // Obtener el usuario autenticado
+            $user = $this->getUser();
+            if (!$user) {
+                return $this->json([
+                    'status' => 'error',
+                    'message' => 'Usuario no autenticado'
+                ], Response::HTTP_UNAUTHORIZED);
+            }
+
+            // Decodificar el JSON del request
+            $data = json_decode($request->getContent(), true);
+
+            // Validar estructura del JSON
+            if (!is_array($data)) {
+                return $this->json([
+                    'status' => 'error',
+                    'message' => 'Formato JSON inválido'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+            // Verificar que existe el array changed_cards
+            if (!isset($data['changed_cards']) || !is_array($data['changed_cards'])) {
+                return $this->json([
+                    'status' => 'error',
+                    'message' => 'El campo "changed_cards" es requerido y debe ser un array'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+            // Verificar que existe el deck_id
+            if (!isset($data['deck_id']) || !is_numeric($data['deck_id'])) {
+                return $this->json([
+                    'status' => 'error',
+                    'message' => 'El campo "deck_id" es requerido y debe ser un número'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+            $deckId = (int)$data['deck_id'];
+            $changedCards = $data['changed_cards'];
+
+            // Verificar que el mazo existe y pertenece al usuario
+            $deck = $this->deckRepository->findOneByIdAndUser($deckId, $user);
+            if (!$deck) {
+                return $this->json([
+                    'status' => 'error',
+                    'message' => 'Mazo no encontrado o no tienes permisos para modificarlo'
+                ], Response::HTTP_NOT_FOUND);
+            }
+
+            // Verificar que no esté vacío
+            if (empty($changedCards)) {
+                return $this->json([
+                    'status' => 'error',
+                    'message' => 'No se encontraron cartas para actualizar'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+            // Procesar las actualizaciones usando el servicio
+            $result = $this->deckBuilderService->updateDeckCards($user, $deck, $changedCards);
+
+            // Preparar respuesta basada en el resultado
+            if ($result['success_count'] > 0) {
+                $message = "Se actualizaron {$result['success_count']} cartas correctamente";
+                
+                if (!empty($result['errors'])) {
+                    $message .= ", pero se encontraron " . count($result['errors']) . " errores";
+                }
+                
+                return $this->json([
+                    'status' => 'success',
+                    'message' => $message,
+                    'data' => [
+                        'updated_count' => $result['success_count'],
+                        'errors' => $result['errors'],
+                        'deck_value' => $result['deck_value'] ?? 0,
+                        'total_cards' => $result['total_cards'] ?? 0
+                    ]
+                ]);
+                
+            } else {
+                return $this->json([
+                    'status' => 'error',
+                    'message' => 'No se pudo actualizar ninguna carta',
+                    'data' => [
+                        'errors' => $result['errors']
+                    ]
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+        } catch (\InvalidArgumentException $e) {
+            return $this->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        } catch (\Exception $e) {
+            return $this->json([
+                'status' => 'error',
+                'message' => 'Error interno del servidor: ' . $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }
