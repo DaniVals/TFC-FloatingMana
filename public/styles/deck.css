@@ -1,7 +1,7 @@
 .deck {
 	aspect-ratio: 4/3;
 
-	background-color: var(--semisolid-background-color);
+	background-color: var(--mana-colorless-color);
 	background-position: center center;
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -9,4 +9,19 @@
 
 	font-weight: bolder;
 	font-size: 2em;
+	-webkit-text-stroke: 1px black;
+	text-shadow: 1px 1px 1px #000, -1px -1px 2px #000;
+
+	transition: background-size 0.2s ease;
 }
+.deck:hover,
+.deck:focus-visible
+{
+	background-size: 110%;
+}
+
+.deck-mana_green {background-color: var(--mana-green-color);}
+.deck-mana_red {background-color: var(--mana-red-color);}
+.deck-mana_blue {background-color: var(--mana-blue-color);}
+.deck-mana_white {background-color: var(--mana-white-color);}
+.deck-mana_black {background-color: var(--mana-black-color);}

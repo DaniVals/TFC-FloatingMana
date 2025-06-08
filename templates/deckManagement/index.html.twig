@@ -24,14 +24,19 @@
 			<div class="row">
 				<div class="col-12 text-center">
 					<h1> Tus mazos </h1>
-					<div class="col-12 text-center">
-						<a href="{{ path('deck_create_view') }}" class="btn btn-outline-success {% if app.user.getDecks|length == 0 %}btn-lg{% endif %}">
-							Crear nuevo mazo
-						</a>
-					</div>
 				</div>
 			</div>
+
 			{% include "separation.twig" %}
+			
+			<div class="row">
+				<div class="col-12 text-center">
+					<a href="{{ path('deck_create_view') }}" class="btn btn-outline-success {% if app.user.getDecks|length == 0 %}btn-lg{% endif %}">
+						Crear nuevo mazo
+					</a>
+				</div>
+			</div>
+			<br>
 
 			<div class="row justify-content-center justify-content-sm-start" id="deck-list" data-ajax-route="https://api.scryfall.com/cards/">
 				{# {{ dump(app.user.getDecks) }} #}
@@ -39,8 +44,13 @@
 				{% for deck in app.user.getDecks %}
 					{# {{ dump(deck) }} #}
 					<a href="{{ path('deck_show', { id: deck.getIdDeck }) }}"
-					   class="deck col-md-3 col-sm-5 col-9 m-3 d-flex flex-column justify-content-center text-center"
-					   style="background-image:url('{{deck.getCoverImg}}');">
+					   class="deck col-md-3 col-sm-5 col-9 m-3 d-flex flex-column justify-content-center text-center
+					   {% if deck.getCoverImg and deck.getCoverImg|slice(0, 5) == 'mana_' %}
+					   {{'deck-' ~ deck.getCoverImg}}
+					   {% endif %}"
+
+					   style="background-image:url('{{deck.getCoverImg}}');"
+					   >
 						{{ deck.getDeckName }}
 					</a>
 				{% endfor %}

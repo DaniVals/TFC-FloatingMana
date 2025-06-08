@@ -35,15 +35,14 @@
 
 			{% include "separation.twig" %}
 
-			<div class="row">
-				<div class="col-6 col-sm-2 text-center">
+			<div class="row justify-content-around">
+				<div class="col-5 col-sm-3 text-start">
 					<a href="{{ path('deck_index') }}" class="btn btn-outline-secondary me-auto">
 						Volver
 					</a>
 				</div>
-				<div class="col-0 col-sm-8 text-center">
-				</div>
-				<div class="col-6 col-sm-2 text-center">
+				{# <div class="col-2 col-sm-6 text-center"></div> #}
+				<div class="col-5 col-sm-3 text-end">
 						{% if app.user and deck.getUser and app.user.id == deck.getUser.id %}
 							<a href="{{ path('deck_edit_view', {id: deck.getIdDeck}) }}" class="btn btn-outline-primary">
 								Editar mazo
@@ -51,6 +50,8 @@
 						{% endif %}
 				</div>
 			</div>
+
+			<br>
 
 			<div class="row">
 				<div class="col-12 text-center">
