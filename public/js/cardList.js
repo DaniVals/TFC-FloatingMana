@@ -182,7 +182,6 @@ function saveChanges() {
 	const AJAXroute = SAVE_CHANGES_POPUP.getAttribute('data-save-route');
 
 	TEXT_SAVE_CHANGES_POPUP.innerText = "Guardando cambios...";
-	console.log(changed_cards);
 	
 	const xhr = new XMLHttpRequest();
 	xhr.open('POST', AJAXroute);
