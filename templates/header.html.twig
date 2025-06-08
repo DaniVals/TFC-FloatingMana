@@ -62,11 +62,11 @@
 		</div>
 
 		<div class="col-6 col-md-3 d-flex justify-content-end">
-			<img class="default-profile-picture" 
-			src="{% if is_granted("IS_AUTHENTICATED_FULLY") %}
-			{{app.user.getProfilePicture}}
-			{% endif %}" 
-			alt="">
+			{% if is_granted("IS_AUTHENTICATED_FULLY") %}
+				<img class="default-profile-picture" 
+				src="{{app.user.getProfilePicture}}" 
+				alt="">
+			{% endif %}
 		</div>
 	</div>
 
