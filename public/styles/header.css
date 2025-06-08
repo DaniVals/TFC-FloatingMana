@@ -33,14 +33,15 @@ header input{
 
 #sideHeaderButtonClose,
 #sideHeaderButtonOpen {
-	width:  100px;
+	width:  50px;
 	height: 100px;
+	margin-left: 1em;
 	
 	border: none;
 	background: #0000;
 
 	background-repeat: no-repeat;
-	background-size: 50px;
+	background-size: contain;
 	background-position: center center;
 
 	/* filtro para que los svg sean blancos */
