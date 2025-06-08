@@ -177,6 +177,8 @@ function saveChanges() {
 	const AJAXroute = SAVE_CHANGES_POPUP.getAttribute('data-save-route');
 
 	TEXT_SAVE_CHANGES_POPUP.innerText = "Guardando cambios...";
+	console.log(changed_cards);
+	
 	const xhr = new XMLHttpRequest();
 	xhr.open('POST', AJAXroute);
 	xhr.setRequestHeader('Content-Type', 'application/json');
@@ -195,6 +197,10 @@ function saveChanges() {
 
 			const data = JSON.parse(xhr.responseText);
 			TEXT_SAVE_CHANGES_POPUP.innerText = data["message"];
+		}
+		else if (xhr.status === 400) {
+			TEXT_SAVE_CHANGES_POPUP.innerText = "Error al guardar cambios";
+			console.error('Error al guardar cambios en el mazo', xhr);
 		}
 	};
 	xhr.onerror = function () {

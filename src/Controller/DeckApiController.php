@@ -107,8 +107,7 @@ class DeckApiController extends AbstractController
         ]);
     }
 
-        #[Route('/update', name: 'update', methods: ['POST'])]
-    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+        #[Route('/deck/update', name: 'deck_cards_update', methods: ['POST'])]
     public function updateDeck(Request $request): JsonResponse
     {
         try {

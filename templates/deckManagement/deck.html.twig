@@ -31,6 +31,11 @@
 				<div class="col-12 text-center">
 					<h1 class="fw-bold"> {{ deck.getDeckName }} </h1>
 				</div>
+			</div>
+
+			{% include "separation.twig" %}
+
+			<div class="row">
 				<div class="col-6 col-sm-2 text-center">
 					<a href="{{ path('deck_index') }}" class="btn btn-outline-secondary me-auto">
 						Volver
@@ -47,35 +52,71 @@
 				</div>
 			</div>
 
-			{% include "separation.twig" %}
-
 			<div class="row">
 				<div class="col-12 text-center">
 					{# <button onclick="addToBody()">mostrar lista</button> #}
 					<select id="sortMode" class="form-select w-auto d-inline-block" onchange="sortBy('sortMode')">
-						{# <option value="id">No ordenar</option> #}
+						<option value="id">No ordenar</option>
 						<option value="name">Nombre</option>
 						<option value="price">Precio</option>
 					</select>
-					<select id="groupMode" class="form-select w-auto d-inline-block" onchange="groupBy('groupMode')">
+					{# <select id="groupMode" class="form-select w-auto d-inline-block" onchange="groupBy('groupMode')">
 						<option value="none">No agrupar</option>
 						<option value="type">Tipo</option>
 						<option value="set">Expansion</option>
-					</select>
+					</select> #}
+				</div>
+			</div>
+			
+			<div class="row justify-content-end" id="save-changes-popup" data-has-changes="0" data-save-route="{{path('deck_cards_update')}}">
+				<div class="p-2 col-md-8 col-sm-10 col-12 d-flex flex-row">
+					<div class="col-md-8 col-8 d-flex justify-content-center align-items-center">
+						<p class="m-0 text-center">Pulsa el boton para guardar cambios</p>
+					</div>
+					<button class="col-md-4 col-4 btn btn-success" id="save-changes-popup-save" onclick="saveChanges()">Guardar Cambios</button>
+					<button class="col-md-4 col-4 btn btn-danger"  id="save-changes-popup-close" onclick="closePopup()">Cerrar</button>
 				</div>
 			</div>
 
 			<br>
-			
-			{# <div >
-				<span class="card-data" data-card-id="4b4390f4-451f-4575-96e0-dc4dcb45ad8f"></span>
-				<span class="card-data" data-card-id="047f196b-a9d1-4cd3-b665-3b304cc59767"></span>
-			</div> #}
 
 			<div class="row justify-content-center no-deco" id="card-list" data-ajax-route="https://api.scryfall.com/cards/">
 			
 				{% for card in deck.getDeckCards %}
-					<div class="col-12 col-sm-11 col-md-10 ps-0    card-list-show" data-card-id="{{ card.getCard.getIdScryfall }}" data-card-name="{{ card.getCard.getCardName }}">
+					<div class="col-12 col-sm-11 col-md-10 ps-0    card-list-show" 
+					data-card-id="{{ card.getCard.getIdScryfall }}" data-card-name="{{ card.getCard.getCardName }}"
+					data-card-quantity="{{ card.getCardQuantity }}" data-card-order="{{ card.getIdDeckCard }}"
+					>
+						<div class="d-flex justify-content-between align-items-center w-100"> 
+
+							<a class="col-sm-8 col-8   d-flex justify-content-between"
+							href=" {{ path('view_card', {id: card.getCard.getIdScryfall  }) }} ">
+								<img id="card-image" class="col-sm-4 col-6" src="https://fepfi.es/wp-content/uploads/2021/10/placeholder-1.png" alt="card image">
+								
+								<p class="col d-flex flex-row align-items-center justify-content-start m-0" title="{{ card.getCard.getCardName }}"> 
+									{{ card.getCard.getCardName }} 
+								</p>
+							</a>
+
+							<div id="card-prices" class="col-sm-1 col-2 d-flex flex-row align-items-start" data-price-improvement="0">
+								<div class="d-flex flex-column align-items-center justify-content-center">
+									<span class="d-block" id="card-price"></span>
+								</div>
+							</div>
+
+							{# <div id="card-state" class="col-sm-1 col-2 d-flex flex-column justify-content-center align-items-center" data-price-improvement="0"> #}
+								{# <p class="m-0 card-state card-state-{{ card.getState.getStateName }}">{{ card.getState.getStateName }}</p> #}
+							{# </div> #}
+
+							<div class="col-sm-2 col-2 d-flex flex-row align-items-center justify-content-evenly">
+								<button class="btn btn-outline-secondary" onclick="modifyCardQuantity({{ card.getIdDeckCard }}, -1)">-</button>
+								<p data-quantity-status="default" id="card-quantity" class="m-0 mx-sm-1"> {{ card.getCardQuantity }} </p>
+								<button class="btn btn-outline-secondary" onclick="modifyCardQuantity({{ card.getIdDeckCard }}, +1)">+</button>
+							</div>
+						</div>
+
+
+{# 
 						<a href=" {{ path('view_card', {id: card.getCard.getIdScryfall  }) }} "> 
 						<div class="d-flex justify-content-between align-items-center w-100">
 							<img id="card-image" class="col-4 col-md-2 col-sm-3" src="https://fepfi.es/wp-content/uploads/2021/10/placeholder-1.png" alt="card image">
@@ -83,7 +124,7 @@
 							<p class="col-1" id="card-price"></p>
 							<p class="col-1"> {{ card.getCardQuantity }} </p>
 						</div>
-						</a>
+						</a> #}
 					</div>
 				{% endfor %}
 			</div>
