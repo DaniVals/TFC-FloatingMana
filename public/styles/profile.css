@@ -1,0 +1,17 @@
+#forms-grid > div {
+	background: var(--profile-form-bg);
+
+	padding: 2em 1em;
+	margin: 0.5em;
+
+	border-radius: 0.5em;
+}
+#forms-grid > div h2 {
+	text-align: center;
+}
+
+.profile-picture{
+	aspect-ratio: 1/1;
+	object-fit: cover;
+	border-radius: 0.5em;
+}

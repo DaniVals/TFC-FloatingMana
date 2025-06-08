@@ -122,6 +122,8 @@
 	--header-top-border:  2px solid var(--semisolid-background-color);
 	--header-side-background: var(--default-background-color);
 	--header-side-border: 2px solid var(--semisolid-background-color);
+
+	--profile-form-bg: var(--light-background-color);
 }
 
 
@@ -225,6 +227,7 @@ a{
 	color: transparent;
 
 	aspect-ratio: 1/1;
+	object-fit: cover;
 }
 
 .btn-accesibility {
