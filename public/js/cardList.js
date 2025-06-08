@@ -173,6 +173,11 @@ function saveChanges() {
 		}
 	}
 
+	const DECK_ID = SAVE_CHANGES_POPUP.getAttribute('data-deck-id');
+	if (DECK_ID) {
+		changed_cards["deck_id"] = DECK_ID;
+	}
+
 	const TEXT_SAVE_CHANGES_POPUP = SAVE_CHANGES_POPUP.querySelector('p')
 	const AJAXroute = SAVE_CHANGES_POPUP.getAttribute('data-save-route');
 
