@@ -4,7 +4,7 @@
 
 	{# NORMAL HEADER #}
 	<div class="row justify-content-center d-flex">
-		<div class="col-6 col-md-3 justify-content-start d-flex">
+		<div class="col-8 col-md-3 justify-content-start d-flex">
 			<a href="{{ path('dashboard') }}" title="Ir a Dashboard">
 				<img src="https://images.fineartamerica.com/images/artworkimages/medium/3/magic-the-gathering-colors-of-mana-aurora-uyainah-transparent.png" alt="logo">
 			</a>
@@ -61,7 +61,7 @@
 
 		</div>
 
-		<div class="col-6 col-md-3 d-flex justify-content-end">
+		<div class="col-4 col-md-3 d-flex justify-content-end">
 			{% if is_granted("IS_AUTHENTICATED_FULLY") %}
 				<img class="default-profile-picture" 
 				src="{{'/' ~ app.user.getProfilePicture}}" 
