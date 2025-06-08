@@ -2,14 +2,10 @@
 <label for="_deckFormat">Formato de mazo:</label>
 <select id="deckFormat" name="_deckFormat" class="form-control" required>
 
-	{% set formats = ['no format', 'commander', 'modern', 'jump start'] %}
+	{% set formats = ['No format', 'Commander', 'Modern', 'Jump start'] %}
 	{% for format in formats %}
 		<option value="{{ format }}" {% if deck.getFormat is defined and deck.getFormat == format %}selected{% endif %}>
 			{{ format }}
 		</option>
 	{% endfor %}
-	{# <option value="aggressive" {% if  deck.getFormat is defined and deck.getFormat == 'aggressive' %}selected{% endif %}>Agresivo</option>
-	<option value="control" {% if  deck.getFormat is defined and deck.getFormat == 'control' %}selected{% endif %}>Control</option>
-	<option value="combo" {% if  deck.getFormat is defined and deck.getFormat == 'combo' %}selected{% endif %}>Combo</option>
-	<option value="midrange" {% if  deck.getFormat is defined and deck.getFormat == 'midrange' %}selected{% endif %}>Midrange</option> #}
 </select>
