@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\DeckRepository;
 use App\Service\DeckBuilderService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,10 +14,12 @@ use Symfony\Component\HttpFoundation\Response;
 class DeckApiController extends AbstractController
 {
     private $deckBuilderService;
+    private $deckRepository;
     
-    public function __construct(DeckBuilderService $deckBuilderService)
+    public function __construct(DeckBuilderService $deckBuilderService, DeckRepository $deckRepository)
     {
         $this->deckBuilderService = $deckBuilderService;
+        $this->deckRepository = $deckRepository;
     }
     
     #[Route('/deck/add-card', name: 'add_card_to_deck', methods: ['POST'])]
@@ -132,26 +135,23 @@ class DeckApiController extends AbstractController
             }
 
             // Verificar que existe el array changed_cards
-            if (!isset($data['changed_cards']) || !is_array($data['changed_cards'])) {
+            if (!isset($data['changed_card']) || !is_array($data['changed_card'])) {
                 return $this->json([
                     'status' => 'error',
                     'message' => 'El campo "changed_cards" es requerido y debe ser un array'
                 ], Response::HTTP_BAD_REQUEST);
             }
 
-            // Verificar que existe el deck_id
+            $changedCards = $data['changed_card'];
+
+            // Verificar que el mazo existe y pertenece al usuario
             if (!isset($data['deck_id']) || !is_numeric($data['deck_id'])) {
                 return $this->json([
                     'status' => 'error',
-                    'message' => 'El campo "deck_id" es requerido y debe ser un número'
+                    'message' => 'El campo "deck" es requerido y debe ser un número'
                 ], Response::HTTP_BAD_REQUEST);
             }
-
-            $deckId = (int)$data['deck_id'];
-            $changedCards = $data['changed_cards'];
-
-            // Verificar que el mazo existe y pertenece al usuario
-            $deck = $this->deckRepository->findOneByIdAndUser($deckId, $user);
+            $deck = $this->deckRepository->findOneByIdAndUser((int)$data['deck_id'], $user);
             if (!$deck) {
                 return $this->json([
                     'status' => 'error',

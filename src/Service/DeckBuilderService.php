@@ -20,7 +20,7 @@ class DeckBuilderService
     private $cardRepository;
     private $deckCardRepository;
     private $scryfallApiService;
-    
+
     public function __construct(
         DeckRepository $deckRepository,
         CardRepository $cardRepository,
@@ -32,17 +32,17 @@ class DeckBuilderService
         $this->deckCardRepository = $deckCardRepository;
         $this->scryfallApiService = $scryfallApiService;
     }
-    
+
     public function addCardToDeck(User $user, int $deckId, string $cardName, string $cardId, int $quantity, bool $isSideboard = false): array
     {
         // Buscar el mazo
         $deck = $this->deckRepository->find($deckId);
-        
+
         // Verificar que el mazo existe y pertenece al usuario
         if (!$deck || $deck->getUser() !== $user) {
             throw new DeckNotFoundException('Mazo no encontrado o no tienes permiso para modificarlo');
         }
-        
+
         // Buscar la carta
         $card = $this->cardRepository->findIdScryfall($cardId);
         if (!$card) {
@@ -55,12 +55,12 @@ class DeckBuilderService
         }
 
         $card = $this->cardRepository->findIdScryfall($cardId);
-        
+
         // Validar la cantidad
         if ($quantity <= 0) {
             throw new InvalidCardQuantityException('La cantidad debe ser mayor que 0');
         }
-        
+
         // Verificar restricciones del formato (ejemplo: máximo 4 copias por carta)
         $format = $deck->getFormat();
         if ($format !== 'commander' && $card->getCardName() !== 'Basic Land') {
@@ -69,13 +69,13 @@ class DeckBuilderService
                 throw new InvalidCardQuantityException('No se pueden tener más de 4 copias de esta carta en el mazo');
             }
         }
-        
+
         // Buscar si la carta ya existe en el mazo
         $deckCard = $this->deckCardRepository->findOneBy([
             'deck' => $deck,
             'card' => $card,
         ]);
-        
+
         // Si ya existe, actualizar cantidad
         if ($deckCard) {
             $deckCard->setCardQuantity($deckCard->getCardQuantity() + $quantity);
@@ -86,13 +86,13 @@ class DeckBuilderService
             $deckCard->setCard($card);
             $deckCard->setCardQuantity($quantity);
         }
-        
+
         // Guardar cambios
         $this->deckCardRepository->save($deckCard, true);
-        
+
         // Actualizar contadores del mazo
         $totalValue = $this->calculateDeckValue($deck);
-        
+
         // Devolver los datos actualizados
         return [
             'deck' => $deck,
@@ -101,11 +101,11 @@ class DeckBuilderService
             'deckValue' => $totalValue
         ];
     }
-    
+
     private function calculateDeckValue(Deck $deck): float
     {
         $totalValue = 0.0;
-        
+
         // Obtener todas las cartas del mazo
         $deckCards = $this->deckCardRepository->findBy(['deck' => $deck]);
 
@@ -127,7 +127,7 @@ class DeckBuilderService
 
         return $totalValue;
     }
-    
+
     // Crear un mazo nuevo
     public function createDeck(User $user, string $deckName, string $deckFormat): Deck
     {
@@ -135,10 +135,10 @@ class DeckBuilderService
         $deck->setDeckName($deckName);
         $deck->setFormat($deckFormat);
         $deck->setUser($user);
-        
+
         // Guardar el mazo en la base de datos
         $this->deckRepository->create($deck, true);
-        
+
         return $deck;
     }
 
@@ -156,7 +156,7 @@ class DeckBuilderService
 
         // Guardar los cambios en la base de datos
         $this->deckRepository->save($deck, true);
-        
+
         return $deck;
     }
 
@@ -199,69 +199,33 @@ class DeckBuilderService
                         continue;
                     }
 
-                    $deckCardId = $cardData['deck_card_id'] ?? null;
                     $cardId = $cardData['card_id'] ?? null;
                     $newQuantity = (int)($cardData['quantity'] ?? 0);
-                    $isSideboard = (bool)($cardData['is_sideboard'] ?? false);
 
                     // Buscar la entrada en el mazo
                     $deckCard = null;
-                    if ($deckCardId) {
-                        // Búsqueda por ID de DeckCard (recomendado)
-                        $deckCard = $this->deckCardRepository->findOneBy([
-                            'id' => $deckCardId,
-                            'deck' => $deck
-                        ]);
-                    } elseif ($cardId) {
+                    if ($cardId) {
                         // Búsqueda por ID de carta (compatibilidad)
                         $card = $this->cardRepository->find($cardId);
                         if ($card) {
-                            $deckCard = $this->deckCardRepository->findOneByDeckAndCard($deck, $card, $isSideboard);
+                            $deckCard = $this->deckCardRepository->findOneByDeckAndCard($deck, $card);
                         }
                     }
 
-                    if (!$deckCard) {
-                        // Si no existe la entrada pero se proporciona cardId y quantity > 0, crear nueva
-                        if ($cardId && $newQuantity > 0) {
-                            $card = $this->cardRepository->find($cardId);
-                            if (!$card) {
-                                $result['errors'][] = "Carta con ID {$cardId} no encontrada";
-                                continue;
-                            }
-
-                            $deckCard = new DeckCard();
-                            $deckCard->setDeck($deck);
-                            $deckCard->setCard($card);
-                            $deckCard->setCardQuantity($newQuantity);
-                            
-                            // Guardar la nueva carta en el mazo
-                            $this->deckCardRepository->save($deckCard, true);
-                        } else {
-                            $identifier = $deckCardId ?? $cardId ?? 'desconocido';
-                            $result['errors'][] = "Entrada de carta con ID {$identifier} no encontrada en el mazo";
-                            continue;
-                        }
-                    } else {
-                        // Si la nueva cantidad es 0 o menor, eliminar la carta del mazo
-                        if ($newQuantity <= 0) {
-                            $this->deckCardRepository->remove($deckCard, true);
-                            $result['success_count']++;
-                            continue;
-                        }
-
-                        // Actualizar cantidad si es diferente
-                        if ($newQuantity !== $deckCard->getCardQuantity()) {
-                            $deckCard->setCardQuantity($newQuantity);
-                        }
-
-                        // Actualizar sideboard si es diferente
-                        if (isset($cardData['is_sideboard']) && $isSideboard !== $deckCard->getIsSideboard()) {
-                            $deckCard->setIsSideboard($isSideboard);
-                        }
-                        
-                        // Guardar los cambios
-                        $this->deckCardRepository->save($deckCard, true);
+                    // Si la nueva cantidad es 0 o menor, eliminar la carta del mazo
+                    if ($newQuantity <= 0) {
+                        $this->deckCardRepository->remove($deckCard, true);
+                        $result['success_count']++;
+                        continue;
                     }
+
+                    // Actualizar cantidad si es diferente
+                    if ($newQuantity !== $deckCard->getCardQuantity()) {
+                        $deckCard->setCardQuantity($newQuantity);
+                    }
+
+                    // Guardar los cambios
+                    $this->deckCardRepository->save($deckCard, true);
 
                     $result['success_count']++;
 
@@ -333,11 +297,11 @@ class DeckBuilderService
     {
         $deckCards = $this->deckCardRepository->findBy(['deck' => $deck]);
         $totalCards = 0;
-        
+
         foreach ($deckCards as $deckCard) {
             $totalCards += $deckCard->getCardQuantity();
         }
-        
+
         return $totalCards;
     }
 }
