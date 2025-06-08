@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/collection', name: 'collection_')]
 class CollectionController extends AbstractController
@@ -27,17 +28,20 @@ class CollectionController extends AbstractController
     #[Route('', name: 'index', methods: ['GET'])]
     public function index(): Response
     {
-        /*try {*/
-        $user = $this->getUser();
-        $collectionArray = $this->collectionService->getUserCollection($user);
+        try {
+            $user = $this->getUser();
+            if (!$user) {
+                throw new \Exception('Usuario no autenticado');
+            }
+            $collectionArray = $this->collectionService->getUserCollection($user);
 
-        return $this->render('collectionManagement/collection.html.twig', [
-            'title' => 'Mi colección',
-            'description' => 'Aquí puedes ver y gestionar tu colección de cartas.',
-            'status' => 'success',
-            'collection' => $collectionArray
+            return $this->render('collectionManagement/collection.html.twig', [
+                'title' => 'Mi colección',
+                'description' => 'Aquí puedes ver y gestionar tu colección de cartas.',
+                'status' => 'success',
+                'collection' => $collectionArray
         ]);
-        /*} catch (\Exception $e) {
+        } catch (\Exception $e) {
             return $this->render('collectionManagement/collection.html.twig', [
                 'title' => 'Mi colección',
                 'description' => 'Aquí puedes ver y gestionar tu colección de cartas.',
@@ -45,7 +49,7 @@ class CollectionController extends AbstractController
                 'message' => $e->getMessage(),
                 'collection' => [] // Provide an empty array as fallback
             ]);
-        } */
+        }
     }
 
     #[Route('/stats', name: 'stats', methods: ['GET'])]
