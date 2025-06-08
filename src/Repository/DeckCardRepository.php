@@ -55,47 +55,37 @@ class DeckCardRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('dc')
             ->andWhere('dc.deck = :deck')
             ->setParameter('deck', $deck)
-            ->orderBy('dc.isSideboard', 'ASC')
-            ->addOrderBy('c.name', 'ASC')
             ->leftJoin('dc.card', 'c')
+            ->orderBy('c.name', 'ASC')
             ->getQuery()
             ->getResult();
     }
 
     
-    // Encuentra todas las cartas del mazo principal (no sideboard)
+    // Encuentra todas las cartas del mazo principal (si tienes sideboard, necesitarás agregar el campo)
     public function findMainboardCards(Deck $deck): array
     {
         return $this->createQueryBuilder('dc')
             ->andWhere('dc.deck = :deck')
-            ->andWhere('dc.isSideboard = :sideboard')
-            ->setParameter('deck', $deck)
-            ->setParameter('sideboard', false)
             ->leftJoin('dc.card', 'c')
             ->orderBy('c.name', 'ASC')
             ->getQuery()
             ->getResult();
     }
 
-    //Encuentra todas las cartas del sideboard
+    //Encuentra todas las cartas del sideboard (método placeholder - necesita implementación del campo isSideboard)
     public function findSideboardCards(Deck $deck): array
     {
-        return $this->createQueryBuilder('dc')
-            ->andWhere('dc.deck = :deck')
-            ->andWhere('dc.isSideboard = :sideboard')
-            ->setParameter('deck', $deck)
-            ->setParameter('sideboard', true)
-            ->leftJoin('dc.card', 'c')
-            ->orderBy('c.name', 'ASC')
-            ->getQuery()
-            ->getResult();
+        // Este método necesita que agregues el campo isSideboard a tu entidad DeckCard
+        // Por ahora devuelve array vacío
+        return [];
     }
 
     // Cuenta el número de una carta específica en un mazo
     public function countCardInDeck(Deck $deck, Card $card): int
     {
         $result = $this->createQueryBuilder('dc')
-            ->select('SUM(dc.quantity)')
+            ->select('SUM(dc.cardQuantity)')
             ->andWhere('dc.deck = :deck')
             ->andWhere('dc.card = :card')
             ->setParameter('deck', $deck)
@@ -106,42 +96,25 @@ class DeckCardRepository extends ServiceEntityRepository
         return $result ? (int)$result : 0;
     }
 
-    // //Cuenta el número total de cartas en el mazo principal
-    // public function countCardsInMainboard(Deck $deck): int
-    // {
-    //     $result = $this->createQueryBuilder('dc')
-    //         ->select('SUM(dc.quantity)')
-    //         ->andWhere('dc.deck = :deck')
-    //         ->andWhere('dc.isSideboard = :sideboard')
-    //         ->setParameter('deck', $deck)
-    //         ->setParameter('sideboard', false)
-    //         ->getQuery()
-    //         ->getSingleScalarResult();
-    //         
-    //     return $result ? (int)$result : 0;
-    // }
-    //
-    // // Cuenta el número total de cartas en el sideboard
-    // public function countCardsInSideboard(Deck $deck): int
-    // {
-    //     $result = $this->createQueryBuilder('dc')
-    //         ->select('SUM(dc.quantity)')
-    //         ->andWhere('dc.deck = :deck')
-    //         ->andWhere('dc.isSideboard = :sideboard')
-    //         ->setParameter('deck', $deck)
-    //         ->setParameter('sideboard', true)
-    //         ->getQuery()
-    //         ->getSingleScalarResult();
-    //         
-    //     return $result ? (int)$result : 0;
-    // }
+    // Cuenta el número total de cartas en el mazo
+    public function countCardsInDeck(Deck $deck): int
+    {
+        $result = $this->createQueryBuilder('dc')
+            ->select('SUM(dc.cardQuantity)')
+            ->andWhere('dc.deck = :deck')
+            ->setParameter('deck', $deck)
+            ->getQuery()
+            ->getSingleScalarResult();
+            
+        return $result ? (int)$result : 0;
+    }
 
     
     // Calcula el valor total del mazo
     public function calculateDeckValue(Deck $deck): float
     {
         $result = $this->createQueryBuilder('dc')
-            ->select('SUM(dc.quantity * c.price)')
+            ->select('SUM(dc.cardQuantity * c.price)')
             ->andWhere('dc.deck = :deck')
             ->leftJoin('dc.card', 'c')
             ->setParameter('deck', $deck)
@@ -152,15 +125,13 @@ class DeckCardRepository extends ServiceEntityRepository
     }
 
     // Encuentra una entrada específica de carta en un mazo
-    public function findOneByDeckAndCard(Deck $deck, Card $card, bool $isSideboard = false): ?DeckCard
+    public function findOneByDeckAndCard(Deck $deck, Card $card): ?DeckCard
     {
         return $this->createQueryBuilder('dc')
             ->andWhere('dc.deck = :deck')
             ->andWhere('dc.card = :card')
-            ->andWhere('dc.isSideboard = :sideboard')
             ->setParameter('deck', $deck)
             ->setParameter('card', $card)
-            ->setParameter('sideboard', $isSideboard)
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -171,12 +142,10 @@ class DeckCardRepository extends ServiceEntityRepository
         $colors = ['W' => 0, 'U' => 0, 'B' => 0, 'R' => 0, 'G' => 0, 'C' => 0];
         
         $results = $this->createQueryBuilder('dc')
-            ->select('c.colors, SUM(dc.quantity) as count')
+            ->select('c.colors, SUM(dc.cardQuantity) as count')
             ->andWhere('dc.deck = :deck')
-            ->andWhere('dc.isSideboard = :sideboard')
             ->leftJoin('dc.card', 'c')
             ->setParameter('deck', $deck)
-            ->setParameter('sideboard', false)
             ->groupBy('c.colors')
             ->getQuery()
             ->getResult();
@@ -201,12 +170,10 @@ class DeckCardRepository extends ServiceEntityRepository
     public function getTypeDistribution(Deck $deck): array
     {
         return $this->createQueryBuilder('dc')
-            ->select('c.type, SUM(dc.quantity) as count')
+            ->select('c.type, SUM(dc.cardQuantity) as count')
             ->andWhere('dc.deck = :deck')
-            ->andWhere('dc.isSideboard = :sideboard')
             ->leftJoin('dc.card', 'c')
             ->setParameter('deck', $deck)
-            ->setParameter('sideboard', false)
             ->groupBy('c.type')
             ->getQuery()
             ->getResult();
@@ -217,12 +184,10 @@ class DeckCardRepository extends ServiceEntityRepository
     public function getManaCurve(Deck $deck): array
     {
         $results = $this->createQueryBuilder('dc')
-            ->select('c.cmc, SUM(dc.quantity) as count')
+            ->select('c.cmc, SUM(dc.cardQuantity) as count')
             ->andWhere('dc.deck = :deck')
-            ->andWhere('dc.isSideboard = :sideboard')
             ->leftJoin('dc.card', 'c')
             ->setParameter('deck', $deck)
-            ->setParameter('sideboard', false)
             ->groupBy('c.cmc')
             ->getQuery()
             ->getResult();

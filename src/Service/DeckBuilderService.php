@@ -71,10 +71,7 @@ class DeckBuilderService
         }
 
         // Buscar si la carta ya existe en el mazo
-        $deckCard = $this->deckCardRepository->findOneBy([
-            'deck' => $deck,
-            'card' => $card,
-        ]);
+        $deckCard = $this->deckCardRepository->findOneByDeckAndCard($deck, $card);
 
         // Si ya existe, actualizar cantidad
         if ($deckCard) {
@@ -168,6 +165,8 @@ class DeckBuilderService
      * @param array $changedCards Array de cartas con cambios
      * @return array Resultado de la operación con contadores y errores
      */
+    // En DeckBuilderService.php - Reemplaza el método updateDeckCards
+
     public function updateDeckCards(User $user, Deck $deck, array $changedCards): array
     {
         $result = [
@@ -199,17 +198,26 @@ class DeckBuilderService
                         continue;
                     }
 
-                    $cardId = $cardData['card_id'] ?? null;
+                    // CORRECCIÓN: card_id en el JSON es realmente idDeckCard
+                    $deckCardId = $cardData['card_id'] ?? null;  // Este es el idDeckCard
                     $newQuantity = (int)($cardData['quantity'] ?? 0);
 
-                    // Buscar la entrada en el mazo
+                    // Buscar directamente por idDeckCard
                     $deckCard = null;
-                    if ($cardId) {
-                        // Búsqueda por ID de carta (compatibilidad)
-                        $card = $this->cardRepository->find($cardId);
-                        if ($card) {
-                            $deckCard = $this->deckCardRepository->findOneByDeckAndCard($deck, $card);
+                    if ($deckCardId) {
+                        $deckCard = $this->deckCardRepository->find($deckCardId);
+
+                        // Verificar que la DeckCard encontrada pertenece al mazo correcto
+                        if ($deckCard && $deckCard->getDeck()->getIdDeck() !== $deck->getIdDeck()) {
+                            $result['errors'][] = "La carta ID {$deckCardId} no pertenece al mazo {$deck->getIdDeck()}";
+                            continue;
                         }
+                    }
+
+                    // Si no se encontró la DeckCard
+                    if (!$deckCard) {
+                        $result['errors'][] = "No se encontró la entrada DeckCard con ID {$deckCardId}";
+                        continue;
                     }
 
                     // Si la nueva cantidad es 0 o menor, eliminar la carta del mazo
@@ -222,22 +230,20 @@ class DeckBuilderService
                     // Actualizar cantidad si es diferente
                     if ($newQuantity !== $deckCard->getCardQuantity()) {
                         $deckCard->setCardQuantity($newQuantity);
+                        $this->deckCardRepository->save($deckCard, true);
                     }
-
-                    // Guardar los cambios
-                    $this->deckCardRepository->save($deckCard, true);
 
                     $result['success_count']++;
 
                 } catch (\Exception $e) {
-                    $identifier = $cardData['deck_card_id'] ?? $cardData['card_id'] ?? 'desconocido';
-                    $result['errors'][] = "Error al actualizar carta {$identifier}: " . $e->getMessage();
+                    $identifier = $cardData['card_id'] ?? 'desconocido';
+                    $result['errors'][] = "Error al actualizar DeckCard ID {$identifier}: " . $e->getMessage();
                 }
             }
 
-            // Calcular estadísticas actualizadas del mazo
+            // Calcular valores finales del mazo
             $result['deck_value'] = $this->calculateDeckValue($deck);
-            $result['total_cards'] = $this->getTotalCards($deck);
+            $result['total_cards'] = $this->countCardsInDeck($deck);
 
         } catch (\Exception $e) {
             throw new \Exception('Error al actualizar el mazo: ' . $e->getMessage());
@@ -247,18 +253,12 @@ class DeckBuilderService
     }
 
     /**
-     * Valida la estructura de datos de una carta para actualización en mazo
-     * 
-     * @param array $cardData Datos de la carta
-     * @return bool True si los datos son válidos
-     */
+ * Valida la estructura de datos de una carta para actualización en mazo
+ */
     private function validateDeckCardData(array $cardData): bool
     {
-        // Verificar que existe el identificador de carta del mazo o carta
-        $hasDeckCardId = isset($cardData['deck_card_id']);
-        $hasCardId = isset($cardData['card_id']);
-
-        if (!$hasDeckCardId && !$hasCardId) {
+        // Verificar que existe card_id (que es realmente idDeckCard)
+        if (!isset($cardData['card_id']) || !is_numeric($cardData['card_id'])) {
             return false;
         }
 
@@ -267,24 +267,7 @@ class DeckBuilderService
             return false;
         }
 
-        // Verificar que el estado sideboard es válido si se proporciona
-        if (isset($cardData['is_sideboard']) && !is_bool($cardData['is_sideboard']) && !in_array($cardData['is_sideboard'], [0, 1, '0', '1', true, false])) {
-            return false;
-        }
-
         return true;
-    }
-
-
-    /**
-     * Obtiene el número total de cartas en el mazo
-     * 
-     * @param Deck $deck Mazo
-     * @return int Total de cartas
-     */
-    private function getTotalCards(Deck $deck): int
-    {
-        return $this->deckCardRepository->countCardsInDeck($deck);
     }
 
     /**
@@ -295,13 +278,6 @@ class DeckBuilderService
      */
     public function countCardsInDeck(Deck $deck): int
     {
-        $deckCards = $this->deckCardRepository->findBy(['deck' => $deck]);
-        $totalCards = 0;
-
-        foreach ($deckCards as $deckCard) {
-            $totalCards += $deckCard->getCardQuantity();
-        }
-
-        return $totalCards;
+        return $this->deckCardRepository->countCardsInDeck($deck);
     }
 }

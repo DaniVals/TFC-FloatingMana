@@ -71,9 +71,9 @@ class DeckRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('d')
             ->andWhere('d.idDeck = :idDeck')
-            ->andWhere('d.idUser = :idUser')
+            ->andWhere('d.user = :user')
             ->setParameter('idDeck', $id)
-            ->setParameter('idUser', $user)
+            ->setParameter('user', $user)
             ->getQuery()
             ->getOneOrNullResult();
     }
