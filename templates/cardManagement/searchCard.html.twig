@@ -23,8 +23,8 @@
 			<div class="col-12 text-center justify-content-center">
 				<h1>Busqueda</h1>
 				<div class="d-flex justify-content-center">
-					<form id="search-card-form" class="col-3" action=" {{path('search_card', {nombre: '__name__'})}}">
-						<input class="form-control col-3" type="text" name="cardName"
+					<form id="search-card-form" class="col-md-4 col-sm-6 col-8" action=" {{path('search_card', {nombre: '__name__'})}}">
+						<input class="form-control" type="text" name="cardName"
 						placeholder="Search a card..." value="{{ app.request.attributes.get('nombre') }}">
 					</form>
 				</div>
