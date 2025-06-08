@@ -184,6 +184,15 @@ function saveChanges() {
 
 	xhr.onload = function () {
 		if (xhr.status === 200) {
+			for (let i = 0; i < cards.length; i++) {
+				if (cards[i].newQuantity != cards[i].quantity) {
+					cards[i].quantity = cards[i].newQuantity
+					cards[i].updateElementQuantity()
+				}
+			}
+			TEXT_SAVE_CHANGES_POPUP.innerText = "Cartas guardadas";
+			SAVE_CHANGES_POPUP.setAttribute('data-has-changes', 2);
+
 			const data = JSON.parse(xhr.responseText);
 			TEXT_SAVE_CHANGES_POPUP.innerText = data["message"];
 		}
@@ -192,4 +201,10 @@ function saveChanges() {
 		TEXT_SAVE_CHANGES_POPUP.innerText = "Error al guardar cambios";
 		console.error('Error al guardar cambios en el mazo');
 	};
+}
+
+function closePopup() {
+	const SAVE_CHANGES_POPUP = document.getElementById('save-changes-popup');
+	SAVE_CHANGES_POPUP.setAttribute('data-has-changes', 0);
+	console.log("Cerrando popup de guardar cambios");
 }

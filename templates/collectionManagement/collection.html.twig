@@ -40,8 +40,11 @@
         </div>
         <div class="row justify-content-end" id="save-changes-popup" data-has-changes="0" data-save-route="{{path('collection_update')}}">
 			<div class="p-2 col-md-8 col-sm-10 col-12 d-flex flex-row">
-				<p      class="col-md-10 col-8 text-center">Pulsa el boton para guardar cambios</p>
-				<button class="col-md-2  col-4 btn btn-success" onclick="saveChanges()">Guardar Cambios</button>
+				<div class="col-md-8 col-8 d-flex justify-content-center align-items-center">
+					<p class="m-0 text-center">Pulsa el boton para guardar cambios</p>
+				</div>
+				<button class="col-md-4 col-4 btn btn-success" id="save-changes-popup-save" onclick="saveChanges()">Guardar Cambios</button>
+				<button class="col-md-4 col-4 btn btn-danger"  id="save-changes-popup-close" onclick="closePopup()">Cerrar</button>
 			</div>
         </div>
 

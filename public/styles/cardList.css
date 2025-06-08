@@ -95,3 +95,11 @@
 	background: var(--card-list-save-background);
 	border-radius: 5px;
 }
+
+#save-changes-popup-close,
+#save-changes-popup-save{
+	display: none;
+}
+
+#save-changes-popup[data-has-changes="1"] #save-changes-popup-save {display: block;}
+#save-changes-popup[data-has-changes="2"] #save-changes-popup-close {display: block;}
