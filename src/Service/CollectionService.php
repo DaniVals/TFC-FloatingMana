@@ -117,6 +117,17 @@ class CollectionService
             }
         }
 
+        if (!isset($collectionItem)) {
+            // Si no existe, crear una nueva entrada en la colección
+            $collectionItem = new Collection();
+            $collectionItem->setUser($user);
+            $collectionItem->setCard($card);
+            $collectionItem->setQuantity($quantity);
+            $collectionItem->setPurchasePrice($price);
+            $collectionItem->setIsFoil((bool)$foil);
+            $collectionItem->setState($state);
+        }
+
         $this->entityManager->persist($collectionItem);
         $this->entityManager->flush();
 
