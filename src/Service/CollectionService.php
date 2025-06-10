@@ -304,8 +304,7 @@ class CollectionService
 
         foreach ($collection as $item) {
             $totalCards += $item->getQuantity();
-            // Asumiendo que la entidad Card tiene un campo price
-            $estimatedValue += ($item->getCard()->getPrice() ?? 0) * $item->getQuantity();
+            $estimatedValue += ($item->getPurchasePrice() ?? 0) * $item->getQuantity();
         }
 
         return [
