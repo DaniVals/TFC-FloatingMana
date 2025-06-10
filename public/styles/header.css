@@ -46,7 +46,7 @@ header input{
 	background: #0000;
 
 	background-repeat: no-repeat;
-	background-size: calc(var(--header-height)/2);
+	background-size: calc(var(--header-height)*3/4);
 	background-position: center center;
 
 	/* filtro para que los svg sean blancos */
@@ -83,4 +83,8 @@ header #open-header {
 	padding-top: 0.5em;
 	background-color: var(--header-side-background);
 	border-right: var(--header-side-border);
+}
+
+header .small-text {
+	font-size: 0.8em;
 }
