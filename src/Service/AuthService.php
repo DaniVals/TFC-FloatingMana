@@ -5,9 +5,7 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Exception\InvalidCredentialsException;
 use App\Exception\UserBlockedException;
-use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class AuthService {
     private $userRepository;
@@ -34,19 +32,9 @@ class AuthService {
         
         // Verificar la contraseña
         if (!$this->passwordHasher->isPasswordValid($user, $password)) {
-            $this->incrementFailedLoginAttempts($user);
             throw new InvalidCredentialsException('Credenciales inválidas');
         }
-        
-        // Resetear intentos fallidos
-        $this->resetFailedLoginAttempts($user);
-        
-        // Actualizar fecha de último login
-        // $user->setLastLoginAt(new \DateTime());
-        
-        // Guardar cambios en la base de datos
-        $this->userRepository->save($user, true);
-        
+
         return $user;
     }
     
