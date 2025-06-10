@@ -59,9 +59,9 @@ class UserCollectionRepository extends ServiceEntityRepository
      *
      * @param int $idCard ID de la carta
      * @param User $user
-     * @return Collection|null
+     * @return Collection[]
      */
-    public function findOneByCardAndUser(Card $idCard, User $user): ?Collection
+    public function findOneByCardAndUser(Card $idCard, User $user): array
     {
         return $this->createQueryBuilder('c')
             ->where('c.user = :user')
@@ -69,7 +69,7 @@ class UserCollectionRepository extends ServiceEntityRepository
             ->setParameter('user', $user)
             ->setParameter('card', $idCard)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
     }
 
     /**

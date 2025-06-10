@@ -96,20 +96,25 @@ class CollectionService
         }
 
         // Verificar si ya existe en la colección
-        $collectionItem = $this->collectionRepository->findOneByCardAndUser($card, $user);
+        $collectionItems = $this->collectionRepository->findOneByCardAndUser($card, $user);
 
-        if ($collectionItem) {
-            // Si ya existe, actualizamos la cantidad
-            $collectionItem->setQuantity($collectionItem->getQuantity() + $quantity);
-        } else {
-            // Si no existe, creamos un nuevo registro
-            $collectionItem = new Collection();
-            $collectionItem->setUser($user);
-            $collectionItem->setCard($card);
-            $collectionItem->setQuantity($quantity);
-            $collectionItem->setpurchasePrice($price);
-            $collectionItem->setisFoil($foil);
-            $collectionItem->setState($state);
+        // Iterar por la collectionItems para que, por cada carta, se verifique si ya existe
+        foreach ($collectionItems as $collectionItem) {
+            if ($collectionItem) {
+                // Si la carta es diferente por cualquier motivo, crear una nueva entrada
+                if ($collectionItem->getState() !== $state || $collectionItem->getIsFoil() !== $foil || $collectionItem->getPurchasePrice() !== $price) {
+                    $collectionItem = new Collection();
+                    $collectionItem->setUser($user);
+                    $collectionItem->setCard($card);
+                    $collectionItem->setQuantity($quantity);
+                    $collectionItem->setPurchasePrice($price);
+                    $collectionItem->setIsFoil((bool)$foil);
+                    $collectionItem->setState($state);
+                } else {
+                    // Si ya existe, solo actualizar la cantidad y precio
+                    $collectionItem->setQuantity($collectionItem->getQuantity() + $quantity);
+                }
+            }
         }
 
         $this->entityManager->persist($collectionItem);
