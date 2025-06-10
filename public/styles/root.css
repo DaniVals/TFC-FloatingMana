@@ -92,6 +92,7 @@
 	--card-flip-button-height: 2em;
 
 	--slide-background-color: radial-gradient(circle at 100% 100%, #fff3, #fff1);
+	--slide-background-color-hover: radial-gradient(circle at 100% 100%, #fff1, #fff3);
 	--popup-background-color: var(--clear-background-color);
 	--popup-back-background-color: var(--semisolid-background-color);
 

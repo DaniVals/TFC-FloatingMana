@@ -67,6 +67,10 @@ h3 + hr {
 	border-radius: 5px;
 	padding: 10px;
 }
+.card-slide-preview:hover,
+.card-slide-preview:has(*:focus-visible){
+	background: var(--slide-background-color-hover);
+}
 .card-slide-preview img{
 	border-radius: 10px;
 }
