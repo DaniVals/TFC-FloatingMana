@@ -135,7 +135,7 @@ class CollectionController extends AbstractController
         $quantity = (int)$data['quantity'] ?? 1;
         $isFoil = (int)$data['isFoil'] ?? 0;
         $state = $data['state'] ?? 2;
-        $price = (int)$data['purchasePrice'] ?? 0.0;
+        $price = (float)$data['purchasePrice'] ?? 0.0;
 
 
         try {

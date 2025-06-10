@@ -9,6 +9,7 @@ use App\Entity\State;
 use App\Repository\CardRepository;
 use App\Repository\UserCollectionRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpParser\Node\Expr\Cast\Double;
 use Symfony\Bundle\SecurityBundle\Security;
 
 class CollectionService
@@ -64,7 +65,7 @@ class CollectionService
     /**
      * Añade una carta a la colección del usuario
      */
-    public function addCardToCollection(string $cardId, int $quantity, int $price, int $foil, int $state): ?Collection
+    public function addCardToCollection(string $cardId, int $quantity, float $price, int $foil, int $state): ?Collection
     {
         if ($quantity <= 0) {
             throw new \InvalidArgumentException('La cantidad debe ser mayor que cero');
