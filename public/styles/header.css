@@ -15,8 +15,13 @@ header .flex-row{
 }
 
 header img{
-	width:  100px;
-	height: 100px;
+	width:  var(--header-height);
+	height: var(--header-height);
+}
+header .default-profile-picture {
+	width:  var(--header-height);
+	height: var(--header-height);
+	font-size: medium;
 }
 
 header input{
@@ -33,15 +38,15 @@ header input{
 
 #sideHeaderButtonClose,
 #sideHeaderButtonOpen {
-	width:  50px;
-	height: 100px;
+	width:  var(--header-height);
+	height: var(--header-height);
 	margin-left: 1em;
 	
 	border: none;
 	background: #0000;
 
 	background-repeat: no-repeat;
-	background-size: contain;
+	background-size: calc(var(--header-height)/2);
 	background-position: center center;
 
 	/* filtro para que los svg sean blancos */

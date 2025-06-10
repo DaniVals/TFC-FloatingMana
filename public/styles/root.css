@@ -123,6 +123,7 @@
 	--header-top-border:  2px solid var(--semisolid-background-color);
 	--header-side-background: var(--default-background-color);
 	--header-side-border: 2px solid var(--semisolid-background-color);
+	--header-height: 4em;
 
 	--profile-form-bg: var(--light-background-color);
 
