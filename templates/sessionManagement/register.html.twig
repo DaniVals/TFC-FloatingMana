@@ -16,11 +16,11 @@
 		<div class="d-flex justify-content-center align-items-center p-5" style="min-height: 90vh;">
 			<form action="{{ path('app_register') }}" method="post" 
 			class="row justify-content-center w-100">
-				<p class="text-center">
-					{% if responseData is defined %}
+				{% if responseData is defined %}
+					<p class="text-center alert alert-danger">
 						{{ responseData.message }}
-					{% endif %}
-				</p>
+					</p>
+				{% endif %}
 				<table class="col-12 col-md-8 pop-up-bordered w-100">
 					<tr>
 						<td class="col-6 col-md-4 p-2">Usuario</td>
@@ -38,7 +38,9 @@
 						<td colspan="2" class="text-center p-2"><button type="submit" class="btn btn-primary">Registrarse</button></td>
 					</tr>
 					<tr>
-						<td class="mb-1 text-center"> <a href="{{ path('app_login_view') }}">Iniciar sesion</a></td>
+						<td class="pb-2 text-center"> 
+							<a class="btn btn-outline-primary" href="{{ path('app_login_view') }}">Iniciar sesion</a>
+						</td>
 						{#<!--<td> <a href="{{ path('load_recovery') }}">Recover Password</a> </td> -->#}
 					</tr>
 				</table>
