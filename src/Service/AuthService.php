@@ -44,6 +44,11 @@ class AuthService {
         if ($this->userRepository->findOneByEmail($email)) {
             throw new \Exception('Este email ya está registrado');
         }
+    
+        // Regex para validar el email
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new \Exception('Email inválido');
+        }
 
         // Crear una carpeta para el usuario en public/profilePictures
         $userDirectory = 'profilePictures/' . $email;
