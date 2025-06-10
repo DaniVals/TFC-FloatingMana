@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use App\Entity\Collection;
+use App\Entity\User;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -94,7 +96,7 @@ class ScryfallApiService
         }
     }
 
-    public function getCardPrice(string $id): int
+    public function getCardPrice(string $id): float
     {
         $url = 'https://api.scryfall.com/cards/' . $id;
 
@@ -111,9 +113,53 @@ class ScryfallApiService
             }
 
             $data = $response->toArray();
-            return (int)($data['prices']['eur'] ?? 0);  
+            return (float)($data['prices']['eur'] ?? 0);  
         } catch (TransportExceptionInterface | ClientExceptionInterface | ServerExceptionInterface | DecodingExceptionInterface $e) {
             throw new \Exception('Error during API request: ' . $e->getMessage());
         }
+    }
+
+    // Trend value
+    /**
+     * Obtiene el valor de tendencia de una colección.
+     *
+     * @param Collection[] $collection
+     * @return float
+     */
+    public function getTrendValue(array $collection): float
+    {
+        // Sacar los precios de scryfall de cada carta de la colección
+        $totalPrice = 0.0;
+        $cardCount = count($collection);
+        if ($cardCount === 0) {
+            return 0.0; // Evitar división por cero
+        }
+        foreach ($collection as $card) {
+            // Sumar los precios de todas las cartas de la colección teniendo en cuenta que pueden ser diferentes versiones de la misma carta y la cantidaad de copias
+            $cardPrice = $this->getCardPrice($card->getCard()->getIdScryfall());
+            $totalPrice += $cardPrice * $card->getQuantity();
+        }
+        // Calcular el valor de tendencia
+        return $totalPrice; // Retorna el valor de tendencia
+
+    }
+
+
+    // Get diffrence
+    /**
+     * Obtiene la diferencia de valor entre dos colecciones.
+     *
+     * @param Collection[] $collection1
+     * @param Collection[] $collection2
+     * @return float
+     */
+    public function getDifferenceOfPrice(float $trend_price, float $collection_price): float
+    {
+        // Devolver el porcentaje de diferencia entre el valor de tendencia y el valor de la colección
+        if ($collection_price === 0) {
+            return 0; // Evitar división por cero
+        }
+        $difference = $trend_price - $collection_price;
+        return ($difference / $collection_price) * 100; // Retorna el porcentaje de diferencia
     }
 }

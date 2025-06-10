@@ -323,11 +323,16 @@ class CollectionService
             $totalCards += $item->getQuantity();
             $estimatedValue += ($item->getPurchasePrice() ?? 0) * $item->getQuantity();
         }
-
+        
+        $collection = $this->getUserCollection($user);
+        $trendValue = $this->scryfallApiService->getTrendValue($collection);
+        $difference = $this->scryfallApiService->getDifferenceOfPrice($trendValue, $estimatedValue);
         return [
             'total_cards' => $totalCards,
             'unique_cards' => $uniqueCards,
-            'estimated_value' => $estimatedValue
+            'collection_value' => $estimatedValue,
+            'trend_value' => $trendValue,
+            'difference' => $difference
         ];
     }
 
