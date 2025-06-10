@@ -108,7 +108,7 @@ class CollectionService
                     $collectionItem->setCard($card);
                     $collectionItem->setQuantity($quantity);
                     $collectionItem->setPurchasePrice($price);
-                    $collectionItem->setIsFoil((bool)$foil);
+                    $collectionItem->setIsFoil($foil);
                     $collectionItem->setState($state);
                 } else {
                     // Si ya existe, solo actualizar la cantidad y precio
@@ -124,7 +124,7 @@ class CollectionService
             $collectionItem->setCard($card);
             $collectionItem->setQuantity($quantity);
             $collectionItem->setPurchasePrice($price);
-            $collectionItem->setIsFoil((bool)$foil);
+            $collectionItem->setIsFoil($foil);
             $collectionItem->setState($state);
         }
 
