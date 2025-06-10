@@ -32,8 +32,13 @@ class CardCollection {
 
 		const cardPrice = this.element.querySelector("#card-price");
 		if (JSON_DATA["prices"] && JSON_DATA["prices"]["eur"]) {
-			this.price = JSON_DATA["prices"]["eur"];
-			cardPrice.innerText = JSON_DATA["prices"]["eur"] + "€";
+			if (this.isFoil && this.isFoil == true) {
+				this.price = JSON_DATA["prices"]["eur_foil"];
+				cardPrice.innerText = JSON_DATA["prices"]["eur_foil"] + "€";
+			}else{
+				this.price = JSON_DATA["prices"]["eur"];
+				cardPrice.innerText = JSON_DATA["prices"]["eur"] + "€";
+			}
 		}
 
 		if (JSON_DATA["type_line"]) {
