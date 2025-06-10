@@ -22,14 +22,15 @@
 .option h2, .option p {
 	color: var(--dashboard-color);
 	fill: var(--dashboard-color);
+	text-align: center;
 }
 
 #carrousel{
-	background-color: aqua;
+	background-color: var(--carrousel-bg);
+	border-radius: 1em;
+	overflow: hidden;
 }
 #carrousel #elements {
-	background-color: green;
-
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: start;
@@ -44,8 +45,14 @@
 }
 
 #carrousel #elements .element {
-	background-color: blue;
 	flex: 0 0 100%; /* Hace que cada hijo tenga el mismo ancho que el padre */
 	width: 100%;
 	display: block !important;
+}
+
+.dot {
+	aspect-ratio: 1/1;
+	width: 2em;
+
+	border-radius: 999px;
 }

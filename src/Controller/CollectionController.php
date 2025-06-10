@@ -334,7 +334,7 @@ class CollectionController extends AbstractController
     }
 
 
-    #[Route('/fetch_most_valuable', name: 'fetch_most_valuable', methods: ['GET'])]
+    #[Route('/fetch_most_valuable', name: 'fetch_most_valuable', methods: ['GET', 'POST'])]
     public function fetchMostValuableCards(Request $request): JsonResponse
     {
         try {

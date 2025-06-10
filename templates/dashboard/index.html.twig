@@ -31,46 +31,29 @@
 	<br>
 
 	<div class="container">
-		<div class="row row-cols-1 row-cols-md-2 flex-md-row-reverse">
-			{# Cosas de bienvenida #}
-			<div class="col justify-content-center">
-				<div id="carrousel">
-					
-					<div id="elements">
-						<img src="https://cards.scryfall.io/large/front/3/b/3bd9e99a-ae8c-4323-aa86-b19288c877d4.jpg?1673307584" alt="Img 1" class="element">
-						<img src="https://cards.scryfall.io/large/front/3/b/f0944759-ee9f-4ae0-9d1b-2533ff6791a2.jpg?1562448331" alt="Img 2" class="element">
-						<img src="https://cards.scryfall.io/large/front/3/b/3bd9e99a-ae8c-4323-aa86-b19288c877d4.jpg?1673307584" alt="Img 3" class="element">
-						<img src="https://cards.scryfall.io/large/front/f/0/f0944759-ee9f-4ae0-9d1b-2533ff6791a2.jpg?1562448331" alt="Img 4" class="element">
-					</div>
-
-					<ul class="dots">
-						<li class="dot" onclick="changeIndex(1)">  > </li>
-						<li class="dot" onclick="changeIndex(-1)"> < </li>
-					</ul>
-				</div>
-			</div>
+		<div class="row">
 
 			{# BOTONES CABECERA #}
-			<div class="col justify-content-center">
-				<a class="option mana-bg-green" href="{{ path('collection_index') }}" class="text-center">
+			<div class="col-12 col-sm-5 col-md-5 justify-content-center">
+				<a class="option mana-bg-green" href="{{ path('collection_index') }}">
 					<div class="d-flex flex-column justify-content-center align-items-center h-100">
 						<h2>Colección</h2>
 						<p>Explora y organiza tu colección</p>
 					</div>
 				</a>
-				<a class="option mana-bg-white" href="{{ path('deck_index') }}" class="text-center">
+				<a class="option mana-bg-white" href="{{ path('deck_index') }}">
 					<div class="d-flex flex-column justify-content-center align-items-center h-100">
 						<h2>Mazos</h2>
 						<p>Crea, edita y comparte mazos</p>
 					</div>
 				</a>
-				<a class="option mana-bg-red" href="{{ path('search_card_form') }}" class="text-center">
+				<a class="option mana-bg-red" href="{{ path('search_card_form') }}">
 					<div class="d-flex flex-column justify-content-center align-items-center h-100">
 						<h2>Buscar</h2>
 						<p>Busca cartas para añadir a tu colección</p>
 					</div>
 				</a>
-				<a class="option mana-bg-blue" href="{{ path('profile') }}" class="text-center">
+				<a class="option mana-bg-blue" href="{{ path('profile') }}">
 					<div class="d-flex flex-column justify-content-center align-items-center h-100">
 						<h2>Perfil</h2>
 						<p>Visita tu perfil</p>
@@ -78,21 +61,53 @@
 				</a>
 				
 				{% if is_granted("IS_AUTHENTICATED_FULLY") %}
-					<a class="option mana-bg-black" href="{{ path('app_logout') }}" class="text-center">
+					<a class="option mana-bg-black" href="{{ path('app_logout') }}">
 						<div class="d-flex flex-column justify-content-center align-items-center h-100">
 							<h2>Cerrar sesión</h2>
 							<p>¡Hasta pronto!</p>
 						</div>
 					</a>
 				{% else %}
-					<a class="option mana-bg-black" href="{{ path('app_login') }}" class="text-center">
+					<a class="option mana-bg-black" href="{{ path('app_login') }}">
 						<div class="d-flex flex-column justify-content-center align-items-center h-100">
 							<h2>Iniciar sesión</h2>
 							<p>¡Únete a nosotros y empieza a gestionar tus cartas!</p>
 						</div>
 					</a>
 				{% endif %}
+				<div class="mb-5"></div>
+				<hr class="d-sm-none">
 			</div>
+
+			<div class="col-1 d-none d-md-block"></div>
+
+
+			{# PRESENTACION #}
+			<div class="col-12 col-sm-7 col-md-6 justify-content-center">
+
+				<h1 class="text-center mb-5 mb-sm-2">Tus cartas mas caras</h1>
+				<div id="carrousel" data-AJAX-route="{{ path('collection_fetch_most_valuable') }}" data-max-cards="5" data-scryfall-route="https://api.scryfall.com/cards/">
+					
+					<div id="elements">
+						<div class="element" id="loading-element" class="text-center justify-content-center">
+							<p class="text-center">Cargando</p>
+							<img class="img-fluid d-block mx-auto" style="max-height: 10em;" 
+							src="https://cdn.pixabay.com/animation/2023/08/11/21/18/21-18-05-265_512.gif" alt="Icono de carga">
+						</div>
+						{# <img src="https://cards.scryfall.io/large/front/3/b/3bd9e99a-ae8c-4323-aa86-b19288c877d4.jpg?1673307584" alt="Img 1" class="element">
+						<img src="https://cards.scryfall.io/large/front/3/b/f0944759-ee9f-4ae0-9d1b-2533ff6791a2.jpg?1562448331" alt="Img 2" class="element">
+						<img src="https://cards.scryfall.io/large/front/3/b/3bd9e99a-ae8c-4323-aa86-b19288c877d4.jpg?1673307584" alt="Img 3" class="element">
+						<img src="https://cards.scryfall.io/large/front/f/0/f0944759-ee9f-4ae0-9d1b-2533ff6791a2.jpg?1562448331" alt="Img 4" class="element"> #}
+					</div>
+
+					<div class="d-flex justify-content-center p-3">
+						<button class="dot me-4" onclick="changeIndex(-1)"> < </button>
+						<span class="me-4 d-flex justify-content-center align-items-center" id="carrousel-text" style="min-width: 2em;">1/1</span>
+						<button class="dot" onclick="changeIndex(1)">  > </button>
+					</div>
+				</div>
+			</div>
+
 
 		</div>
 	</div>
