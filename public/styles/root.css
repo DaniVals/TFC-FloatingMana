@@ -272,3 +272,14 @@ a{
 	user-select: auto;
 	z-index: 1000;
 }
+
+.clear-border {
+	border-color: var(--default-text-color);
+	color: var(--default-text-color);
+}
+.clear-border:hover,
+.clear-border:focus-visible
+{
+	color: var(--default-background-color) !important;
+	background-color: var(--default-text-color) !important;
+}
