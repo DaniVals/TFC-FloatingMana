@@ -18,7 +18,6 @@
 			class="row justify-content-center w-100">
 			
 				{% if responseData is defined %}
-					{{ dump(responseData) }}
 					<p class="text-center alert alert-danger">
 						{{ responseData.message }}
 					</p>
