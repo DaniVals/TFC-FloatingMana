@@ -404,4 +404,9 @@ class CollectionService
         return array_map(fn(Collection $c) => $c->toArray(), $collections);
     }
 
+    public function fetchMostValuableCards(User $user, int $limit = 5): array
+    {
+        $collections = $this->collectionRepository->findMostValuableCardsByUser($user, $limit);
+        return $collections;
+    }
 }

@@ -313,7 +313,7 @@ class CollectionController extends AbstractController
     public function exportCollection(): Response
     {
         try {
-            $collection = $this->collectionService->getUserCollection();
+            $collection = $this->collectionService->getUserCollection($this->getUser());
             $exportData = '';
 
             foreach ($collection as $item) {
@@ -325,6 +325,35 @@ class CollectionController extends AbstractController
             $response->headers->set('Content-Disposition', 'attachment; filename="collection_export.txt"');
 
             return $response;
+        } catch (\Exception $e) {
+            return $this->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+
+    #[Route('/fetch_most_valuable', name: 'fetch_most_valuable', methods: ['GET'])]
+    public function fetchMostValuableCards(Request $request): JsonResponse
+    {
+        try {
+            $data = json_decode($request->getContent(), true);
+            if (!isset($data['limit']) || !is_int($data['limit'])) {
+                return $this->json([
+                    'status' => 'error',
+                    'message' => 'Parámetro "limit" no proporcionado o inválido'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+            $limit = (int)$data['limit'];
+            $user = $this->getUser();
+            $cards = $this->collectionService->fetchMostValuableCards($user ,$limit);
+
+            return $this->json([
+                'status' => 'success',
+                'data' => $cards
+            ]);
         } catch (\Exception $e) {
             return $this->json([
                 'status' => 'error',

@@ -315,9 +315,23 @@ class UserCollectionRepository extends ServiceEntityRepository
     public function remove(Collection $collection, bool $flush = true): void
     {
         $this->_em->remove($collection);
-        
+
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+    public function findMostValuableCardsByUser(User $user, int $limit): array
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c', 'card')
+            ->join('c.card', 'card')
+            ->where('c.user = :user')
+            ->andWhere('c.purchasePrice IS NOT NULL')
+            ->setParameter('user', $user)
+            ->orderBy('c.purchasePrice', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
     }
 }
