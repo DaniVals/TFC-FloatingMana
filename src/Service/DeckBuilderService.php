@@ -146,10 +146,11 @@ class DeckBuilderService
     }
 
     // Edit deck
-    public function editDeck(Deck $deck, string $deckName, string $deckFormat): Deck
+    public function editDeck(Deck $deck, string $deckName, string $deckFormat, string $cover): Deck
     {
         $deck->setDeckName($deckName);
         $deck->setFormat($deckFormat);
+        $deck->setCoverImg($cover);
 
         // Guardar los cambios en la base de datos
         $this->deckRepository->save($deck, true);
