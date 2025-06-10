@@ -7,6 +7,7 @@ use App\Exception\UserBlockedException;
 use App\Exception\InvalidCredentialsException;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,10 +17,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class AuthController extends AbstractController {
 
     private $logger;
+    private $security;
     private $authService;
 
-    public function __construct(AuthService $authService, LoggerInterface $logger) {
+    public function __construct(AuthService $authService, LoggerInterface $logger, Security $security) {
         $this->logger = $logger;
+        $this->security = $security;
         $this->authService = $authService;
     }
 
@@ -152,12 +155,18 @@ class AuthController extends AbstractController {
             // Delegar la lógica de registro al servicio
             $user = $this->authService->register($email, $password, $name);
 
-            return $this->render('sessionManagement/register.html.twig', [
+            $this->security->login($user);
+
+            return $this->render('dashboard/index.html.twig', [
                 'responseData' => [
                     'success' => true,
-                    'user' => $user,
                     'message' => 'Registro exitoso',
-                    'status'  => Response::HTTP_OK
+                    'user' => [
+                        'id' => $user->getId(),
+                        'username' => $user->getName(),
+                        'email' => $user->getEmail()
+                    ],
+                    'status'  => Response::HTTP_CREATED
                 ]
             ]);
 

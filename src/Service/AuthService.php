@@ -51,7 +51,7 @@ class AuthService {
     }
     
     //Método para registrar un nuevo usuario
-    public function register(string $email, string $password, string $name): UserInterface {
+    public function register(string $email, string $password, string $name): User {
         // Verificar si el email ya está registrado
         if ($this->userRepository->findOneByEmail($email)) {
             throw new \Exception('Este email ya está registrado');
