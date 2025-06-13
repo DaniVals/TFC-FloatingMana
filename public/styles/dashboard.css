@@ -56,3 +56,21 @@
 
 	border-radius: 999px;
 }
+
+.profile-badge {
+	display: flex;
+	margin-bottom: 0.5em;
+}
+.profile-badge > p {
+	color: var(--default-text-color) !important;
+	padding-top: 1em;
+}
+.profile-badge span {
+	width: 10em;
+	padding-top: 1em;
+	padding-left: 5px;
+}
+.profile-badge img {
+	width: 5em;
+	border-radius: 1em;
+}

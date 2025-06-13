@@ -6,16 +6,120 @@
 	
 	{% include "root.html.twig" %}
 	<link rel="stylesheet" href=" {{ asset('styles/dashboard.css') }} ">
+	<script src=" {{asset('js/githubBadge.js')}} "></script>
 
 </head>
 {% include "header.html.twig" %}
 <body>
 
 	<div class="container">
-		<div class="row row-cols-12 row-cols-md-6    justify-content-center">
-			<p>Que guapo nos va a quedar la pagina de presentacion</p>
-			<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem voluptatibus iste magnam maxime beatae unde nemo sed architecto eligendi provident quae porro, voluptas rem animi. Voluptatibus reprehenderit natus saepe consequuntur!</p>
+		<br>
+		<div class="row row-cols-1 row-cols-md-2    justify-content-center">
+
+			<div class="col">
+				<h2>Floating mana</h2>
+				<p>
+					Bienvenido a nuestra aplicación web, titulada Floating Mana. 
+					Esta aplicación nace de la necesidad de los jugadores de <i>Magic; The Gathering</i>, 
+					de contar con una solución fácil, ordenada y accesible la mayor parte del tiempo de gestionar sus colecciones, 
+					mazos y cartas individuales de dicho juego.
+				</p>
+				<p>
+					Aunque hay muchas aplicaciones que proporcionan este tipo de servicios ya que <i>Magic: The Gathering</i> es muy popular en todo el mundo, 
+					casi todas tienen algo en común, y es que pueden llegar a ser muy complicadas de navegar, 
+					poco accesibles tanto a nivel de discapacidad del usuario como por el dispositivo usado y pueden resultar confusas para los principiantes.
+				</p>
+				<p>
+					Por eso, nuestro equipo se ha centrado en desarrollar una aplicación simple, accesible y con una estética minimalista y clara 
+					para que los nuevos jugadores puedan entrar al mundo de este maravilloso juego de forma cómoda y sencilla.
+				</p>
+				<p>
+					Si desea hacer alguna queja o recomendación para ayudarnos a mejorar,
+					le dejamos a disposición un <a class="text-decoration-underline" href="https://forms.gle/j7HMXK7Ynu5ZomH48">formulario aquí</a> donde puede valorar nuestra web. <br>
+					Gracias por su atención.
+				</p>
+			</div>
+
+
+			<div class="col" id="development-team" data-AJAX="https://api.github.com/users/">
+				<h2>Equipo de desarrollo</h2>
+				<p>Nuestro equipo de desarrollo está compuesto por tres integrantes:</p>
+				<a class="profile-badge" data-username="navarra3103" href="https://github.com/navarra3103">
+					<img  id="profile-photo" src="https://github.com/navarra3103.png" alt="Foto de perfil de Nvr">
+					<span id="profile-name">Nvr</span>
+					<p>encargado de la BBDD, las entidades y el ORM.</p>
+				</a>
+
+				<a class="profile-badge" data-username="monstahcode" href="https://github.com/monstahcode">
+					<img  id="profile-photo" src="https://github.com/monstahcode.png" alt="Foto de perfil de Monstah">
+					<span id="profile-name">Monstahcode</span>
+					<p>encargado de los controladores, servicios y despliegue.</p>
+				</a>
+				
+				<a class="profile-badge" data-username="DaniVals" href="https://github.com/DaniVals">
+					<img  id="profile-photo" src="https://github.com/DaniVals.png" alt="Foto de perfil de Shoveflow">
+					<span id="profile-name">ShovelFlow</span>
+					<p>encargada de la vista, la accesibilidad y el frontend.</p>
+				</a>
+			</div>
+		</div>
+
+		<br>
+		<br>
+
+		<div class="row row-cols-1">
+			<div class="col">
+				<h2 class="text-center">Cómo funciona la web</h2>
+				<p>
+					Usa el botón en la parte superior derecha de la pantalla 
+					para iniciar sesión o registrarte en nuestra app. <br>
+					Una vez hayas iniciado sesión podrás acceder a:
+				</p>
+			
+				<div class="row row-cols-1 row-cols-md-2   justify-content-center">
+					<div class="col">
+						<h3 class="text-center">Colección</h3> 
+						<p>
+							Lista todas las cartas que has agregado a tu colección. 
+							Podrás ver, comparar, ordenar y modificar los datos de dichas cartas. 
+							Cuando estés modificando cartas de la lista, te aparecerá un popup en la parte inferior derecha, 
+							donde se mostrarán los cambios,
+							y estos se aplicarán cuando se seleccione el botón de 'Guardar cambios'.
+						</p>
+					</div>
+					<div class="col">
+						<h3 class="text-center">Mazos</h3> 
+						<p>
+							Lista todos tus mazos. Podrás verlos y crear nuevos o eliminar los que ya existen.
+							Desde aquí también podrás ver y editar la lista de cartas pertenecientes al mazo de igual manera que en Colección.
+						</p>
+					</div>
+					<div class="col">
+						<h3 class="text-center">Búsqueda</h3> 
+						<p>
+							Podrás buscar cartas por su nombre, mostrando todas las cartas cuyo nombre coincida o incluya el texto buscado,
+							junto a un botón que mostrará el popup para añadir la carta a tu colección o a uno de tus mazos. 
+							Al hacer click en una de las cartas, 
+							se mostrará dicha carta junto a su información completa y a otro botón para abrir el popup anteriormente mencionado.
+						</p>
+					</div>
+					<div class="col">
+						<h3 class="text-center">Perfil</h3> 
+						<p>
+							Te permite ver y editar los datos de tu cuenta como nombre, correo, contraseña y foto de perfil.
+							También permite borrar la cuenta de manera permanente.
+						</p>
+					</div>
+					<div class="col">
+						<h3 class="text-center">Cerrar sesión</h3> 
+						<p>
+							Cierra tu sesión actual y vuelve a la página de iniciar sesión. 
+							Aquí podrás volver a iniciar sesión usando la misma u otra cuenta, o simplemente salir de la aplicación.
+						</p>
+					</div>
+				</div>
+
+			</div>
 		</div>
 	</div>
-
 </body>
