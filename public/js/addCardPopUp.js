@@ -183,6 +183,8 @@ function addCardToCollection() {
 			message.setAttribute("data-status", 200);
 		} else if (data["success"] == false) {
 			message.setAttribute("data-status", 404);
+		} else if (xhr.status == 201) {
+			message.setAttribute("data-status", 200);
 		} else {
 			message.setAttribute("data-status", xhr.status);
 		}
