@@ -1,7 +1,7 @@
 .option {
 	margin: 0.5em;
 
-	min-height: 10em !important;
+	min-height: 8em !important;
 	border-radius: 10px;
 	
 	display: flex;
