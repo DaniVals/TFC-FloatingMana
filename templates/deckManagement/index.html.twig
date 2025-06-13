@@ -8,26 +8,32 @@
 	<link rel="stylesheet" href=" {{ asset('styles/deck.css') }} ">
 </head>
 {% include "header.html.twig" %}
+{% import "macros/svgs.twig" as svg %}
+
 <body>
 	
     <div class="container">
+
+		<div class="row">
+			<div class="col-12 text-center">
+				<h1> Tus mazos </h1>
+			</div>
+		</div>
+
+		{% include "separation.twig" %}
+
 		{% if not is_granted("IS_AUTHENTICATED_FULLY") %}
 			<div class="row">
-				<div class="col-12 text-center">
-					<a href="{{ path('app_login') }}">
-					<h1> Inicia sesion para gestionar tus mazos </h1>
+				<div class="col-12 text-center justify-content-center">
+					<h3 class="mb-4"> Inicia sesión para gestionar tus mazos </h3>
+					<a class="fw-bold btn mana-bg-black" href="{{ path('app_login') }}">
+						{{ svg.login("side-header-svg") }}
+						Iniciar sesión
 					</a>
 				</div>
 			</div>
+
 		{% else %}
-
-			<div class="row">
-				<div class="col-12 text-center">
-					<h1> Tus mazos </h1>
-				</div>
-			</div>
-
-			{% include "separation.twig" %}
 			
 			<div class="row">
 				<div class="col-12 text-center">

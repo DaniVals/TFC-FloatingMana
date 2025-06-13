@@ -10,6 +10,8 @@
 	<script src=" {{asset('js/cardList.js')}} "></script>
 </head>
 {% include "header.html.twig" %}
+{% import "macros/svgs.twig" as svg %}
+
 <body>
     <!-- Por cada carta, mostrar su nombre, precio y la imagen. -->
     <!-- Leer el dato que se envia desde el controlador y mostrarlo en la vista. -->
@@ -22,6 +24,21 @@
 
 		{% include "separation.twig" %}
 
+		{% if not is_granted("IS_AUTHENTICATED_FULLY") %}
+
+
+			<div class="row">
+				<div class="col-12 text-center justify-content-center">
+					<h3 class="mb-4"> Inicia sesión para gestionar tu coleccion </h3>
+					<a class="fw-bold btn mana-bg-black" href="{{ path('app_login') }}">
+						{{ svg.login("side-header-svg") }}
+						Iniciar sesión
+					</a>
+				</div>
+			</div>
+
+		{% else %}
+			
         <div class="row">
             <div class="col-12 text-center">
 			 	{# <button onclick="addToBody()">mostrar lista</button> #}
@@ -94,6 +111,7 @@
         </div>
 		{# the last card should end up in the middle of the screen when scrolling to the bottom #}
 		<div class="final-margin"></div>
+		{% endif %}
     </div>
 		{# {{ dump(collection) }} #}
 		{# {{ dump(app.user) }} #}
