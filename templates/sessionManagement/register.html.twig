@@ -21,29 +21,23 @@
 						{{ responseData.message }}
 					</p>
 				{% endif %}
-				<table class="col-12 col-md-8 pop-up-bordered w-100">
-					<tr>
-						<td class="col-6 col-md-4 p-2">Usuario</td>
-						<td class="col-6 col-md-4 p-2"><input type="text" id="username" name="_username" class="form-control" /></td>
-					</tr>
-					<tr>
-						<td class="p-2">Correo</td>
-						<td class="p-2"><input type="email" id="email" name="_email" class="form-control" /></td>
-					</tr>
-					<tr>
-						<td class="p-2">Contraseña</td>
-						<td class="p-2"><input type="password" id="password" name="_password" class="form-control" /></td>
-					</tr>
-					<tr>
-						<td colspan="2" class="text-center p-2"><button type="submit" class="btn btn-primary">Registrarse</button></td>
-					</tr>
-					<tr>
-						<td class="pb-2 text-center"> 
-							<a class="btn btn-outline-primary" href="{{ path('app_login_view') }}">Iniciar sesion</a>
-						</td>
-						{#<!--<td> <a href="{{ path('load_recovery') }}">Recover Password</a> </td> -->#}
-					</tr>
-				</table>
+				<div class="form-window">
+					<label for="_username" class="form-label">Usuario</label>
+					<input type="text" id="username" name="_username" class="form-control mb-3"/>
+
+					
+					<label for="_email" class="form-label">Correo electrónico</label>
+					<input type="email" id="email" name="_email" class="form-control mb-3" />
+
+					<label for="_password" class="form-label">Contraseña</label>
+					<input type="password" id="password" name="_password" class="form-control  mb-3" />
+
+					<input type="submit" value="Registrarse" class="btn btn-primary d-block w-90">
+
+					<div class="mt-5">
+						<a class="btn btn-outline-primary" href="{{ path('app_login_view') }}">Iniciar sesión</a>
+					</div>
+				</div>
 			</form>
 		</div>
 	</div>

@@ -5,3 +5,9 @@
 	align-items: center;
 	justify-content: center;
 }
+
+.form-window {
+	background: var(--form-bg);
+	padding: 2em;
+	border-radius: 1em;
+}
