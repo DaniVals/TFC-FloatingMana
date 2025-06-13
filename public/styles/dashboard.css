@@ -64,13 +64,15 @@
 .profile-badge > p {
 	color: var(--default-text-color) !important;
 	padding-top: 1em;
+	padding-left: 5px;
 }
 .profile-badge span {
-	width: 10em;
+	width: 12em;
 	padding-top: 1em;
 	padding-left: 5px;
 }
 .profile-badge img {
 	width: 5em;
+	height: 5em;
 	border-radius: 1em;
 }
