@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	for (let i = 0; i < badges.length; i++) {
 		const badge = badges[i];
 		const username = badge.getAttribute('data-username');
-		console.log(badge);
+		// console.log(badge);
 		
 		
 		const xhr = new XMLHttpRequest();
@@ -17,13 +17,13 @@ document.addEventListener('DOMContentLoaded', () => {
 				const data = JSON.parse(xhr.responseText);
 
 				const name = badge.querySelector('#profile-name');
-				console.log(name);
+				// console.log(name);
 				if (name) {
 					name.innerHTML = data['name'];
 				}
 				
 				const img = badge.querySelector('#profile-photo');
-				console.log(img);
+				// console.log(img);
 				if (name) {
 					img.src = data['avatar_url'];
 				}
