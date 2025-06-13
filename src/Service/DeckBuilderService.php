@@ -126,12 +126,13 @@ class DeckBuilderService
     }
 
     // Crear un mazo nuevo
-    public function createDeck(User $user, string $deckName, string $deckFormat): Deck
+    public function createDeck(User $user, string $deckName, string $deckFormat, string $cover): Deck
     {
         $deck = new Deck();
         $deck->setDeckName($deckName);
         $deck->setFormat($deckFormat);
         $deck->setUser($user);
+        $deck->setCoverImg($cover);
 
         // Guardar el mazo en la base de datos
         $this->deckRepository->create($deck, true);

@@ -51,9 +51,10 @@ class DeckController extends AbstractController {
 
 	$deckName = $request->request->get('_deckName');
 	$deckFormat = $request->request->get('_deckFormat');
+	$deckCover = $request->request->get('deck_cover');
 
 	try {
-	    $deck = $this->deckBuilderService->createDeck($user, $deckName, $deckFormat);
+	    $deck = $this->deckBuilderService->createDeck($user, $deckName, $deckFormat, $deckCover);
 	    $this->deckRepository->save($deck, true);
 
 	    return $this->redirectToRoute('deck_show', ['id' => $deck->getIdDeck()]);
