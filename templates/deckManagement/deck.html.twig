@@ -16,12 +16,34 @@
 	<script src=" {{asset('js/cardList.js')}} "></script>
 </head>
 {% include "header.html.twig" %}
+{% import "macros/svgs.twig" as svg %}
+
 <body>
 	{% if not deck %}
 		<div class="container">
 			<div class="row">
 				<div class="col-12 text-center d-flex justify-content-center align-items-center" style="height: 50vh;">
 					<p class="fs-3">Mazo no encontrado</p>
+				</div>
+			</div>
+		</div>
+	{% elseif deck.getDeckCards is empty %}
+		<div class="container">
+			<div class="row">
+				<div class="col-12 text-center">
+					<h1 class="fw-bold"> {{ deck.getDeckName }} </h1>
+				</div>
+			</div>
+
+			{% include "separation.twig" %}
+
+			<div class="row">
+				<div class="col-12 text-center justify-content-center">
+					<h3 class="mb-4"> Busca cartas para añadir a tu colección </h3>
+					<a class="fw-bold btn mana-bg-red" href="{{ path('search_card_form') }}">
+						{{ svg.search("side-header-svg") }}
+						Buscar
+					</a>
 				</div>
 			</div>
 		</div>
@@ -82,7 +104,7 @@
 			<br>
 
 			<div class="row justify-content-center no-deco" id="card-list" data-ajax-route="https://api.scryfall.com/cards/">
-			
+
 				{% for card in deck.getDeckCards %}
 					<div class="col-12 col-sm-11 col-md-10 ps-0    card-list-show" 
 					data-card-id="{{ card.getCard.getIdScryfall }}" data-card-name="{{ card.getCard.getCardName }}"
